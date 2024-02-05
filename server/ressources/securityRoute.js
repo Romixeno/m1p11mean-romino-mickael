@@ -2,7 +2,7 @@ import { Router } from "express";
 import { login, logout, register } from "../controllers/securityController.js";
 export default Router()
     .get('/register',register)
-    .post('/register/:roles',register)
+    .post('/user/register',register)
     .get('/login',login)
-    .post('/login/:roles',login)
+    .post('/user/login/',login)
     .delete('/logout',logout)

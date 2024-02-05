@@ -9,8 +9,8 @@ export const serviceSchema = Joi.object({
     duration: Joi.number().min(1).required(),
     commission: Joi.number().min(0).required(),
     image: Joi.string().allow(''),
-    clientId: Joi.string().allow('').guid(), 
-    employeeId: Joi.string().allow('').guid(), 
+    clientId: Joi.string(), 
+    employeeId: Joi.string(), 
 });
 
 export const addService = async (req, res) => {

@@ -16,19 +16,11 @@ const clientSchema = new Schema({
         type:Number,
         required:true
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-      },
     image: { 
         type : String ,
         required : false
     },
-    password: {
-        type: String,
-        required: true
-    },
+   
     appointments: [{
         type: Schema.Types.ObjectId, ref: 'Appointment'
     }],

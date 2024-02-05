@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const employeeSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     lastname: {
         type: String,
@@ -13,15 +13,6 @@ const employeeSchema = new Schema({
     numberPhone:{
         type:Number,
         required:true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true
     },
     appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],
     workingHours: {
