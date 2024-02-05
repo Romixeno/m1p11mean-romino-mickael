@@ -1,6 +1,9 @@
 import Joi from 'joi'
-import clientId from '../models/clientModels.js'
-import Employee from '../models/employeeModels.js'
+import bcrypt from 'bcrypt'
+import path from 'path'
+import fs from 'fs'
+import crypto from 'crypto'
+import mongoose from 'mongoose'
 import Service from '../models/serviceModels.js'
 
 export const serviceSchema = Joi.object({
@@ -8,55 +11,138 @@ export const serviceSchema = Joi.object({
     price: Joi.number().min(0).required(),
     duration: Joi.number().min(1).required(),
     commission: Joi.number().min(0).required(),
-    image: Joi.string().allow(''),
     clientId: Joi.string(), 
     employeeId: Joi.string(), 
 });
 
 export const addService = async (req, res) => {
     try {
-        const { name, price, duration, commission, image, clientId, employeeId } = req.body;
 
         // Validation des données avec Joi
-        const { error, value } = serviceSchema.validate({ name, price, duration, commission, image, clientId, employeeId });
+        const { error, value } = serviceSchema.validate(req.body);
         if (error) {
             return res.status(400).json({ error: error.message });
         }
-        
-        // Ajout du service dans la base de données
-        const newService = new Service(value);
-        await newService.save();
 
-        res.status(201).json({ message: 'Service added successfully',service: newService });
+        
+
+        if (!fs.existsSync('public')) {
+          fs.mkdir('public', (err) => {
+            if (err) {
+              console.error('Error creating directory:', err);
+            }
+          });
+        }
+        if(!req.files){
+          return res.status(400).json({message:' fields images is requires'})
+      }
+      const {image}= req.files
+      const newFileName = '/images/IMG-'+Date.now()+crypto.randomInt(1000,999999)+path.extname(image.name)
+      image.mv('public' + newFileName,(e)=>{
+          if(e){
+              console.log(e);
+          }
+      })
+        value.image = newFileName
+        const data = new Service(value)
+        
+        const saveService = await data.save()
+
+        res.status(201).json(saveService)
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
-export const getService = async (req, res) => {
-    try {
-      const services = await Service.find();
-      res.json(services);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Erreur lors de la récupération des services' });
-    }
-  };
+  //service par Id
+export const getAllServices = async (req, res) => {
+  try {
+    const services = await Service.find();
+    res.json(services);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
   
   //  récupérer un service par ID
   export const getServiceById = async (req, res) => {
     try {
-      const serviceId = req.params.serviceId;
-      const service = await Service.findOne({ serviceId });
-  
+      const service = await Service.findById(req.params.id);
       if (!service) {
-        return res.status(404).json({ error: 'Service non trouvé' });
+        return res.status(404).json({ error: 'Service not found' });
       }
-  
-   return res.json(service);
+      res.json(service);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Erreur lors de la récupération du service par ID' });
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+  //update service
+
+  export const updateService = async (req, res) => {
+    try {
+      const { error, value } = serviceSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.message });
+      }
+
+      const imagesDir = path.join('public', 'images');
+  
+      if (!fs.existsSync(imagesDir)) {
+        fs.mkdirSync(imagesDir, { recursive: true });
+      }
+  
+      const service = await Service.findById(req.params.id);
+      if (!service) {
+        return res.status(404).json({ error: 'Service not found' });
+      }
+  
+      if (req.files && req.files.image) {
+        const { image } = req.files;
+        const newFileName =
+          '/images/IMG-' + Date.now() + crypto.randomInt(1000, 999999) + path.extname(image.name);
+  
+        image.mv(path.join('public', newFileName), (e) => {
+          if (e) {
+            console.log(e);
+            return res.status(500).json({ error: 'Error during file upload' });
+          }
+  
+          fs.unlinkSync(path.join('public', service.image)); // Supprimer l'ancienne image
+          service.image = newFileName;
+          service.set(value);
+          service.save()
+            .then((updatedService) => res.json(updatedService))
+            .catch((updateError) => res.status(500).json({ error: 'Error during service update', updateError }));
+        });
+      } else {
+        service.set(value);
+        service.save()
+          .then((updatedService) => res.json(updatedService))
+          .catch((updateError) => res.status(500).json({ error: 'Error during service update', updateError }));
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+  //delete service
+  export const deleteService = async (req, res) => {
+    try {
+      const service = await Service.findById(req.params.id);
+      if (!service) {
+        return res.status(404).json({ error: 'Service not found' });
+      }
+  
+      fs.unlinkSync(path.join('public', service.image)); 
+  
+      await service.deleteOne();
+      res.json({ message: 'Service deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   };
