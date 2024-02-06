@@ -10,6 +10,9 @@ import path from "path"
 import { mongooseConnect } from "./config/database.js"
 import securityRoute from "./ressources/securityRoute.js"
 import serviceRoute from "./ressources/serviceRoute.js"
+import preferenceRoute from "./ressources/preferenceRoute.js"
+import remindRoute from "./ressources/remindRoute.js"
+import payementRoute from "./ressources/payementRoute.js"
 
 const app = express()
 
@@ -47,6 +50,9 @@ mongooseConnect().then(()=>{
 
     app.use('/',securityRoute)
     app.use('/',serviceRoute)
+    app.use('/',preferenceRoute)
+    app.use('/',remindRoute)
+    app.use('/',payementRoute)
 
     app.listen(3001,()=>{
         console.log('http://localhost:3001');

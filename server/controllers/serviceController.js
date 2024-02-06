@@ -1,5 +1,4 @@
 import Joi from 'joi'
-import bcrypt from 'bcrypt'
 import path from 'path'
 import fs from 'fs'
 import crypto from 'crypto'
@@ -23,7 +22,8 @@ export const addService = async (req, res) => {
         if (error) {
             return res.status(400).json({ error: error.message });
         }
-
+        value.clientId = value.clientId ? mongoose.Types.ObjectId(value.clientId) : null;
+        value.employeeId = value.employeeId ? mongoose.Types.ObjectId(value.employeeId) : null;
         
 
         if (!fs.existsSync('public')) {
@@ -44,7 +44,11 @@ export const addService = async (req, res) => {
           }
       })
         value.image = newFileName
-        const data = new Service(value)
+        const data = new Service({
+          ...value,
+          clientId: value.clientId,
+          employeeId: value.employeeId,
+      })
         
         const saveService = await data.save()
 
