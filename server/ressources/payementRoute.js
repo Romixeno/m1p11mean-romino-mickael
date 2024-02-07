@@ -1,4 +1,5 @@
 import { Router } from "express";
-import { createPayment } from "../controllers/payementController.js";
+import { createPayment, getAllPayments } from "../controllers/payementController.js";
 export default Router()
-    ('/',createPayment)
+    .post('/createPayement',createPayment)
+    .get('/allPayement',getAllPayments)
