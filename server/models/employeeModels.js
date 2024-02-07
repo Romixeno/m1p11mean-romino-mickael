@@ -6,18 +6,24 @@ const employeeSchema = new Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     lastname: {
         type: String,
         required: true
     },
-    numberPhone:{
-        type:Number,
-        required:true
+    numberPhone: {
+        type: Number,
+        required: true
     },
+
     appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],
     workingHours: {
         type: String,
-        required: false
+        required: true
     },
     commissionPercentage: {
         type: Number,

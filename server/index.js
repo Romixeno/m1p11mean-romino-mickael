@@ -13,6 +13,8 @@ import serviceRoute from "./ressources/serviceRoute.js"
 import preferenceRoute from "./ressources/preferenceRoute.js"
 import remindRoute from "./ressources/remindRoute.js"
 import payementRoute from "./ressources/payementRoute.js"
+import employerRoute from "./ressources/employerRoute.js"
+import taskRoute from "./ressources/taskRoute.js"
 
 const app = express()
 
@@ -53,7 +55,8 @@ mongooseConnect().then(()=>{
     app.use('/',preferenceRoute)
     app.use('/',remindRoute)
     app.use('/',payementRoute)
-
+    app.use('/',employerRoute)
+    app.use('/',taskRoute)
     app.listen(3001,()=>{
         console.log('http://localhost:3001');
     })
