@@ -1,0 +1,55 @@
+@import "../../../globalStyle";
+
+.section-about-us {
+  display: flex;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  color: white;
+  .about-us-content {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 3%;
+    padding-right: 3%;
+    gap: 5px;
+    height: 100vh;
+    width: 55%;
+    background-color: black;
+
+    span {
+      color: $brown;
+      font-size: 2rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      text-align: left;
+      font-size: 4rem;
+    }
+    p {
+      font-size: 1.6rem;
+      line-height: 30px;
+    }
+  }
+  .about-us-photo {
+    flex: 1;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .circle {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid $brown;
+    transform: translateX(-70%);
+    top: -20px;
+  }
+}

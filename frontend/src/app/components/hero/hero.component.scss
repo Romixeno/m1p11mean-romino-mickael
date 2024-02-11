@@ -1,0 +1,54 @@
+@import "../../../globalStyle";
+.hero {
+  position: relative;
+  height: 100vh;
+  img {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+  }
+  .hero-content {
+    margin-left: auto;
+    width: 40%;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding: 0 10rem;
+    padding-top: 10rem;
+
+    h1 {
+      color: white;
+      font-size: 4rem;
+      font-weight: 400;
+    }
+    span {
+      line-height: 30px;
+      color: $light;
+      font-size: 1.4rem;
+    }
+    .line {
+      width: 150px;
+      height: 2px;
+      background-color: $light;
+    }
+    .btn-appointment {
+      border: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-size: 1.6rem;
+      padding: 15px 20px;
+      width: max-content;
+      background-color: $brown;
+      color: $light;
+      cursor: pointer;
+    }
+  }
+}
