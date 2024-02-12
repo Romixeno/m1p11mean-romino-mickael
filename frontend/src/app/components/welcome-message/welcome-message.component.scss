@@ -1,0 +1,30 @@
+@import "../../../globalStyle";
+.welcome-message-container {
+  padding-top: 10rem;
+  padding-left: 3%;
+  padding-right: 3%;
+  background: $black;
+  .presentation {
+    width: 100%;
+    position: relative;
+    height: 200px;
+
+    .presentation-text-container {
+      padding: 0 5rem;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .presentation-img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

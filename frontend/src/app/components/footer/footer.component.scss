@@ -1,0 +1,68 @@
+@import "../../../globalStyle";
+footer {
+  margin-top: 2rem;
+  //   padding: 4rem 0;
+  padding-bottom: 0;
+
+  background-color: $black;
+  color: white;
+  .footer-container {
+    padding: 4rem 3%;
+    padding-right: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    .footer-brand {
+      h1 {
+        font-size: 3.5rem;
+      }
+      span {
+        font-size: 1.3rem;
+        margin-top: 2rem;
+      }
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      h3 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.5rem;
+        font-weight: normal;
+      }
+    }
+    .footer-hours {
+      span {
+        font-size: 1.1rem;
+        color: $light_white;
+        font-weight: normal;
+      }
+      .time {
+        font-weight: 100;
+      }
+    }
+
+    .footer-contact {
+      .contact-email {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        span {
+          font-size: 1.1rem;
+          font-weight: lighter;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+      }
+    }
+  }
+  .footer-bottom {
+    padding: 0.5rem 0;
+    border-top: 1px solid rgb(131, 131, 131);
+    margin-top: 1rem;
+    text-align: center;
+  }
+}

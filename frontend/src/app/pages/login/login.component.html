@@ -1,0 +1,15 @@
+<welcome-message>
+  <h1 class="presentation-text">
+    Welcome! Login to schedule appointments for our premium beauty services and
+    ensure your spot for a rejuvenating experience.
+  </h1>
+</welcome-message>
+<div class="form-container">
+  <p>Not a member yet? <a [routerLink]="['/signup']">Sign up here</a></p>
+  <form [formGroup]="loginForm">
+    <span>Login</span>
+    <input type="text" placeholder="Enter your email" formControlName="email" />
+    <input type="password" placeholder="*****" formControlName="password" />
+    <button type="submit">Login</button>
+  </form>
+</div>

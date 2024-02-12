@@ -1,0 +1,56 @@
+<welcome-message>
+  <h1 class="presentation-text">
+    Join our community of beauty enthusiasts and embark on a journey to
+    rejuvenation and self-care. Don't miss out—secure your spot now!
+  </h1>
+</welcome-message>
+<div class="form-container">
+  <p>Already a member? <a [routerLink]="['/login']">Login here</a></p>
+  <form [formGroup]="signupForm">
+    <span>Sign Up</span>
+    <div class="input-group">
+      <div class="input-container">
+        <input
+          type="text"
+          placeholder="First Name"
+          formControlName="firstName"
+        />
+        <small>*First name must be required</small>
+      </div>
+      <div class="input-container">
+        <input type="text" placeholder="Last Name" formControlName="lastName" />
+        <small>*Last name must be required</small>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <input type="email" placeholder="Email" formControlName="email" />
+      <small>*Email must be required</small>
+    </div>
+    <div class="input-container">
+      <input
+        type="tel"
+        placeholder="Phone Number"
+        formControlName="phoneNumber"
+      />
+      <small>*Phone Number must be required</small>
+    </div>
+    <div class="input-container">
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <small>*Password Number must be required</small>
+    </div>
+    <div class="input-container">
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        formControlName="confirmPassword"
+      />
+      <small>*Confirm your password</small>
+    </div>
+    <button type="submit">Sign Up</button>
+  </form>
+</div>
