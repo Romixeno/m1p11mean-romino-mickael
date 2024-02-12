@@ -20,7 +20,6 @@ const employeeSchema = new Schema({
         required: true
     },
 
-    appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],
     workingHours: {
         type: String,
         required: true

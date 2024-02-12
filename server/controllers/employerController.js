@@ -21,6 +21,7 @@ export const createEmployee = async (req, res) => {
         }
         value.clientId = value.clientId ? mongoose.Types.ObjectId(value.clientId) : null;
         value.employeeId = value.employeeId ? mongoose.Types.ObjectId(value.employeeId) : null;
+        
         if (!fs.existsSync('public')) {
             fs.mkdir('public', (err) => {
                 if (err) {
@@ -53,10 +54,10 @@ export const createEmployee = async (req, res) => {
     }
 };
 // Lire les détails d'un employé
-export const getEmployee = async (req, res) => {
+export const getOneEmployee = async (req, res) => {
     try {
-        const { id } = req.params;
-        const employee = await Employer.findById(id);
+        const { _id } = req.params;
+        const employee = await Employer.findById(_id);
         if (!employee) {
             return res.status(404).json({ error: 'Employee not found' });
         }
@@ -128,8 +129,8 @@ export const updateEmployee = async (req, res) => {
 // Supprimer un employé
 export const deleteEmployee = async (req, res) => {
     try {
-        const { id } = req.params;
-        const deletedEmployee = await Employer.findByIdAndDelete(id);
+        const { _id } = req.params;
+        const deletedEmployee = await Employer.findByIdAndDelete(_id);
         if (!deletedEmployee) {
             return res.status(404).json({ error: 'Employee not found' });
         }

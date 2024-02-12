@@ -6,8 +6,14 @@ import cron from 'node-cron';
 export const createAppointment = async (req, res) => {
     try {
 
-        const {  date ,service ,employee, clientId } = req.body;
-        const newAppointment = new Appointment({client: clientId,  date ,service ,employee});
+        const {  date ,_serviceId ,_employeeId, _clientId } = req.body;
+        const newAppointment = new Appointment({
+            client: _clientId, 
+            date ,
+            _serviceId ,
+            _employeeId,
+            
+        });
 
         await newAppointment.save();
         res.status(201).json(newAppointment);

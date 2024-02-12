@@ -22,8 +22,8 @@ export const addService = async (req, res) => {
         if (error) {
             return res.status(400).json({ error: error.message });
         }
-        value.clientId = value.clientId ? mongoose.Types.ObjectId(value.clientId) : null;
-        value.employeeId = value.employeeId ? mongoose.Types.ObjectId(value.employeeId) : null;
+        value._clientId = value._clientId ? mongoose.Types.ObjectId(value._clientId) : null;
+        value._employeeId = value._employeeId ? mongoose.Types.ObjectId(value._employeeId) : null;
         
 
         if (!fs.existsSync('public')) {
@@ -46,8 +46,8 @@ export const addService = async (req, res) => {
         value.image = newFileName
         const data = new Service({
           ...value,
-          clientId: value.clientId,
-          employeeId: value.employeeId,
+          _clientId: value._clientId,
+          _employeeId: value._employeeId,
       })
         
         const saveService = await data.save()

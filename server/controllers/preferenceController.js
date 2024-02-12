@@ -1,12 +1,16 @@
 import Preference from "../models/preferenceModels.js";
-import Employer from "../models/employeeModels.js";
+import mongoose from 'mongoose'
 
 // Fonction pour créer des préférences pour un client
 export const createPreference = async (req, res) => {
     try {
         const { client, servicePreferences, employeePreferences } = req.body;
 
+        // Générer un nouvel ID
+        const newPreferenceId = mongoose.Types.ObjectId();
+
         const newPreference = new Preference({
+            _id: newPreferenceId,
             client,
             servicePreferences,
             employeePreferences
@@ -20,20 +24,19 @@ export const createPreference = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
 //  récupérer les préférences d'un client
 export const getPreferenceByClient = async (req, res) => {
     try {
-        const { clientId } = req.params;
+        const { _clientId } = req.params;
 
-        const preference = await Preference.findOne({ client: clientId })
-
-            .populate('servicePreferences')
-            //a verifier
-            .populate('employeePreferences');
-
+        if (!_clientId) {
+            return res.status(400).json({ error: 'Client ID is required' });
+        }
+        
+        const preference = await Preference.findOne({ client: _clientId })
+        
         if (!preference) {
-            return res.status(404).json({ message: 'Preference not found' });
+            return res.status(404).json({ message: 'Preference not found for the client' });
         }
 
         res.status(200).json(preference);
@@ -46,7 +49,7 @@ export const getPreferenceByClient = async (req, res) => {
 // Fonction pour mettre à jour les préférences d'un client
 export const updatePreferenceByClient = async (req, res) => {
     try {
-        const { clientId } = req.params;
+        const { _clientId } = req.params;
         const { servicePreferences, employeePreferences } = req.body;
 
         if (!clientId || typeof clientId !== 'string') {
@@ -54,7 +57,7 @@ export const updatePreferenceByClient = async (req, res) => {
         }
         //a verifier
         const updatedPreference = await Preference.findOneAndUpdate(
-            { client: clientId },
+            { client: _clientId },
             { servicePreferences, employeePreferences },
             { new: true }
         );
