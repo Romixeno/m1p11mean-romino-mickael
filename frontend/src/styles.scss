@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "globalStyle";
+@import url("https://cdn.jsdelivr.net/npm/fontawesome-6-pro@6.4.0/css/all.min.css");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  //   font-family: 'Cormorant Garamond', serif;
+  font-family: "Montserrat", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cormorant Garamond", serif;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $black;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $brown;
+  }
+}
+
+section {
+  padding: 3rem 4%;
+
+  h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin: 1rem 0;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+}
+@media screen and (max-width: 992px) {
+  html {
+    font-size: 55%;
+  }
+}
+@media screen and (max-width: 490px) {
+  html {
+    font-size: 50%;
+  }
+}

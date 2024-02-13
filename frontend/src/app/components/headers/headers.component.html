@@ -1,0 +1,48 @@
+<div class="header" appScroll>
+  <div class="header-top">
+    <div class="header-top-left">
+      <span><i class="fa-regular fa-phone"></i> +261 38 70 846 43</span>
+    </div>
+    <div class="header-top-right">
+      <ng-container *ngIf="isLoggedIn; else loginSignupTemplate">
+        <div class="user-info">
+          <div class="user-avatar">
+            <!-- User Avatar Image Goes Here -->
+            <img src="../../../assets/noavatar.jpg" alt="" />
+          </div>
+          <div class="user-name">
+            <!-- User Name Goes Here -->
+            <span class="">Romixeno</span>
+          </div>
+        </div>
+        <span>|</span>
+        <a href="#"><i class="fa-light fa-bag-shopping"></i></a>
+      </ng-container>
+      <ng-template #loginSignupTemplate>
+        <a [routerLink]="['/signup']">Sign up</a>
+        <span>|</span>
+        <a [routerLink]="['/login']" routerLinkActive="link-active"
+          ><i class="fa-light fa-user"></i> Log in</a
+        >
+      </ng-template>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="header-bottom-logo">
+      <!-- Logo -->
+      <h1>Beauty Salon.</h1>
+    </div>
+    <div class="header-bottom-links">
+      <!-- Home, services, etc. links -->
+      <a
+        [routerLink]="['']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        >Home</a
+      >
+      <a href="#">Services</a>
+      <a href="#">About us</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</div>

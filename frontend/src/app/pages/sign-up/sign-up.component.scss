@@ -1,0 +1,91 @@
+@import "../../../globalStyle";
+.form-container {
+  margin: 7rem 0;
+  padding: 0 3%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+
+  p {
+    text-align: center;
+    font-size: 1.6rem;
+    a {
+      color: $brown; /* or any other color you prefer */
+      text-decoration: underline;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: darken($brown, 20%);
+      }
+    }
+  }
+
+  form {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 350px;
+    padding: 3rem 3rem;
+
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    span {
+      font-size: 2rem;
+    }
+
+    .input-container {
+      display: flex;
+      gap: 5px;
+      flex-direction: column;
+
+      small {
+        color: red;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+    }
+    .input-group {
+      display: flex;
+      gap: 15px;
+
+      input {
+        width: 250px;
+      }
+    }
+
+    input {
+      padding-left: 10px;
+      height: 40px;
+      outline: none;
+      border-radius: 6px;
+      border: 1px solid lightgray;
+
+      &:focus {
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="text"] {
+      font-size: 1.4rem;
+    }
+    button {
+      margin-top: 15px;
+      color: black;
+      cursor: pointer;
+      background-color: $brown;
+      height: 45px;
+      border: 1px solid black;
+      border-radius: 2px;
+      transition: 0.3s ease;
+      &:hover {
+        color: white;
+        background-color: lighten($brown, 5%);
+      }
+    }
+  }
+}

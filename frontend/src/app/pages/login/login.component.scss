@@ -1,0 +1,94 @@
+@import "../../../globalStyle";
+// .welcome-message-container {
+//   padding-top: 10rem;
+//   padding-left: 3%;
+//   padding-right: 3%;
+//   background: $black;
+//   .presentation {
+//     width: 100%;
+//     position: relative;
+//     height: 200px;
+
+//     .text {
+//       top: 0;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+//       background-color: rgba(0, 0, 0, 0.5);
+//       position: absolute;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+
+//       h1 {
+//         text-align: center;
+//         font-size: 2.5rem;
+//         color: white;
+//       }
+//     }
+//     img {
+//       object-fit: cover;
+//       width: 100%;
+//       height: 100%;
+//     }
+//   }
+// }
+
+.form-container {
+  margin: 7rem 0;
+  padding: 0 3%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  p {
+    text-align: center;
+    font-size: 1.6rem;
+    a {
+      color: $brown; /* or any other color you prefer */
+      text-decoration: underline;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: darken($brown, 20%);
+      }
+    }
+  }
+
+  form {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    padding: 3rem 3rem;
+
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    span {
+      font-size: 2rem;
+    }
+
+    input {
+      padding-left: 10px;
+      height: 40px;
+      outline: none;
+    }
+
+    input[type="password"] {
+      font-size: 1.6rem;
+    }
+    button {
+      color: black;
+      cursor: pointer;
+      background-color: $brown;
+      height: 40px;
+      border: 1px solid black;
+      transition: 0.3s ease;
+      &:hover {
+        color: white;
+        background-color: lighten($brown, 5%);
+      }
+    }
+  }
+}
