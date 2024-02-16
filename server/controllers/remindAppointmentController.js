@@ -1,18 +1,19 @@
 import Appointment from '../models/remindAppointmentModels.js';
 import nodemailer from 'nodemailer';
 import cron from 'node-cron';
+require('dotenv').config();
 
 // Fonction pour créer un nouveau rendez-vous
 export const createAppointment = async (req, res) => {
     try {
 
-        const {  date ,_serviceId ,_employeeId, _clientId } = req.body;
+        const { date, _serviceId, _employeeId, _clientId } = req.body;
         const newAppointment = new Appointment({
-            client: _clientId, 
-            date ,
-            _serviceId ,
+            client: _clientId,
+            date,
+            _serviceId,
             _employeeId,
-            
+
         });
 
         await newAppointment.save();
@@ -34,18 +35,27 @@ export const getAppointments = async (req, res) => {
 export const sendReminderEmail = async (appointment) => {
     try {
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
             auth: {
-                user: '',
-                pass: '',
+                type: "OAuth2",
+                user: "kamirakoto2001@gmail.com",
+                clientId: process.env.CLIENT_ID,
+                clientSecret: process.env.CLIENT_SECRET,
+                refreshToken: process.env.RFT,
+                accessToken: process.env.ACT
             },
-        });
+        })
 
         const mailOptions = {
-            from: '',
-            to: appointment.client.email, 
+            from: 'kamirakoto2001@gmail.com',
+            to: appointment.client.email,
             subject: 'Rappel de rendez-vous',
             text: `Rappel: Vous avez un rendez-vous prévu le ${appointment.date}.`,
+            html: ` <div style="background-color:black;width:400px;height:400px">
+            <p style="color: aliceblue;">votre rendez vous apres 24h</p>
+        </div>`
         };
 
         const info = await transporter.sendMail(mailOptions);
