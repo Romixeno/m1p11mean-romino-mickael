@@ -11,7 +11,7 @@ import { error } from 'console';
 export class MgServicesFormComponent {
   serviceServices: ServiceService = inject(ServiceService);
   formData: FormData = new FormData();
-
+  file: File;
   @Output() onCloseFormClicked: EventEmitter<null> = new EventEmitter<null>();
   @Output() loadingState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -38,9 +38,7 @@ export class MgServicesFormComponent {
   onFileDropped(file: File) {
     // let formData = new FormData();
     console.log(file);
-    this.formData.append('image', file);
-
-    console.log(this.formData.getAll('image'));
+    this.file = file;
   }
 
   triggerFileInput(input: HTMLInputElement, event: Event) {
@@ -49,6 +47,9 @@ export class MgServicesFormComponent {
   }
 
   mgFormSubmit() {
+    this.formData.append('image', this.file);
+    console.log(this.formData.getAll('image'));
+
     Object.keys(this.mgForm.value).forEach((key) => {
       const control = this.mgForm.get(key);
       if (key !== 'image' && control) {

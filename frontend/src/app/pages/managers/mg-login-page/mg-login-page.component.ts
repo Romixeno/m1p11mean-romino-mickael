@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mg-login-page',
@@ -9,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './mg-login-page.component.scss',
 })
 export class MgLoginPageComponent {
+  router: Router = inject(Router);
   mgForm: FormGroup;
   message: any | null;
   authService: AuthService = inject(AuthService);
@@ -20,12 +22,15 @@ export class MgLoginPageComponent {
   }
 
   mgSubmit() {
+    console.log(this.mgForm.value);
     this.authService.login(this.mgForm.value).subscribe({
       next: (response: any) => {
         const user = response.user;
         const { password, __v, ...other } = user;
         this.authService.setUser(other);
-        console.log(response);
+        if (user.userType == 'Manager') {
+          this.router.navigateByUrl('/manager/services');
+        }
       },
       error: (err: HttpErrorResponse) => {
         if (err.error instanceof ErrorEvent) {
