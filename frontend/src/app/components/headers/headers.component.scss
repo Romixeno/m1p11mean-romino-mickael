@@ -74,6 +74,21 @@
           }
         }
       }
+
+      .btn-logout {
+        cursor: pointer;
+        color: rgb(174, 174, 174);
+        background-color: transparent;
+        border: none;
+        transition: all 0.3s ease;
+        i {
+          padding-left: 5px;
+        }
+
+        &:hover {
+          color: rgb(255, 255, 255);
+        }
+      }
     }
   }
   .header-bottom {
@@ -105,6 +120,14 @@
             background-color: $brown;
           }
         }
+      }
+    }
+    .search-icon {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: 0.3s ease;
+      &:hover {
+        opacity: 1;
       }
     }
   }

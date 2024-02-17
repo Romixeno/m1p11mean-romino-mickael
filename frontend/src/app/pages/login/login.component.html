@@ -6,10 +6,46 @@
 </welcome-message>
 <div class="form-container">
   <p>Not a member yet? <a [routerLink]="['/signup']">Sign up here</a></p>
-  <form [formGroup]="loginForm">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="sb sb-success" *ngIf="message?.signup">
+      Your account has been created successfully
+    </div>
+    <div class="sb sb-error" *ngIf="message?.error">{{ message?.error }}</div>
     <span>Login</span>
-    <input type="text" placeholder="Enter your email" formControlName="email" />
-    <input type="password" placeholder="*****" formControlName="password" />
-    <button type="submit">Login</button>
+    <div class="input-container">
+      <input
+        type="text"
+        placeholder="Enter your email"
+        formControlName="email"
+      />
+      <small
+        *ngIf="loginForm.get('email').errors?.['required'] && loginForm.get('email').touched"
+        >*Email must be required</small
+      >
+      <small *ngIf="loginForm.get('email').errors?.['invalidEmail']"
+        >*Email must be valid</small
+      >
+    </div>
+
+    <div class="input-container">
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <small
+        *ngIf="loginForm.get('password').errors?.['required'] && loginForm.get('password').touched"
+        >*Email must be required</small
+      >
+    </div>
+    <!-- <input type="text" placeholder="Enter your email" formControlName="email" />
+    <input type="password" placeholder="Password" formControlName="password" /> -->
+    <button
+      type="submit"
+      [disabled]="loginForm.invalid"
+      [ngClass]="{ disabled: loginForm.invalid }"
+    >
+      Login
+    </button>
   </form>
 </div>

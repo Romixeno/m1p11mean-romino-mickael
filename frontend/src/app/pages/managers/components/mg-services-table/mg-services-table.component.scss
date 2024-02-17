@@ -1,0 +1,72 @@
+@import "../../../../../globalStyle";
+.services-table-container {
+  margin-top: 2rem;
+  .loading {
+    width: 48px;
+    height: 48px;
+    border: 5px solid $black;
+    border-bottom-color: $brown;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+    margin: 2rem auto;
+  }
+  .table-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .table-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 1.5rem;
+      background-color: $black;
+      h2 {
+        font-size: 3rem;
+        color: white;
+      }
+
+      .services-option {
+        button {
+          cursor: pointer;
+          border: none;
+          color: white;
+          padding: 0 2.5rem;
+          height: 35px;
+          background-color: $brown;
+
+          font-size: 1.3rem;
+          &:hover {
+            background-color: darken($color: $brown, $amount: 5%);
+          }
+        }
+      }
+    }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #353b48;
+    th,
+    td {
+      font-weight: 400;
+      font-size: 1.5rem;
+      padding: 1rem;
+    }
+
+    td {
+      text-align: center;
+
+      img {
+        object-fit: cover;
+        width: 70px;
+        height: 87px;
+      }
+    }
+    tr {
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    }
+  }
+}

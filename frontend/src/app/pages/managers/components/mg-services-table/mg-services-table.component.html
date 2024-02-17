@@ -1,0 +1,46 @@
+<div class="services-table-container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <h2>Manage Services</h2>
+      <div class="services-option">
+        <button class="add-employee" (click)="showForm()">
+          <i class="fa-sharp fa-solid fa-plus"></i> Add Services
+        </button>
+      </div>
+    </div>
+    <div class="loading" *ngIf="showLoading"></div>
+    <table *ngIf="serviceList && !showLoading">
+      <tr>
+        <th>type</th>
+        <th>name</th>
+        <th>description</th>
+        <th>price</th>
+        <th>duration (min)</th>
+        <th>commission</th>
+        <th>image</th>
+        <th>action</th>
+      </tr>
+      <!-- <ng-container *ngIf="serviceList"> -->
+      <tr *ngFor="let service of serviceList">
+        <td>{{ service.type }}</td>
+        <td>{{ service.name }}</td>
+        <td>
+          {{ service.description }}
+        </td>
+        <td>${{ service.price }}</td>
+        <td>{{ service.duration }}</td>
+        <td>{{ service.commission }}%</td>
+        <td>
+          <img src="assets/{{ service.image }}" alt="" />
+        </td>
+        <td>button</td>
+      </tr>
+      <!-- </ng-container> -->
+    </table>
+  </div>
+</div>
+<mg-services-form
+  *ngIf="showFormServices"
+  (onCloseFormClicked)="closeForm()"
+  (loadingState)="setLoadingToTrue($event)"
+></mg-services-form>

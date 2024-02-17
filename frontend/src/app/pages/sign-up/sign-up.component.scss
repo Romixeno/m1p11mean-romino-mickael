@@ -27,10 +27,14 @@
     padding: 3rem 3rem;
 
     border: 1px solid lightgray;
+
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+
+    &.ng-valid.ng-touched {
+    }
     span {
       font-size: 2rem;
     }
@@ -64,6 +68,23 @@
 
       &:focus {
         box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      &.confirm-password.ng-valid {
+        border: 1px solid green;
+      }
+      // &.confirm-password.ng-dirty.ng-invalid {
+      //   border: 1px solid red;
+      // }
+      &.confirm-password.ng-dirty.ng-invalid {
+        border: 1px solid red;
+        &.required {
+          border: 1px solid lightgray;
+        }
+      }
+
+      &.confirm-password.disabled {
+        pointer-events: none;
       }
     }
 

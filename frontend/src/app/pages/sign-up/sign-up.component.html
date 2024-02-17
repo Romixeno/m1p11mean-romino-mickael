@@ -6,7 +6,8 @@
 </welcome-message>
 <div class="form-container">
   <p>Already a member? <a [routerLink]="['/login']">Login here</a></p>
-  <form [formGroup]="signupForm">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="sb sb-error" *ngIf="message">{{ message }}</div>
     <span>Sign Up</span>
     <div class="input-group">
       <div class="input-container">
@@ -15,17 +16,29 @@
           placeholder="First Name"
           formControlName="firstName"
         />
-        <small>*First name must be required</small>
+        <small
+          *ngIf="signupForm.get('firstName').errors?.['required'] && signupForm.get('firstName').touched"
+          >*First name must be required</small
+        >
       </div>
       <div class="input-container">
         <input type="text" placeholder="Last Name" formControlName="lastName" />
-        <small>*Last name must be required</small>
+        <small
+          *ngIf="signupForm.get('lastName').errors?.['required'] && signupForm.get('lastName').touched"
+          >*Last name must be required</small
+        >
       </div>
     </div>
 
     <div class="input-container">
       <input type="email" placeholder="Email" formControlName="email" />
-      <small>*Email must be required</small>
+      <small
+        *ngIf="signupForm.get('email').errors?.['required'] && signupForm.get('email').touched"
+        >*Email must be required</small
+      >
+      <small *ngIf="signupForm.get('email').errors?.['invalidEmail']"
+        >*Email must be valid</small
+      >
     </div>
     <div class="input-container">
       <input
@@ -33,24 +46,49 @@
         placeholder="Phone Number"
         formControlName="phoneNumber"
       />
-      <small>*Phone Number must be required</small>
+      <small
+        *ngIf="signupForm.get('phoneNumber').errors?.['required'] && signupForm.get('phoneNumber').touched"
+        >*Phone Number must be required</small
+      >
     </div>
     <div class="input-container">
-      <input
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-      />
-      <small>*Password Number must be required</small>
+      <input type="file" name="" id="" />
     </div>
-    <div class="input-container">
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        formControlName="confirmPassword"
-      />
-      <small>*Confirm your password</small>
+    <div class="input-group pass" formGroupName="pass">
+      <div class="input-container">
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <small
+          *ngIf="signupForm.get('pass.password').errors?.['required'] && signupForm.get('pass.password').touched"
+          >*Password Number must be required</small
+        >
+      </div>
+      <div class="input-container">
+        <input
+          class="confirm-password"
+          type="password"
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+          [ngClass]="{
+            disabled: !signupForm.get('pass.password').value,
+            required:
+              signupForm.get('pass.confirmPassword').value == '' ||
+              signupForm.get('pass.confirmPassword').value == null
+          }"
+        />
+        <small
+          *ngIf="signupForm.get('pass.confirmPassword').errors?.['required'] && signupForm.get('pass.confirmPassword').touched"
+          >*Confirm your password</small
+        >
+      </div>
     </div>
+
     <button type="submit">Sign Up</button>
   </form>
+</div>
+<div class="overlay" *ngIf="showLoader">
+  <div class="loader"></div>
 </div>

@@ -1,2 +1,6 @@
 <app-headers></app-headers> <router-outlet></router-outlet>
+
 <app-footer></app-footer>
+<div class="overlay" *ngIf="showLoader">
+  <div class="loader"></div>
+</div>

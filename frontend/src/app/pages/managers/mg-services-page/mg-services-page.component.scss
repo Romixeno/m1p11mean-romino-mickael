@@ -1,0 +1,41 @@
+@import "../../../../globalStyle";
+.mg-services {
+  padding-top: 120px;
+  min-height: 100vh;
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .services-filter {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 10px;
+
+    .services-filter-search {
+      input {
+        outline: none;
+        padding-left: 10px;
+        width: 250px;
+        height: 30px;
+        border: 1px solid lightgray;
+      }
+    }
+  }
+  .services-option-add-services {
+    button {
+      cursor: pointer;
+      border: none;
+      color: white;
+      padding: 0 2rem;
+      height: 30px;
+      background-color: $brown;
+      border-radius: 3px;
+      font-size: 1.2rem;
+      &:hover {
+        background-color: darken($color: $brown, $amount: 5%);
+      }
+    }
+  }
+}

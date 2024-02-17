@@ -57,7 +57,7 @@
 
   form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
+    width: 400px;
     padding: 3rem 3rem;
 
     border: 1px solid lightgray;
@@ -69,25 +69,60 @@
       font-size: 2rem;
     }
 
+    .input-container {
+      display: flex;
+      gap: 5px;
+      flex-direction: column;
+
+      small {
+        color: red;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+    }
     input {
       padding-left: 10px;
       height: 40px;
       outline: none;
+      border-radius: 6px;
+      border: 1px solid lightgray;
+      &:focus {
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      &.ng-dirty.ng-invalid {
+        border: 1px solid red;
+      }
     }
 
     input[type="password"] {
       font-size: 1.6rem;
+
+      &::placeholder {
+        font-size: 1.3rem;
+      }
     }
+
     button {
+      margin-top: 15px;
       color: black;
       cursor: pointer;
       background-color: $brown;
       height: 40px;
       border: 1px solid black;
+      border-radius: 2px;
       transition: 0.3s ease;
       &:hover {
         color: white;
         background-color: lighten($brown, 5%);
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        &:hover {
+          color: black;
+          background-color: $brown;
+        }
       }
     }
   }

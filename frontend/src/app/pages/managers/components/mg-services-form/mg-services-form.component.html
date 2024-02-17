@@ -1,0 +1,52 @@
+<div class="overlay">
+  <form [formGroup]="mgForm" (ngSubmit)="mgFormSubmit()">
+    <div class="form-top">
+      <h2>Add Services</h2>
+      <button class="btn-close" (click)="closeForm()">
+        <i class="fa-light fa-xmark"></i>
+      </button>
+    </div>
+    <div class="form-drag-area" appDrag (fileDropped)="onFileDropped($event)">
+      <i class="fa-light fa-cloud-arrow-up icon"></i>
+      <span class="header">Drag & Drop to Upload File</span>
+      <span>OR</span
+      ><button (click)="triggerFileInput(fileInput, $event)">
+        Browse file
+      </button>
+      <input type="file" hidden="true" #fileInput formControlName="image" />
+    </div>
+    <div class="input-container">
+      <div class="col">
+        <div class="input-box">
+          <label for="">Type</label>
+          <input type="text" formControlName="type" />
+        </div>
+        <div class="input-box">
+          <label for="">Name</label>
+          <input type="text" formControlName="name" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-box">
+          <label for=""><i class="fa-solid fa-tag"></i>Price</label>
+          <input type="number" formControlName="price" />
+        </div>
+        <div class="input-box">
+          <label for=""
+            ><i class="fa-regular fa-timer"></i>Duration (min)</label
+          >
+          <input type="number" formControlName="duration" />
+        </div>
+      </div>
+      <div class="input-box">
+        <label for="">Commission</label>
+        <input type="number" formControlName="commission" />
+      </div>
+      <div class="input-box">
+        <label for="">Description</label>
+        <textarea resize="false" formControlName="description"></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Add</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,78 @@
+<welcome-message>
+  <h1 class="presentation-text">
+    Discover Your Perfect Pampering Experience with Our Range of Luxurious
+    Services
+  </h1>
+</welcome-message>
+<section class="services-container">
+  <div class="filter-container">
+    <div class="filter">
+      <div class="filter-search">
+        <label>Search</label>
+        <input
+          type="text"
+          id=""
+          placeholder="type anything..."
+          [(ngModel)]="searchedText"
+        />
+      </div>
+      <div class="filter-by-type">
+        <label for="serviceType">Filter by Type:</label>
+        <select id="serviceType" (change)="onFilterTypeChange($event)">
+          <option value="All">All</option>
+          <!-- <option *ngFor="let type of servicesType" [value]="type">
+          {{ type }}
+        </option> -->
+          <option value="Hair">Hair</option>
+          <option value="Makeup">Makeup</option>
+          <option value="Nail">Nail</option>
+        </select>
+      </div>
+      <div class="filter-btn-apply">
+        <button (click)="onBtnFilterApplyClicked()">Apply</button>
+      </div>
+    </div>
+  </div>
+  <div class="all-services-types">
+    <div class="services-type" *ngFor="let type of servicesType">
+      <h1>{{ type }}</h1>
+      <div class="services-list">
+        <ng-container *ngFor="let service of servicesList">
+          <div class="service-item" *ngIf="service.type == type">
+            <button class="preference-button">
+              <i class="fa-light fa-heart"></i>
+            </button>
+            <div class="service-item-img">
+              <img [src]="service.image" alt="" />
+            </div>
+            <div class="service-item-bottom">
+              <div class="service-item-details">
+                <h3 class="service-item-detail-name">{{ service.name }}</h3>
+                <span class="service-detail-price"
+                  ><i class="fa-solid fa-tag"></i>Price:
+                  <strong>${{ service.price }}</strong></span
+                >
+                <span class="service-detail-duration"
+                  ><i class="fa-regular fa-timer"></i>Durée:
+                  <strong>{{
+                    service.duration > 60
+                      ? (service.duration / 60).toFixed(1) + " heures"
+                      : service.duration + " minutes"
+                  }}</strong></span
+                >
+                <p class="service-detail-description">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit
+                  vitae omnis esse a sunt, distinctio dolore explicabo assumenda
+                  nostrum placeat?
+                </p>
+              </div>
+              <div class="service-item-btn">
+                <button>Make an appointment</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>
