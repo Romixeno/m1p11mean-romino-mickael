@@ -1,0 +1,12 @@
+<div class="confirm-modal-overlay">
+  <div class="confirm-modal">
+    <h2>Confirm Action</h2>
+    <p>Are you sure you want to proceed with this action?</p>
+    <div class="modal-buttons">
+      <ng-content select=".btn-cancel"></ng-content>
+      <ng-content select=".btn-confirm"></ng-content>
+      <!-- <button class="btn-cancel">Cancel</button>
+      <button class="btn-confirm">Confirm</button> -->
+    </div>
+  </div>
+</div>

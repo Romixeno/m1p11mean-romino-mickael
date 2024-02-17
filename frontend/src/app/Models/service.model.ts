@@ -1,4 +1,5 @@
 export class ServiceModel {
+  _id?: string;
   type: string;
   name: string;
   price: number;

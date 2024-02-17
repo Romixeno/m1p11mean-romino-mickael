@@ -1,9 +1,11 @@
 import {
   Directive,
+  ElementRef,
   EventEmitter,
   HostBinding,
   HostListener,
   Output,
+  ViewChild,
 } from '@angular/core';
 
 @Directive({
@@ -14,6 +16,7 @@ export class DragDirective {
 
   @Output() fileDropped: EventEmitter<File> = new EventEmitter<File>();
   @HostBinding('class.active') active = false;
+
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
     event.preventDefault();
 

@@ -15,11 +15,14 @@
     display: flex;
     flex-direction: column;
 
+    h1 {
+      color: #353b48;
+    }
     .sb {
-      padding: 1.5rem 2rem;
+      padding: 1.5rem 2.5rem;
 
       &.success-message {
-        width: 50%;
+        width: max-content;
       }
       &.error-message {
         width: max-content;
@@ -39,6 +42,8 @@
       }
 
       .services-option {
+        display: flex;
+        gap: 10px;
         button {
           cursor: pointer;
           border: none;
@@ -74,11 +79,74 @@
         width: 70px;
         height: 87px;
       }
+
+      &.td-option {
+        .btn-edit {
+          cursor: pointer;
+          font-size: 1.6rem;
+          border: none;
+          padding: 0.5rem 0.7rem;
+          background: rgb(38, 125, 255);
+          border-radius: 2px;
+          color: white;
+
+          &:hover {
+            background: rgb(6, 105, 253);
+          }
+        }
+        .btn-delete {
+          margin-left: 5px;
+          cursor: pointer;
+          font-size: 1.6rem;
+          border: none;
+          padding: 0.5rem 0.7rem;
+          background: rgb(255, 38, 38);
+          border-radius: 2px;
+          color: white;
+
+          &:hover {
+            background: rgb(253, 6, 6);
+          }
+        }
+      }
     }
     tr {
       &:nth-child(even) {
         background-color: #f2f2f2;
       }
+
+      &.no-services-tr {
+        h1 {
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.btn-modal {
+  padding: 8px 16px;
+  margin: 0 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-size: 1.5rem;
+  &.btn-cancel {
+    background-color: #ccc;
+    color: #333;
+
+    &:hover {
+      background-color: #bebebe;
+    }
+  }
+
+  &.btn-confirm {
+    background: rgb(38, 125, 255);
+    color: white;
+
+    &:hover {
+      background: rgb(6, 105, 253);
     }
   }
 }

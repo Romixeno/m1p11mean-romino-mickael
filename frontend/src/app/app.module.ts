@@ -30,6 +30,7 @@ import { MgServicesPageComponent } from './pages/managers/mg-services-page/mg-se
 import { MgServicesFormComponent } from './pages/managers/components/mg-services-form/mg-services-form.component';
 import { MgServicesTableComponent } from './pages/managers/components/mg-services-table/mg-services-table.component';
 import { DragDirective } from './Directives/drag.directive';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { DragDirective } from './Directives/drag.directive';
     MgServicesFormComponent,
     MgServicesTableComponent,
     DragDirective,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,
