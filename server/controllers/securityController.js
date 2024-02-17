@@ -60,6 +60,8 @@ const signInSchema = Joi.object({
 
 export const login = async (req, res) => {
   try {
+    console.log("ato");
+    console.log(req.body);
     const { error, value } = signInSchema.validate(req.body);
 
     if (error) {
