@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, InjectionToken, PLATFORM_ID, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../Models/user.model';
@@ -16,17 +16,17 @@ export class AuthService {
   }
 
   setUser(user: User) {
-    localStorage.setItem('User', JSON.stringify(user));
+    sessionStorage.setItem('User', JSON.stringify(user));
     this.isLoggedInSubject.next(true);
   }
 
   deleteUser() {
-    localStorage.removeItem('User');
+    sessionStorage.removeItem('User');
     this.isLoggedInSubject.next(false);
   }
 
   getUser(): User {
-    return JSON.parse(localStorage.getItem('User'));
+    return JSON.parse(sessionStorage.getItem('User'));
   }
 
   login(body: { email: string; password: string }) {

@@ -2,11 +2,17 @@
   <div class="table-wrapper">
     <div class="table-title">
       <h2>Manage Services</h2>
+      <div class="sb sb-success success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
       <div class="services-option">
         <button class="add-employee" (click)="showForm()">
           <i class="fa-sharp fa-solid fa-plus"></i> Add Services
         </button>
       </div>
+    </div>
+    <div class="sb sb-error error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
     </div>
     <div class="loading" *ngIf="showLoading"></div>
     <table *ngIf="serviceList && !showLoading">
@@ -31,7 +37,7 @@
         <td>{{ service.duration }}</td>
         <td>{{ service.commission }}%</td>
         <td>
-          <img src="assets/{{ service.image }}" alt="" />
+          <img src="http://localhost:3001{{ service.image }}" alt="" />
         </td>
         <td>button</td>
       </tr>
@@ -43,4 +49,5 @@
   *ngIf="showFormServices"
   (onCloseFormClicked)="closeForm()"
   (loadingState)="setLoadingToTrue($event)"
+  (setSuccessMessage)="setSuccessMessage($event)"
 ></mg-services-form>

@@ -14,11 +14,15 @@ export class MgServicesFormComponent {
   file: File;
   @Output() onCloseFormClicked: EventEmitter<null> = new EventEmitter<null>();
   @Output() loadingState: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  @Output() setSuccessMessage: EventEmitter<string> =
+    new EventEmitter<string>();
   mgForm: FormGroup;
 
   setLoadingToTrue() {
     this.loadingState.emit(true);
+  }
+  setMessage(message: string) {
+    this.setSuccessMessage.emit(message);
   }
   ngOnInit() {
     this.mgForm = new FormGroup({
@@ -59,9 +63,10 @@ export class MgServicesFormComponent {
 
     this.serviceServices.addServices(this.formData).subscribe({
       next: (response) => {
-        this.serviceServices.getAllServices();
+        this.serviceServices.getAllServices().subscribe((response) => {});
         this.setLoadingToTrue();
         this.closeForm();
+        this.setMessage('Services added successfully');
       },
       error: (error) => {
         console.error(error);

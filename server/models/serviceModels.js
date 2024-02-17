@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const serviceSchema = new Schema({
+  type: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,

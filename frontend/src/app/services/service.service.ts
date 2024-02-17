@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ServiceModel } from '../Models/service.model';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +17,17 @@ export class ServiceService {
   }
 
   getAllServices() {
-    this.http.get('http://localhost:3001/allServices').subscribe({
-      next: (response: ServiceModel[]) => {
+    // this.http.get('http://localhost:3001/allServices').subscribe({
+    //   next: (response: ServiceModel[]) => {
+    //     this.testSub.next(response);
+    //   },
+    //   error: (err) => {},
+    //   complete: () => {},
+    // });
+    return this.http.get('http://localhost:3001/allServices').pipe(
+      tap((response: ServiceModel[]) => {
         this.testSub.next(response);
-      },
-      error: (err) => {},
-      complete: () => {},
-    });
+      })
+    );
   }
 }

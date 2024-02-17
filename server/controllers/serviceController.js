@@ -44,7 +44,7 @@ export const addService = async (req, res) => {
       Date.now() +
       crypto.randomInt(1000, 999999) +
       path.extname(image.name);
-    image.mv("../frontend/src/assets/" + newFileName, (e) => {
+    image.mv("public" + newFileName, (e) => {
       if (e) {
         console.log(e);
       }
@@ -52,8 +52,6 @@ export const addService = async (req, res) => {
     value.image = newFileName;
     const data = new Service({
       ...value,
-      _clientId: value._clientId,
-      _employeeId: value._employeeId,
     });
 
     const saveService = await data.save();

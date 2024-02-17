@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { ServiceModel } from '../../../../Models/service.model';
 import { ServiceService } from '../../../../services/service.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'mg-services-table',
@@ -17,9 +18,23 @@ export class MgServicesTableComponent {
   serviceList: ServiceModel[] = null;
   showFormServices: boolean = false;
   showLoading: boolean = false;
+  errorMessage: string = '';
+  successMessage: string = '';
   ngOnInit() {
     this.showLoading = true;
-    this.serviceService.getAllServices();
+    this.serviceService.getAllServices().subscribe({
+      error: (err: HttpErrorResponse) => {
+        if (err.status == 500) {
+          this.errorMessage = 'Internal server error. Please try again later.';
+        } else {
+          this.errorMessage = 'An error occurred. Please try again later.';
+        }
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 4000);
+        this.showLoading = false;
+      },
+    });
     this.serviceService.ses$.subscribe({
       next: (service: ServiceModel[]) => {
         console.log(service);
@@ -39,5 +54,11 @@ export class MgServicesTableComponent {
 
   setLoadingToTrue(val: boolean) {
     this.showLoading = val;
+  }
+  setSuccessMessage(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 4000);
   }
 }
