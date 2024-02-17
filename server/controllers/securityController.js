@@ -35,11 +35,12 @@ export const register = async (req, res) => {
     delete value.confirmation;
 
     const newClient = new User({
-      name: value.name,
-      lastname: value.lastname,
+      firstName: value.firstName,
+      lastName: value.lastName,
       email: value.email,
+      image: value.image,
       password: hashedPassword,
-      numberPhone: value.numberPhone,
+      phoneNumber: value.phoneNumber,
       userType: value.userType,
     });
 
