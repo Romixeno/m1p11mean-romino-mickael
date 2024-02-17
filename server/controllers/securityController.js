@@ -9,9 +9,9 @@ const registerSchema = Joi.object({
   phoneNumber: Joi.string()
     .pattern(/^[0-9]+$/)
     .required(),
-  image: Joi.string().default("noavatar.jpg"),
+  image: Joi.string().default("/images/noavatar.jpg"),
   email: Joi.string().email().not("").required(),
-  password: Joi.string().not("").min(8).max(70).required(),
+  password: Joi.string().not("").min(4).max(70).required(),
   confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
   userType: Joi.string()
     .valid("Client", "Employee", "Manager")
@@ -60,8 +60,6 @@ const signInSchema = Joi.object({
 
 export const login = async (req, res) => {
   try {
-    console.log("ato");
-    console.log(req.body);
     const { error, value } = signInSchema.validate(req.body);
 
     if (error) {

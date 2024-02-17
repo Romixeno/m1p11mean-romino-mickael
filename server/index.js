@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:4200",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE", "PATCH"],
     credentials: true,
   })
 );

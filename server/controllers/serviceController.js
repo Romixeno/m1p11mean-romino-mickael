@@ -36,7 +36,7 @@ export const addService = async (req, res) => {
       });
     }
     if (!req.files) {
-      return res.status(400).json({ message: " fields images is requires" });
+      return res.status(400).json({ error: "Image is required" });
     }
     const { image } = req.files;
     const newFileName =
