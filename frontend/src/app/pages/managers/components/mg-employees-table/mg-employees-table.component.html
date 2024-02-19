@@ -1,0 +1,84 @@
+<div class="employees-table-container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <h2>Manage Employees</h2>
+      <div class="sb sb-success success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      <div class="employees-option">
+        <button (click)="onRefresh()">
+          Refresh <i class="fa-regular fa-rotate-right"></i>
+        </button>
+        <button class="add-employee" [routerLink]="['add-employees']">
+          <i class="fa-sharp fa-solid fa-plus"></i> Add Employees
+        </button>
+      </div>
+    </div>
+    <div class="sb sb-error error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="loading" *ngIf="showLoading"></div>
+    <table>
+      <tr>
+        <th>specialty</th>
+        <th>firstName</th>
+        <th>lastName</th>
+        <th>email</th>
+        <th>phoneNumber</th>
+        <th>workingHours</th>
+        <th>commission%</th>
+        <th>image</th>
+        <th>action</th>
+      </tr>
+      <!-- <ng-container *ngIf="serviceList"> -->
+
+      <tr *ngFor="let employee of employeesList">
+        <td>{{ employee.specialty }}</td>
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.phoneNumber }}</td>
+        <td>
+          <li *ngFor="let hours of employee.workingHours">
+            {{ hours.dayOfWeek }}: {{ hours.start }}-{{ hours.end }}
+          </li>
+        </td>
+        <td>{{ employee.commission }}</td>
+        <td>
+          <img src="http://localhost:3001{{ employee.image }}" alt="" />
+        </td>
+        <td class="td-option">
+          <div>
+            <button
+              class="btn-edit"
+              title="edit"
+              (click)="showUpdateForm(employee)"
+            >
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button
+              class="btn-delete"
+              title="delete"
+              (click)="toggleConfirmModal(employee)"
+            >
+              <i class="fa-regular fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <!-- </ng-container> -->
+    </table>
+    <h1 *ngIf="employeesList?.length == 0 && !showLoading">
+      No services added yet [ ]
+    </h1>
+  </div>
+</div>
+
+<confirm-modal *ngIf="showConfirmation">
+  <button class="btn-modal btn-cancel" (click)="toggleConfirmModal()">
+    Cancel
+  </button>
+  <button class="btn-modal btn-confirm" (click)="onDeleteBtnConfirmed()">
+    Confirm
+  </button>
+</confirm-modal>

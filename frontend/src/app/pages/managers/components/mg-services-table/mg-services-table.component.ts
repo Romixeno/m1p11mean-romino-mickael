@@ -17,8 +17,8 @@ export class MgServicesTableComponent implements OnDestroy {
   showFormServices: boolean = false;
   showLoading: boolean = false;
   showConfirmation: boolean = false;
-  errorMessage: string = '';
-  successMessage: string = '';
+  errorMessage: string;
+  successMessage: string;
   private subscription: Subscription;
 
   ngOnInit() {
@@ -34,9 +34,7 @@ export class MgServicesTableComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
   }
 
   showForm() {

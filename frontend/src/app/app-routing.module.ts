@@ -8,6 +8,8 @@ import { ServicesComponent } from './pages/services/services.component';
 import { MgLoginPageComponent } from './pages/managers/mg-login-page/mg-login-page.component';
 import path from 'path';
 import { MgServicesPageComponent } from './pages/managers/mg-services-page/mg-services-page.component';
+import { MgEmployeesPageComponent } from './pages/managers/mg-employees-page/mg-employees-page.component';
+import { MgEmployeesFormComponent } from './pages/managers/mg-employees-page/mg-employees-form/mg-employees-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -31,6 +33,13 @@ const routes: Routes = [
       {
         path: 'services',
         component: MgServicesPageComponent,
+      },
+      {
+        path: 'employees',
+        children: [
+          { path: '', component: MgEmployeesPageComponent },
+          { path: 'add-employees', component: MgEmployeesFormComponent },
+        ],
       },
     ],
   },

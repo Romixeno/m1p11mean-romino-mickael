@@ -1,0 +1,115 @@
+@import "../../../../../globalStyle";
+.form-container {
+  margin-top: 150px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+
+  h2 {
+    font-size: 2.5rem;
+  }
+  form {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 2rem 2.5rem;
+    width: 500px;
+    border: 1px solid lightgray;
+    min-height: 300px;
+
+    .sb {
+      margin-top: 5px;
+    }
+    .input-container {
+      margin-top: 1rem;
+
+      .workingHours {
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 5px;
+      }
+      .btn-add {
+        width: max-content;
+        margin-top: 5px;
+        padding: 1rem 1.5rem;
+        background: rgb(38, 125, 255);
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 2px;
+        border: none;
+
+        &:hover {
+          background: rgb(6, 105, 253);
+        }
+      }
+      .btn-delete {
+        width: max-content;
+        margin-top: 5px;
+        padding: 1rem 1.5rem;
+        background: rgb(255, 38, 38);
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 2px;
+        border: none;
+
+        &:hover {
+          background: rgb(253, 6, 6);
+        }
+      }
+      .col {
+        display: flex;
+        gap: 10px;
+        .input-box {
+          flex: 1;
+        }
+      }
+      .input-box,
+      .select-box {
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        label {
+          font-size: 1.3rem;
+        }
+        input,
+        select {
+          padding: 0 5px;
+          outline: none;
+          border: 1px solid lightgray;
+          height: 32px;
+
+          &:focus {
+            border: 1px solid black;
+          }
+        }
+
+        input[type="file"] {
+          padding: 0.5rem;
+          border: 1px solid lightgray;
+        }
+        small {
+          font-size: 1rem;
+          color: red;
+        }
+      }
+    }
+
+    .btn-submit {
+      cursor: pointer;
+      width: 100%;
+      padding: 1rem;
+      margin-top: 20px;
+      background-color: $black;
+      border: none;
+      color: rgb(206, 206, 206);
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}

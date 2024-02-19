@@ -1,0 +1,163 @@
+@import "../../../../../globalStyle";
+.employees-table-container {
+  margin-top: 2rem;
+  .loading {
+    width: 48px;
+    height: 48px;
+    border: 5px solid $black;
+    border-bottom-color: $brown;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+    margin: 2rem auto;
+  }
+  .table-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      color: #353b48;
+    }
+    .sb {
+      padding: 1.5rem 2.5rem;
+
+      &.success-message {
+        width: max-content;
+      }
+      &.error-message {
+        width: max-content;
+        margin: 5rem auto;
+      }
+    }
+
+    .table-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 1.5rem;
+      background-color: $black;
+      h2 {
+        font-size: 3rem;
+        color: white;
+      }
+
+      .employees-option {
+        display: flex;
+        gap: 10px;
+        button {
+          cursor: pointer;
+          border: none;
+          color: white;
+          padding: 0 2.5rem;
+          height: 35px;
+          background-color: $brown;
+
+          font-size: 1.3rem;
+          &:hover {
+            background-color: darken($color: $brown, $amount: 5%);
+          }
+        }
+      }
+    }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #353b48;
+    th,
+    td {
+      font-weight: 400;
+      font-size: 1.4rem;
+      padding: 1rem;
+    }
+
+    td {
+      text-align: center;
+
+      img {
+        object-fit: cover;
+        width: 50px;
+        height: 67px;
+      }
+      li {
+        font-size: 1.2rem;
+      }
+
+      &.td-option {
+        div {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 5px;
+        }
+        .btn-edit {
+          cursor: pointer;
+          font-size: 1.6rem;
+          border: none;
+          padding: 0.5rem 0.7rem;
+          background: rgb(38, 125, 255);
+          border-radius: 2px;
+          color: white;
+
+          &:hover {
+            background: rgb(6, 105, 253);
+          }
+        }
+        .btn-delete {
+          cursor: pointer;
+          font-size: 1.6rem;
+          border: none;
+          padding: 0.5rem 0.7rem;
+          background: rgb(255, 38, 38);
+          border-radius: 2px;
+          color: white;
+
+          &:hover {
+            background: rgb(253, 6, 6);
+          }
+        }
+      }
+    }
+    tr {
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      &.no-services-tr {
+        h1 {
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.btn-modal {
+  padding: 8px 16px;
+  margin: 0 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-size: 1.5rem;
+  &.btn-cancel {
+    background-color: #ccc;
+    color: #333;
+
+    &:hover {
+      background-color: #bebebe;
+    }
+  }
+
+  &.btn-confirm {
+    background: rgb(38, 125, 255);
+    color: white;
+
+    &:hover {
+      background: rgb(6, 105, 253);
+    }
+  }
+}

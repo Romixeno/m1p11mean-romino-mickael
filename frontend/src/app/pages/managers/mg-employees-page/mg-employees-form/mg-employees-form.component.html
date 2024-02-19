@@ -1,0 +1,140 @@
+<div class="form-container">
+  <form (ngSubmit)="OnSubmit()" [formGroup]="employeeForm">
+    <h2>Add employee</h2>
+    <div class="sb sb-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="input-container">
+      <div class="col">
+        <div class="input-box">
+          <label for="">FirstName</label>
+          <input type="text" name="" id="" formControlName="firstName" />
+          <small
+            *ngIf="employeeForm.get('firstName').errors?.['required'] && employeeForm.get('firstName').touched"
+            >*FirstName must be required</small
+          >
+        </div>
+        <div class="input-box">
+          <label for="">LastName</label>
+          <input type="text" name="" id="" formControlName="lastName" />
+          <small
+            *ngIf="employeeForm.get('lastName').errors?.['required'] && employeeForm.get('lastName').touched"
+            >*LastName must be required</small
+          >
+        </div>
+      </div>
+      <div class="select-box">
+        <label for="">Specialty</label>
+        <select name="" id="" formControlName="specialty">
+          <option tuesday="Hair">Hair</option>
+          <option tuesday="Skin">Skin</option>
+          <option tuesday="Makeup">Makeup</option>
+          <option tuesday="Nail">Nails</option>
+        </select>
+      </div>
+      <div class="input-box">
+        <label for="">Email</label>
+        <input type="email" name="" id="" formControlName="email" />
+        <small
+          *ngIf="employeeForm.get('email').errors?.['required'] && employeeForm.get('email').touched"
+          >*Email must be required</small
+        >
+      </div>
+      <div class="input-box">
+        <label for="">PhoneNumber</label>
+        <input type="text" name="" id="" formControlName="phoneNumber" />
+        <small
+          *ngIf="employeeForm.get('phoneNumber').errors?.['required'] && employeeForm.get('phoneNumber').touched"
+          >*PhoneNumber must be required</small
+        >
+      </div>
+      <div class="input-box" formArrayName="workingHours">
+        <div
+          class="workingHours"
+          *ngFor="
+            let workingHour of employeeForm.get('workingHours')['controls'];
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <div class="select-box">
+            <label for="">Day of the week {{ i + 1 }}</label>
+            <select
+              [name]="i"
+              id=""
+              formControlName="dayOfWeek"
+              (change)="onDowChange($event, i)"
+            >
+              <ng-container *ngFor="let day of dowList">
+                <option
+                  [value]="day"
+                  *ngIf="!selectedDow.includes(day) || selectedDow[i] === day"
+                >
+                  {{ day }}
+                </option>
+              </ng-container>
+            </select>
+            <small
+              *ngIf="workingHour.get('dayOfWeek').errors?.['required'] && workingHour.get('dayOfWeek').touched"
+              >*Day of the Week must be required</small
+            >
+          </div>
+          <div class="col">
+            <div class="input-box">
+              <label for="">Start</label>
+              <input type="time" placeholder="" formControlName="start" />
+              <small
+                *ngIf="workingHour.get('start').errors?.['required'] && workingHour.get('start').touched"
+                >*Start time must be required</small
+              >
+            </div>
+            <div class="input-box">
+              <label for="">End</label>
+              <input type="time" placeholder="" formControlName="end" />
+              <small
+                *ngIf="workingHour.get('end').errors?.['required'] && workingHour.get('end').touched"
+                >*End time must be required</small
+              >
+            </div>
+          </div>
+          <button
+            class="btn-delete"
+            (click)="DeleteWorkingHours(i)"
+            *ngIf="i >= 1"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn-add" (click)="onAddWorkingHours()">
+        Add WorkingHours
+      </button>
+      <div class="input-box">
+        <label for="">Commission %</label>
+        <input type="number" name="" id="" formControlName="commission" />
+        <small
+          *ngIf="employeeForm.get('commission').errors?.['required'] && employeeForm.get('commission').touched"
+          >*Commission must be required</small
+        >
+      </div>
+      <div class="input-box">
+        <label for="">Image</label>
+        <input
+          type="file"
+          name=""
+          id=""
+          formControlName="image"
+          (change)="OnImageChanged($event)"
+        />
+        <small
+          *ngIf="employeeForm.get('image').errors?.['required'] && employeeForm.get('image').touched"
+          >*Image must be required</small
+        >
+      </div>
+    </div>
+    <button class="btn-submit" [disabled]="employeeForm.invalid">
+      Add Employee
+    </button>
+  </form>
+</div>
+<div class="overlay" *ngIf="showLoading">
+  <div class="loader"></div>
+</div>

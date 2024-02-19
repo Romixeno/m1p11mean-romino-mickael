@@ -31,6 +31,9 @@ import { MgServicesFormComponent } from './pages/managers/components/mg-services
 import { MgServicesTableComponent } from './pages/managers/components/mg-services-table/mg-services-table.component';
 import { DragDirective } from './Directives/drag.directive';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { MgEmployeesPageComponent } from './pages/managers/mg-employees-page/mg-employees-page.component';
+import { MgEmployeesTableComponent } from './pages/managers/components/mg-employees-table/mg-employees-table.component';
+import { MgEmployeesFormComponent } from './pages/managers/mg-employees-page/mg-employees-form/mg-employees-form.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,9 @@ import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.
     MgServicesTableComponent,
     DragDirective,
     ConfirmModalComponent,
+    MgEmployeesPageComponent,
+    MgEmployeesTableComponent,
+    MgEmployeesFormComponent,
   ],
   imports: [
     BrowserModule,
