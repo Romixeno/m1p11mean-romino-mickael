@@ -79,8 +79,12 @@
         width: 50px;
         height: 67px;
       }
-      li {
-        font-size: 1.2rem;
+      ul {
+        display: flex;
+        flex-direction: column;
+        li {
+          font-size: 1.2rem;
+        }
       }
 
       &.td-option {

@@ -1,6 +1,6 @@
 <div class="form-container">
   <form (ngSubmit)="OnSubmit()" [formGroup]="employeeForm">
-    <h2>Add employee</h2>
+    <h2>{{ !isUpdating ? "Add Employee" : "Update Employee" }}</h2>
     <div class="sb sb-error" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="input-container">
       <div class="col">
@@ -131,7 +131,7 @@
       </div>
     </div>
     <button class="btn-submit" [disabled]="employeeForm.invalid">
-      Add Employee
+      {{ !isUpdating ? "Add Employee" : "Update Employee" }}
     </button>
   </form>
 </div>

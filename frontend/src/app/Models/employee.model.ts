@@ -1,5 +1,6 @@
 export class EmployeeModel {
   _id?: string;
+  __v?: number;
   specialty: string;
   firstName: string;
   lastName: string;

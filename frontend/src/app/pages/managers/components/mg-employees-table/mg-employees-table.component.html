@@ -18,7 +18,7 @@
       {{ errorMessage }}
     </div>
     <div class="loading" *ngIf="showLoading"></div>
-    <table>
+    <table *ngIf="employeesList && !showLoading">
       <tr>
         <th>specialty</th>
         <th>firstName</th>
@@ -39,9 +39,11 @@
         <td>{{ employee.email }}</td>
         <td>{{ employee.phoneNumber }}</td>
         <td>
-          <li *ngFor="let hours of employee.workingHours">
-            {{ hours.dayOfWeek }}: {{ hours.start }}-{{ hours.end }}
-          </li>
+          <ul>
+            <li *ngFor="let hours of employee.workingHours">
+              {{ hours.dayOfWeek }}: {{ hours.start }}-{{ hours.end }}
+            </li>
+          </ul>
         </td>
         <td>{{ employee.commission }}</td>
         <td>
@@ -52,7 +54,8 @@
             <button
               class="btn-edit"
               title="edit"
-              (click)="showUpdateForm(employee)"
+              [routerLink]="['/manager/employees/add-employees']"
+              [state]="{ employee: employee }"
             >
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
@@ -69,7 +72,7 @@
       <!-- </ng-container> -->
     </table>
     <h1 *ngIf="employeesList?.length == 0 && !showLoading">
-      No services added yet [ ]
+      No Employees added yet [ ]
     </h1>
   </div>
 </div>

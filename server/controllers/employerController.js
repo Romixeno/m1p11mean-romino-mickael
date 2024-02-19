@@ -91,7 +91,7 @@ export const getOneEmployee = async (req, res) => {
 export const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employer.find();
-    console.log(employees);
+
     res.status(200).json(employees);
   } catch (error) {
     console.error(error);
@@ -105,6 +105,11 @@ export const updateEmployee = async (req, res) => {
     if (error) {
       return res.status(400).json({ error: error.message });
     }
+    const workingHours = JSON.parse(value.workingHours);
+    const realValue = {
+      ...value,
+      workingHours: workingHours,
+    };
 
     const imagesDir = path.join("public", "employer");
 
@@ -133,7 +138,8 @@ export const updateEmployee = async (req, res) => {
 
         fs.unlinkSync(path.join("public", employee.image)); // Supprimer l'ancienne image
         employee.image = newFileName;
-        employee.set(value);
+
+        employee.set(realValue);
         employee
           .save()
           .then((updatedEmployee) => res.json(updatedEmployee))
@@ -144,8 +150,8 @@ export const updateEmployee = async (req, res) => {
           );
       });
     } else {
-      service.set(value);
-      service
+      employee.set(realValue);
+      employee
         .save()
         .then((updatedEmployee) => res.json(updatedEmployee))
         .catch((updateError) =>

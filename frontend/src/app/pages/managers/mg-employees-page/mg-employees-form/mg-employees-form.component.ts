@@ -5,6 +5,7 @@ import { EmployeesService } from '../../../../services/employees.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeeModel } from '../../../../Models/employee.model';
 import { Router } from '@angular/router';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-mg-employees-form',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 export class MgEmployeesFormComponent {
   formData: FormData;
   router: Router = inject(Router);
+  selectedEmployee?: EmployeeModel;
   employeeService: EmployeesService = inject(EmployeesService);
   employeeForm: FormGroup;
   errorMessage?: string;
@@ -40,6 +42,7 @@ export class MgEmployeesFormComponent {
   ];
   selectedDow: string[] = [];
   ngOnInit(): void {
+    this.selectedEmployee = history.state?.employee;
     this.employeeForm = new FormGroup({
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
@@ -54,8 +57,30 @@ export class MgEmployeesFormComponent {
         }),
       ]),
       commission: new FormControl(null, Validators.required),
-      image: new FormControl(null, Validators.required),
+      image: new FormControl(null),
     });
+
+    if (this.selectedEmployee) {
+      this.isUpdating = true;
+      const { _id, __v, image, workingHours, ...employeeData } =
+        this.selectedEmployee;
+      this.employeeForm.patchValue(employeeData);
+      (<FormArray>this.employeeForm.get('workingHours')).clear();
+      workingHours.forEach((workingHour) => {
+        const frmGroup = new FormGroup({
+          dayOfWeek: new FormControl(
+            workingHour.dayOfWeek,
+            Validators.required
+          ),
+          start: new FormControl(workingHour.start, Validators.required),
+          end: new FormControl(workingHour.end, Validators.required),
+        });
+
+        (<FormArray>this.employeeForm.get('workingHours')).push(frmGroup);
+      });
+    } else {
+      this.isUpdating = false;
+    }
   }
 
   OnImageChanged(event: Event) {
@@ -109,11 +134,49 @@ export class MgEmployeesFormComponent {
 
     this.selectedDow.splice(index, 1);
   }
-  setErrorMessage(message: string) {
-    this.errorMessage = message;
+  setErrorMessage(err: HttpErrorResponse) {
+    console.error(err);
+    if (err.error instanceof ErrorEvent) {
+      console.error('An error occurred:', err.error.message);
+      this.errorMessage = 'An error occurred. Please try again later.';
+    } else {
+      console.error(
+        `Backend returned code ${err.status}, body was: ${err.error}`
+      );
+
+      switch (err.status) {
+        case 400:
+          this.errorMessage = 'Validation error occurred.';
+          break;
+        case 401:
+          this.errorMessage = 'Authentication error occurred.';
+          break;
+        case 500:
+          this.errorMessage = 'Internal server error occurred.';
+          break;
+        default:
+          this.errorMessage = 'An error occurred. Please try again later.';
+          break;
+      }
+    }
+
     setTimeout(() => {
       this.errorMessage = null;
     }, 4000);
+  }
+
+  appendFormData() {
+    Object.keys(this.employeeForm.value).forEach((key) => {
+      const control = this.employeeForm.get(key);
+      if (key !== 'image' && key !== 'workingHours' && control) {
+        this.formData.append(key, control.value);
+      } else if (key == 'workingHours' && control) {
+        this.formData.append(
+          'workingHours',
+          JSON.stringify(this.employeeForm.value.workingHours)
+        );
+      }
+    });
   }
   OnSubmit() {
     if (!this.isUpdating) {
@@ -122,17 +185,7 @@ export class MgEmployeesFormComponent {
 
       if (this.imgFile) {
         this.formData.append('image', this.imgFile);
-        Object.keys(this.employeeForm.value).forEach((key) => {
-          const control = this.employeeForm.get(key);
-          if (key !== 'image' && key !== 'workingHours' && control) {
-            this.formData.append(key, control.value);
-          } else if (key == 'workingHours' && control) {
-            this.formData.append(
-              'workingHours',
-              JSON.stringify(this.employeeForm.value.workingHours)
-            );
-          }
-        });
+        this.appendFormData();
 
         this.employeeService.addEmployee(this.formData).subscribe({
           next: (response: EmployeeModel[]) => {
@@ -140,33 +193,7 @@ export class MgEmployeesFormComponent {
           },
           error: (err: HttpErrorResponse) => {
             this.showLoading = false;
-
-            if (err.error instanceof ErrorEvent) {
-              console.error('An error occurred:', err.error.message);
-
-              this.setErrorMessage(
-                'An error occurred. Please try again later.'
-              );
-            } else {
-              console.error(
-                `Backend returned code ${err.status}, ` +
-                  `body was: ${err.error}`
-              );
-
-              if (err.status === 400) {
-                console.error(err);
-                this.setErrorMessage('Validation error occurred.');
-              } else if (err.status === 401) {
-                console.error(err);
-                this.setErrorMessage('Authentication error occurred.');
-              } else if (err.status === 500) {
-                this.setErrorMessage('Internal server error occurred.');
-              } else {
-                this.setErrorMessage(
-                  'An error occurred. Please try again later.'
-                );
-              }
-            }
+            this.setErrorMessage(err);
           },
 
           complete: () => {
@@ -175,6 +202,30 @@ export class MgEmployeesFormComponent {
           },
         });
       }
+    } else {
+      this.showLoading = true;
+      this.formData = new FormData();
+
+      if (this.imgFile) {
+        this.formData.append('image', this.imgFile);
+      }
+      this.appendFormData();
+
+      this.employeeService
+        .updateEmployee(this.formData, this.selectedEmployee._id)
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (error: HttpErrorResponse) => {
+            this.showLoading = false;
+            this.setErrorMessage(error);
+          },
+          complete: () => {
+            this.showLoading = false;
+            this.router.navigateByUrl('/manager/employees');
+          },
+        });
     }
   }
 }

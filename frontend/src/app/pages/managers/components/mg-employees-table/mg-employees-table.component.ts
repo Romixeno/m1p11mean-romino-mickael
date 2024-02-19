@@ -25,7 +25,7 @@ export class MgEmployeesTableComponent {
 
   ngOnInit() {
     this.showLoading = true;
-    this.employeeService.getAllEmployee().subscribe(() => {});
+    this.getEmployees();
     this.subscription = this.employeeService.Employee$.subscribe(
       (employees: EmployeeModel[]) => {
         this.employeesList = employees;
@@ -58,18 +58,24 @@ export class MgEmployeesTableComponent {
   }
 
   getEmployees() {
-    // this.serviceService.getAllServices().subscribe({
-    //   error: (err: HttpErrorResponse) => {
-    //     this.errorMessage =
-    //       err.status == 500
-    //         ? 'Internal server error. Please try again later.'
-    //         : 'An error occurred. Please try again later.';
-    //     setTimeout(() => {
-    //       this.errorMessage = '';
-    //     }, 4000);
-    //     this.showLoading = false;
-    //   },
-    // });
+    this.employeeService.getAllEmployee().subscribe({
+      error: (err: HttpErrorResponse) => {
+        this.showLoading = false;
+        if (err.error instanceof ErrorEvent) {
+          console.error('An error occurred:', err.error.message);
+          this.errorMessage = 'An error occurred. Please try again later.';
+        } else {
+          if (err.status == 500) {
+            this.errorMessage = 'Internal server error occurred.';
+          } else {
+            this.errorMessage = 'An error occurred. Please try again later.';
+          }
+        }
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 4000);
+      },
+    });
   }
   showUpdateForm(employee: EmployeeModel) {
     this.isEditMode = true;
@@ -93,7 +99,7 @@ export class MgEmployeesTableComponent {
   }
 
   onDeleteBtnConfirmed() {
-    const serviceId = this.selectedEmployee._id;
+    const employeeId = this.selectedEmployee._id;
     // this.serviceService.deleteService(serviceId).subscribe({
     //   next: () => {
     //     this.getEmployees();
@@ -108,5 +114,24 @@ export class MgEmployeesTableComponent {
     //   },
     // });
     // console.log(this.selectedEmployee._id);
+    this.employeeService.deleteEmployee(employeeId).subscribe({
+      next: () => {
+        this.getEmployees();
+        this.toggleConfirmModal();
+        this.setSuccessMessage('Employee has been deleted successfully');
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error instanceof ErrorEvent) {
+          console.error('An error occurred:', err.error.message);
+          this.errorMessage = 'An error occurred. Please try again later.';
+        } else {
+          if (err.status == 500) {
+            this.errorMessage = 'Internal server error occurred.';
+          } else {
+            this.errorMessage = 'An error occurred. Please try again later.';
+          }
+        }
+      },
+    });
   }
 }
