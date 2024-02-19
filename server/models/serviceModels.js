@@ -6,6 +6,7 @@ const serviceSchema = new Schema(
   {
     type: {
       type: String,
+      enum: ["Hair", "Nail", "Makeup", "Skin"],
       required: true,
     },
     name: {

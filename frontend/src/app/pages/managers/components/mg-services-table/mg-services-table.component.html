@@ -34,7 +34,7 @@
       <tr *ngFor="let service of serviceList">
         <td>{{ service.type }}</td>
         <td>{{ service.name }}</td>
-        <td>
+        <td class="description">
           {{ service.description }}
         </td>
         <td>{{ service.price }}€</td>
@@ -50,20 +50,22 @@
           <img src="http://localhost:3001{{ service.image }}" alt="" />
         </td>
         <td class="td-option">
-          <button
-            class="btn-edit"
-            title="edit"
-            (click)="showUpdateForm(service)"
-          >
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-          <button
-            class="btn-delete"
-            title="delete"
-            (click)="toggleConfirmModal(service)"
-          >
-            <i class="fa-regular fa-trash"></i>
-          </button>
+          <div>
+            <button
+              class="btn-edit"
+              title="edit"
+              (click)="showUpdateForm(service)"
+            >
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button
+              class="btn-delete"
+              title="delete"
+              (click)="toggleConfirmModal(service)"
+            >
+              <i class="fa-regular fa-trash"></i>
+            </button>
+          </div>
         </td>
       </tr>
       <!-- </ng-container> -->

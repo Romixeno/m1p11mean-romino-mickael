@@ -32,4 +32,8 @@ export class ServiceService {
   deleteService(id: string) {
     return this.http.delete(this.url + '/deleteService/' + id);
   }
+
+  searchService(query: { q: string; filterBy: string }) {
+    return this.http.post(this.url + '/search/services', { query: query });
+  }
 }
