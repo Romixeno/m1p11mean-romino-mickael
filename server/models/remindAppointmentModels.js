@@ -8,14 +8,20 @@ const appointmentSchema = new Schema({
     _employeeId: { type: Schema.Types.ObjectId, ref: 'Employee' },
     _serviceId: { type: Schema.Types.ObjectId, ref: 'Service' },
 
+    startTime: {
+        type:Date
+    },
+    endTime: {
+        type:Date
+    },
     date: {
         type: Date,
         required: true,
     },
-    // Champ pour indiquer si l'e-mail de rappel a été envoyé ou non
+    
     sentEmail: {
         type: Boolean,
-        default: false, // Par défaut, l'e-mail de rappel n'a pas encore été envoyé
+        default: false, 
     },
     
 });

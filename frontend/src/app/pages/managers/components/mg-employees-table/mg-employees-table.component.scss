@@ -1,5 +1,5 @@
 @import "../../../../../globalStyle";
-.services-table-container {
+.employees-table-container {
   margin-top: 2rem;
   .loading {
     width: 48px;
@@ -41,7 +41,7 @@
         color: white;
       }
 
-      .services-option {
+      .employees-option {
         display: flex;
         gap: 10px;
         button {
@@ -67,22 +67,24 @@
     th,
     td {
       font-weight: 400;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       padding: 1rem;
     }
 
     td {
       text-align: center;
 
-      &.description {
-        text-align: justify;
-        font-size: 1.2rem;
-      }
-
       img {
         object-fit: cover;
         width: 50px;
         height: 67px;
+      }
+      ul {
+        display: flex;
+        flex-direction: column;
+        li {
+          font-size: 1.2rem;
+        }
       }
 
       &.td-option {

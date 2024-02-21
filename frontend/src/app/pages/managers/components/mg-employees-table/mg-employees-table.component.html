@@ -1,16 +1,16 @@
-<div class="services-table-container">
+<div class="employees-table-container">
   <div class="table-wrapper">
     <div class="table-title">
-      <h2>Manage Services</h2>
+      <h2>Manage Employees</h2>
       <div class="sb sb-success success-message" *ngIf="successMessage">
         {{ successMessage }}
       </div>
-      <div class="services-option">
+      <div class="employees-option">
         <button (click)="onRefresh()">
           Refresh <i class="fa-regular fa-rotate-right"></i>
         </button>
-        <button class="add-employee" (click)="showForm()">
-          <i class="fa-sharp fa-solid fa-plus"></i> Add Services
+        <button class="add-employee" [routerLink]="['add-employees']">
+          <i class="fa-sharp fa-solid fa-plus"></i> Add Employees
         </button>
       </div>
     </div>
@@ -18,50 +18,51 @@
       {{ errorMessage }}
     </div>
     <div class="loading" *ngIf="showLoading"></div>
-    <table *ngIf="serviceList && !showLoading">
+    <table *ngIf="employeesList && !showLoading">
       <tr>
-        <th>type</th>
-        <th>name</th>
-        <th>description</th>
-        <th>price</th>
-        <th>duration</th>
-        <th>commission</th>
+        <th>specialty</th>
+        <th>firstName</th>
+        <th>lastName</th>
+        <th>email</th>
+        <th>phoneNumber</th>
+        <th>workingHours</th>
+        <th>commission%</th>
         <th>image</th>
         <th>action</th>
       </tr>
       <!-- <ng-container *ngIf="serviceList"> -->
 
-      <tr *ngFor="let service of serviceList">
-        <td>{{ service.type }}</td>
-        <td>{{ service.name }}</td>
-        <td class="description">
-          {{ service.description }}
-        </td>
-        <td>{{ service.price }}€</td>
+      <tr *ngFor="let employee of employeesList">
+        <td>{{ employee.specialty }}</td>
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.phoneNumber }}</td>
         <td>
-          {{
-            service.duration > 60
-              ? (service.duration / 60).toFixed(1) + " h"
-              : service.duration + " min"
-          }}
+          <ul>
+            <li *ngFor="let hours of employee.workingHours">
+              {{ hours.dayOfWeek }}: {{ hours.start }}-{{ hours.end }}
+            </li>
+          </ul>
         </td>
-        <td>{{ service.commission }}%</td>
+        <td>{{ employee.commission }}</td>
         <td>
-          <img src="http://localhost:3001{{ service.image }}" alt="" />
+          <img src="http://localhost:3001{{ employee.image }}" alt="" />
         </td>
         <td class="td-option">
           <div>
             <button
               class="btn-edit"
               title="edit"
-              (click)="showUpdateForm(service)"
+              [routerLink]="['/manager/employees/add-employees']"
+              [state]="{ employee: employee }"
             >
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
             <button
               class="btn-delete"
               title="delete"
-              (click)="toggleConfirmModal(service)"
+              (click)="toggleConfirmModal(employee)"
             >
               <i class="fa-regular fa-trash"></i>
             </button>
@@ -70,19 +71,12 @@
       </tr>
       <!-- </ng-container> -->
     </table>
-    <h1 *ngIf="serviceList?.length == 0 && !showLoading">
-      No services added yet [ ]
+    <h1 *ngIf="employeesList?.length == 0 && !showLoading">
+      No Employees added yet [ ]
     </h1>
   </div>
 </div>
-<mg-services-form
-  *ngIf="showFormServices"
-  (onCloseFormClicked)="closeForm()"
-  (loadingState)="setLoadingToTrue($event)"
-  (setSuccessMessage)="setSuccessMessage($event)"
-  [isEditMode]="isEditMode"
-  [service]="selectedService"
-></mg-services-form>
+
 <confirm-modal *ngIf="showConfirmation">
   <button class="btn-modal btn-cancel" (click)="toggleConfirmModal()">
     Cancel

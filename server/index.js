@@ -16,6 +16,7 @@ import payementRoute from "./ressources/payementRoute.js";
 import employerRoute from "./ressources/employerRoute.js";
 import taskRoute from "./ressources/taskRoute.js";
 import searchRoute from "./ressources/searchRoute.js";
+import statistiqueRoute from "./ressources/statistiqueRoute.js";
 
 const app = express();
 
@@ -66,6 +67,7 @@ mongooseConnect().then(() => {
   app.use("/", employerRoute);
   app.use("/", taskRoute);
   app.use("/", searchRoute);
+  app.use("/",statistiqueRoute);
 
   app.listen(3001, () => {
     console.log("http://localhost:3001");

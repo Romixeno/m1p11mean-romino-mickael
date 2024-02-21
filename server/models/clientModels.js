@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 // Modèle pour le client
+
 const clientSchema = new Schema({
     name: {
         type: String,
@@ -20,9 +21,8 @@ const clientSchema = new Schema({
         type : String ,
         required : false
     },
-   
     appointments: [{
-        type: Schema.Types.ObjectId, ref: 'Appointment'
+        type: Schema.Types.ObjectId, ref: 'Appointment',
     }],
     preferences: {
         favoriteService: { type: Schema.Types.ObjectId, ref: 'Service' },

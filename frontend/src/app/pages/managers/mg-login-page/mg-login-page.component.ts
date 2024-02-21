@@ -33,21 +33,12 @@ export class MgLoginPageComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (err.error instanceof ErrorEvent) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.error('An error occurred:', err.error.message);
-          this.message = 'An error occurred. Please try again later.';
+        if (err.status === 400) {
+          this.message = err.error.error;
+        } else if (err.status === 500) {
+          this.message = err.error.error;
         } else {
-          if (err.status === 401) {
-            this.message = 'Invalid email or password. Please try again.';
-          } else if (err.status === 500) {
-            this.message = 'Internal server error. Please try again later.';
-          } else {
-            this.message = 'An error occurred. Please try again later.';
-          }
-          console.error(
-            `Backend returned code ${err.status}, ` + `body was: ${err.error}`
-          );
+          this.message = 'An error occurred. Please try again later.';
         }
         setTimeout(() => {
           this.message = null;

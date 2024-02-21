@@ -9,7 +9,11 @@
     <div class="filter">
       <div class="filter-search">
         <label>Search</label>
-        <input type="text" id="" placeholder="type anything..." />
+        <input
+          type="text"
+          [(ngModel)]="searchedText"
+          placeholder="type anything..."
+        />
       </div>
       <div class="filter-by-type">
         <label for="serviceType">Filter by Type:</label>
@@ -29,45 +33,48 @@
     </div>
   </div>
   <div class="all-services-types">
-    <div class="services-type" *ngFor="let type of servicesType">
-      <h1>{{ type }}</h1>
-      <div class="services-list">
-        <ng-container *ngFor="let service of servicesList">
-          <div class="service-item" *ngIf="service.type == type">
-            <button class="preference-button">
-              <i class="fa-light fa-heart"></i>
-            </button>
-            <div class="service-item-img">
-              <img [src]="service.image" alt="" />
-            </div>
-            <div class="service-item-bottom">
-              <div class="service-item-details">
-                <h3 class="service-item-detail-name">{{ service.name }}</h3>
-                <span class="service-detail-price"
-                  ><i class="fa-solid fa-tag"></i>Price:
-                  <strong>${{ service.price }}</strong></span
-                >
-                <span class="service-detail-duration"
-                  ><i class="fa-regular fa-timer"></i>Durée:
-                  <strong>{{
-                    service.duration > 60
-                      ? (service.duration / 60).toFixed(1) + " heures"
-                      : service.duration + " minutes"
-                  }}</strong></span
-                >
-                <p class="service-detail-description">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit
-                  vitae omnis esse a sunt, distinctio dolore explicabo assumenda
-                  nostrum placeat?
-                </p>
+    <ng-container *ngFor="let type of servicesType">
+      <div class="services-type" *ngIf="hasServicesForType(type)">
+        <h1>{{ type }}</h1>
+        <div class="services-list">
+          <ng-container *ngFor="let service of getServicesForType(type)">
+            <div class="service-item">
+              <button class="preference-button">
+                <i class="fa-light fa-heart"></i>
+              </button>
+              <div class="service-item-img">
+                <img [src]="'http://localhost:3001' + service.image" alt="" />
               </div>
-              <div class="service-item-btn">
-                <button>Make an appointment</button>
+              <div class="service-item-bottom">
+                <div class="service-item-details">
+                  <h3 class="service-item-detail-name">{{ service.name }}</h3>
+                  <span class="service-detail-price"
+                    ><i class="fa-solid fa-tag"></i>Price:
+                    <strong>{{ service.price }}€</strong></span
+                  >
+                  <span class="service-detail-duration"
+                    ><i class="fa-regular fa-timer"></i>Durée:
+                    <strong>{{
+                      service.duration > 60
+                        ? (service.duration / 60).toFixed(1) + " h"
+                        : service.duration + " min"
+                    }}</strong></span
+                  >
+                  <p class="service-detail-description">
+                    {{ service.description }}
+                  </p>
+                </div>
+                <div class="service-item-btn">
+                  <button>Make an appointment</button>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-container>
+          </ng-container>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </section>
+<div class="overlay" *ngIf="showLoading">
+  <div class="loader"></div>
+</div>
