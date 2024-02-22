@@ -136,3 +136,8 @@
 <div class="overlay" *ngIf="showLoading">
   <div class="loader"></div>
 </div>
+<app-password-form
+  *ngIf="showPasswordForm"
+  @fade
+  (onBtnCloseForm)="togglePasswordForm()"
+></app-password-form>

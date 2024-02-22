@@ -143,8 +143,6 @@ export const getAllClients = async (req, res) => {
 
 export const updateClient = async (req, res) => {
   try {
-    let fileNameUpdate;
-    console.log("ato @ito");
     const imagesDir = path.join("public", "images");
     if (!fs.existsSync(imagesDir)) {
       fs.mkdirSync(imagesDir, { recursive: true });

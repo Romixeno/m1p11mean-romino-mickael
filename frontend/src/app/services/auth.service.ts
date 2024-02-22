@@ -128,8 +128,8 @@ export class AuthService {
       .pipe(
         tap((response: any) => {
           const manager = response;
-          const { password, __v, ...other } = manager;
-          this.setUser(other);
+          const { _id, image, userType, ...other } = manager;
+          this.setUser({ _id: _id, image: image, userType: userType });
           this.isAuthenticated();
         })
       );

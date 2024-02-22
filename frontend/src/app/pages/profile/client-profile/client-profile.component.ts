@@ -23,6 +23,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class ClientProfileComponent {
+  showPasswordForm: boolean = false;
   showLoading: boolean = false;
   isEditMode: boolean = false;
   client: ClientModel;
@@ -152,5 +153,8 @@ export class ClientProfileComponent {
       },
       error: (error: HttpErrorResponse) => {},
     });
+  }
+  togglePasswordForm() {
+    this.showPasswordForm = !this.showPasswordForm;
   }
 }

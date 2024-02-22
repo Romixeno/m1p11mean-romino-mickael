@@ -237,3 +237,57 @@ export const logoutEmployee = async (req, res) => {
     .clearCookie("rdi")
     .json({ message: "logout_employee" });
 };
+
+export const updateEmployeeProfile = async (req, res) => {
+  try {
+    const imagesDir = path.join("public", "images");
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+    const employee = await Employer.findById(req.params._id);
+    if (!employee) {
+      return res.status(404).send("Employee not found");
+    }
+
+    if (req.files && req.files.image) {
+      const { image } = req.files;
+      const newFileName =
+        "/images/IMG-" +
+        Date.now() +
+        crypto.randomInt(1000, 999999) +
+        path.extname(image.name);
+      image.mv(path.join("public", newFileName), (e) => {
+        if (e) {
+          console.log(e);
+          return res.status(500).json({ error: "Error during file upload" });
+        }
+
+        fs.unlinkSync(path.join("public", employee.image));
+
+        employee.image = newFileName;
+        employee.set(req.body);
+        employee
+          .save()
+          .then((updatedEmployee) => res.json(updatedEmployee))
+          .catch((updateError) =>
+            res
+              .status(500)
+              .json({ error: "Error during Employee update", updateError })
+          );
+      });
+    } else {
+      employee.set(req.body);
+      employee
+        .save()
+        .then((updatedEmployee) => res.json(updatedEmployee))
+        .catch((updateError) =>
+          res
+            .status(500)
+            .json({ error: "Error during Employee update", updateError })
+        );
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

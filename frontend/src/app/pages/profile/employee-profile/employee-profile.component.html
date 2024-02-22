@@ -21,14 +21,20 @@
           src="http://localhost:3001{{ employee?.image }}"
           alt="Profile Picture"
         />
-        <img [src]="imgUrl" alt="" *ngIf="imgUrl" class="img-preview" />
+        <img
+          [src]="imgUrl"
+          alt=""
+          *ngIf="imgUrl"
+          class="img-preview"
+          alt="Preview"
+        />
       </div>
       <div class="link-container">
         <a href=""
           ><i class="fa-solid fa-calendar-week"></i><span>My task</span></a
         >
 
-        <a href=""
+        <a (click)="togglePasswordForm()"
           ><i class="fa-regular fa-lock"></i><span>Change Password</span></a
         >
       </div>
@@ -142,6 +148,13 @@
     </form>
   </div>
 </section>
+
 <div class="overlay" *ngIf="showLoading">
   <div class="loader"></div>
 </div>
+
+<app-password-form
+  *ngIf="showPasswordForm"
+  @fade
+  (onBtnCloseForm)="togglePasswordForm()"
+></app-password-form>

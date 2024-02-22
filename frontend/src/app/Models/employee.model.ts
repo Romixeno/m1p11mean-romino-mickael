@@ -34,4 +34,7 @@ export class EmployeeModel {
   image: {
     type: String;
   };
+  userType: {
+    type: string;
+  };
 }

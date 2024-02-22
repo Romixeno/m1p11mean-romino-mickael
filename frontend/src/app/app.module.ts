@@ -54,6 +54,8 @@ import {
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ClientProfileComponent } from './pages/profile/client-profile/client-profile.component';
 import { EmployeeProfileComponent } from './pages/profile/employee-profile/employee-profile.component';
+import { PasswordFormComponent } from './pages/profile/password-form/password-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +90,7 @@ import { EmployeeProfileComponent } from './pages/profile/employee-profile/emplo
     ProfileComponent,
     ClientProfileComponent,
     EmployeeProfileComponent,
+    PasswordFormComponent,
   ],
   imports: [
     BrowserModule,

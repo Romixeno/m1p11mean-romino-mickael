@@ -27,7 +27,7 @@ export class EmployeesService {
   }
   updateEmployee(formData: FormData, id: string) {
     // /updateEmployee/:id
-    return this.http.patch(`${this.url}/updateEmployee/${id}`, formData);
+    return this.http.patch(`${this.url}/employee/update/${id}`, formData);
   }
   deleteEmployee(id: string) {
     // /deleteEmployee/:_id

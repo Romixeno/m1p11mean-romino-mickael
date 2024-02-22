@@ -7,6 +7,7 @@ import {
   loginEmployee,
   logoutEmployee,
   updateEmployee,
+  updateEmployeeProfile,
 } from "../controllers/employerController.js";
 export default Router()
   .post("/addEmployee", createEmployee)
@@ -14,5 +15,6 @@ export default Router()
   .get("/oneEmployee/:_id", getOneEmployee)
   .get("/allEmployer", getAllEmployees)
   .patch("/updateEmployee/:id", updateEmployee)
+  .patch("/employee/update/:_id", updateEmployeeProfile)
   .delete("/deleteEmployee/:_id", deleteEmployee)
   .delete("/employee/logout", logoutEmployee);
