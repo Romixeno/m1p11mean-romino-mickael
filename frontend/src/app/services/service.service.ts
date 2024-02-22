@@ -25,6 +25,10 @@ export class ServiceService {
     );
   }
 
+  getAllServicesTypes() {
+    return this.http.get(this.url + '/allServiceType');
+  }
+
   updateServices(formData: FormData, id: string) {
     return this.http.patch(this.url + '/updateService/' + id, formData);
   }

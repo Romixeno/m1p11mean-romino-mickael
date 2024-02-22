@@ -23,12 +23,17 @@
       </div>
       <div class="select-box">
         <label for="">Specialty</label>
-        <select name="" id="" formControlName="specialty">
+        <select formControlName="specialty">
+          <option [value]="type.name" *ngFor="let type of serviceTypeList">
+            {{ type.name }}
+          </option>
+        </select>
+        <!-- <select name="" id="" formControlName="specialty">
           <option tuesday="Hair">Hair</option>
           <option tuesday="Skin">Skin</option>
           <option tuesday="Makeup">Makeup</option>
           <option tuesday="Nail">Nails</option>
-        </select>
+        </select> -->
       </div>
       <div class="input-box">
         <label for="">Email</label>

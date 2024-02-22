@@ -6,7 +6,7 @@ import crypto from "crypto";
 import bcrypt from "bcrypt";
 //create employer
 const employerSchema = Joi.object({
-  specialty: Joi.string().valid("Hair", "Nail", "Makeup", "Skin").required(),
+  specialty: Joi.string().required(),
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const employeeSchema = new Schema({
   specialty: {
     type: String,
-    enum: ["Hair", "Nail", "Makeup", "Skin"],
+    ref: "ServiceType",
     required: true,
   },
   firstName: {
@@ -60,6 +60,10 @@ const employeeSchema = new Schema({
   },
   password: {
     type: String,
+  },
+  userType: {
+    type: String,
+    default: "Employee",
   },
 });
 

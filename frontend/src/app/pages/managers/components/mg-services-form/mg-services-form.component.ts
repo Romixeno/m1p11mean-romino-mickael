@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ServiceService } from '../../../../services/service.service';
 import { ServiceModel } from '../../../../Models/service.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ServiceTypeModel } from '../../../../Models/serviceType.model';
 
 @Component({
   selector: 'mg-services-form',
@@ -10,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./mg-services-form.component.scss'],
 })
 export class MgServicesFormComponent {
+  serviceTypeList: ServiceTypeModel[] = [];
   serviceServices: ServiceService = inject(ServiceService);
   formData: FormData = new FormData();
   file: File;
@@ -39,6 +41,15 @@ export class MgServicesFormComponent {
   }
 
   ngOnInit() {
+    this.serviceServices.getAllServicesTypes().subscribe({
+      next: (response: ServiceTypeModel[]) => {
+        this.serviceTypeList = response;
+        console.log(this.serviceTypeList);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error(error);
+      },
+    });
     this.mgForm = new FormGroup({
       image: new FormControl(null),
       type: new FormControl(null, Validators.required),

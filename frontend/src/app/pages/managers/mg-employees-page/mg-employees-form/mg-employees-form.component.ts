@@ -6,6 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeeModel } from '../../../../Models/employee.model';
 import { Router } from '@angular/router';
 import { error } from 'node:console';
+import { ServiceTypeModel } from '../../../../Models/serviceType.model';
+import { ServiceService } from '../../../../services/service.service';
 
 @Component({
   selector: 'app-mg-employees-form',
@@ -13,10 +15,12 @@ import { error } from 'node:console';
   styleUrl: './mg-employees-form.component.scss',
 })
 export class MgEmployeesFormComponent {
+  serviceTypeList: ServiceTypeModel[] = [];
   formData: FormData;
   router: Router = inject(Router);
   selectedEmployee?: EmployeeModel;
   employeeService: EmployeesService = inject(EmployeesService);
+  serviceServices: ServiceService = inject(ServiceService);
   employeeForm: FormGroup;
   errorMessage?: string;
   imgFile: File;
@@ -43,6 +47,15 @@ export class MgEmployeesFormComponent {
   selectedDow: string[] = [];
   ngOnInit(): void {
     this.selectedEmployee = history.state?.employee;
+    this.serviceServices.getAllServicesTypes().subscribe({
+      next: (response: ServiceTypeModel[]) => {
+        this.serviceTypeList = response;
+        console.log(this.serviceTypeList);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error(error);
+      },
+    });
     this.employeeForm = new FormGroup({
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),

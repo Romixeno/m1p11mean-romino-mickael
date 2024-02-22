@@ -10,7 +10,7 @@ const appointmentSchema = new mongoose.Schema({
   services: [
     {
       serviceType: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "ServiceType",
       },
       employeeId: {

@@ -4,7 +4,7 @@ import fs from "fs";
 import crypto from "crypto";
 import mongoose from "mongoose";
 import Service from "../models/serviceModels.js";
-
+import ServiceType from "../models/serviceTypeModel.js";
 export const serviceSchema = Joi.object({
   type: Joi.string().required(),
   name: Joi.string().required(),
@@ -55,7 +55,7 @@ export const addService = async (req, res) => {
     });
 
     const saveService = await data.save();
-
+    console.log(saveService);
     res.status(201).json(saveService);
   } catch (error) {
     console.error(error);
@@ -178,7 +178,8 @@ export const addServiceType = async (req, res) => {
       return res.status(400).json({ error: error.message });
     }
 
-    const serviceTypeVerify = ServiceType.findOne({ name: value.name });
+    const serviceTypeVerify = await ServiceType.findOne({ name: value.name });
+
     if (serviceTypeVerify) {
       return res.status(403).send("This serviceType already exists");
     }
@@ -194,9 +195,9 @@ export const addServiceType = async (req, res) => {
 
 export const getAllServiceTypes = async (req, res) => {
   try {
-    const servicesType = await ServiceType.find();
+    const types = await ServiceType.find();
 
-    res.status(200).send(servicesType);
+    res.status(200).send(types);
   } catch (error) {
     return res.status(500).send("Internal Server Error");
   }

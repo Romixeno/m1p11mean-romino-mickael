@@ -15,7 +15,7 @@
         class="img-preview"
       />
       <i class="fa-light fa-cloud-arrow-up icon"></i>
-      <span class="header">Drag & Drop to Upload File</span>
+      <span>Drag & Drop to Upload File</span>
       <span>OR</span
       ><button (click)="triggerFileInput(fileInput, $event)">
         Browse file
@@ -34,7 +34,12 @@
       <div class="col">
         <div class="input-box">
           <label for="">Type</label>
-          <input type="text" formControlName="type" />
+          <select formControlName="type">
+            <option [value]="type.name" *ngFor="let type of serviceTypeList">
+              {{ type.name }}
+            </option>
+          </select>
+          <!-- <input type="text" formControlName="type" /> -->
           <small
             *ngIf="
               mgForm.get('type').errors?.['required'] &&

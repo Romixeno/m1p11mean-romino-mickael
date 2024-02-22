@@ -12,7 +12,7 @@ export class CanActivateLoginPage {
   router: Router = inject(Router);
   canActivate(): boolean | UrlTree {
     const userType = this.authService.getUserType();
-    console.log(userType);
+
     if (userType == 'Client' || userType == 'Employee') {
       return this.router.createUrlTree(['/']);
     } else if (userType == 'Manager') {
