@@ -22,6 +22,7 @@ export class AuthService {
   // setAuth(value: boolean) {
   //   this.isLoggedInSubject.next(value);
   // }
+
   getUser() {
     const userData = sessionStorage.getItem('User');
     if (!userData) {

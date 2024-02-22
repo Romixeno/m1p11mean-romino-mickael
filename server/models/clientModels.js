@@ -5,11 +5,15 @@ const Schema = mongoose.Schema;
 // Modèle pour le client
 
 const clientSchema = new Schema({
-  name: {
+  firstName: {
     type: String,
     required: true,
   },
   lastName: {
+    type: String,
+    required: true,
+  },
+  password: {
     type: String,
     required: true,
   },
@@ -32,6 +36,10 @@ const clientSchema = new Schema({
     favoriteEmployee: { type: Schema.Types.ObjectId, ref: "Employee" },
   },
   specialOffersNotification: { type: Boolean, default: true },
+  userType: {
+    type: String,
+    default: "Client",
+  },
 });
 const Client = mongoose.model("Client", clientSchema);
 export default Client;

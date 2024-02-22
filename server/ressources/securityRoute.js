@@ -1,8 +1,20 @@
 import { Router } from "express";
-import { login, logout, register } from "../controllers/securityController.js";
+import {
+  getAllClients,
+  getClientProfile,
+  login,
+  logout,
+  register,
+} from "../controllers/clientController.js";
+// import { login, logout, register } from "../controllers/securityController.js";
 export default Router()
-    .get('/register',register)
-    .post('/user/register',register)
-    .get('/login',login)
-    .post('/user/login/',login)
-    .delete('/logout',logout)
+  .get("/client/profile/:_id", getClientProfile)
+  .get("/client/clients", getAllClients)
+  .post("/client/register", register)
+  .post("/client/login/", login)
+  .delete("/client/logout", logout);
+// .get('/register',register)
+// .post('/user/register',register)
+// .get('/login',login)
+// .post('/user/login/',login)
+// .delete('/logout',logout)
