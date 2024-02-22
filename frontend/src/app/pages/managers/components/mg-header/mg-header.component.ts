@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { User } from '../../../../Models/user.model';
 import { AuthService } from '../../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mg-header',
@@ -9,22 +10,18 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class MgHeaderComponent {
   isLoggedIn: boolean = false;
-  user?: User;
-
+  router: Router = inject(Router);
+  @Input() user: User = null;
   constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-      if (isLoggedIn) {
-        this.user = this.authService.getUser();
-      }
-    });
-  }
+  ngOnInit() {}
 
   onLogout() {
-    this.authService.logout().subscribe(() => {
-      this.user = null;
+    this.authService.logoutUser().subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: () => {},
     });
   }
 }

@@ -10,13 +10,27 @@ import path from 'path';
 import { MgServicesPageComponent } from './pages/managers/mg-services-page/mg-services-page.component';
 import { MgEmployeesPageComponent } from './pages/managers/mg-employees-page/mg-employees-page.component';
 import { MgEmployeesFormComponent } from './pages/managers/mg-employees-page/mg-employees-form/mg-employees-form.component';
+import { EmployeesComponent } from './pages/employees/employees.component';
+import { EmployeeLoginPageComponent } from './pages/employees/employee-login-page/employee-login-page.component';
+import { CanActivateManager } from './guard/manager.guard';
+import { CanActivateLoginPage } from './guard/pageLogin.guard';
+import { AppointmentComponent } from './pages/appointment/appointment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
+    path: 'appointment',
+    canDeactivate: [
+      (comp: AppointmentComponent) => {
+        return comp.canExit();
+      },
+    ],
+    component: AppointmentComponent,
+  },
+  {
     path: 'login',
+    canActivate: [CanActivateLoginPage],
     component: LoginComponent,
-    canActivate: [CanActivate],
   },
   {
     path: 'signup',
@@ -26,9 +40,15 @@ const routes: Routes = [
     path: 'services',
     component: ServicesComponent,
   },
-  { path: 'manager-login', component: MgLoginPageComponent },
+  {
+    path: 'manager-login',
+    canActivate: [CanActivateLoginPage],
+    component: MgLoginPageComponent,
+  },
   {
     path: 'manager',
+    canActivate: [CanActivateManager],
+
     children: [
       {
         path: 'services',
@@ -41,6 +61,13 @@ const routes: Routes = [
           { path: 'add-employees', component: MgEmployeesFormComponent },
         ],
       },
+    ],
+  },
+  {
+    path: 'employee',
+    children: [
+      { path: '', component: EmployeesComponent },
+      { path: 'login', component: EmployeeLoginPageComponent },
     ],
   },
 ];

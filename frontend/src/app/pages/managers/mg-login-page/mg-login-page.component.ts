@@ -23,7 +23,7 @@ export class MgLoginPageComponent {
 
   mgSubmit() {
     console.log(this.mgForm.value);
-    this.authService.login(this.mgForm.value).subscribe({
+    this.authService.loginUser(this.mgForm.value).subscribe({
       next: (response: any) => {
         const user = response.user;
         const { password, __v, ...other } = user;

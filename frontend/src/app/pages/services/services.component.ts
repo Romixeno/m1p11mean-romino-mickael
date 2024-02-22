@@ -2,7 +2,8 @@ import { Component, OnDestroy, inject } from '@angular/core';
 import { ServiceModel } from '../../Models/service.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from '../../services/service.service';
-import { response } from 'express';
+
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-services',
@@ -119,19 +120,32 @@ export class ServicesComponent implements OnDestroy {
     // },
   ];
   filteredServiceList: ServiceModel[];
+  errorMessage: string;
 
   ngOnInit() {
     this.showLoading = true;
-    this.serviceService
-      .getAllServices()
-      .subscribe((response: ServiceModel[]) => {
+    this.serviceService.getAllServices().subscribe({
+      next: (response: ServiceModel[]) => {
         this.showLoading = false;
         this.servicesList = response;
-      });
-
-    this.activeRoute.queryParams.subscribe((query) => {
-      console.log(query);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.showLoading = false;
+        if (err.status == 0) {
+          this.errorMessage =
+            'Please check your internet connection and try again later.';
+        } else if (err.status >= 400 && err.status < 500) {
+          this.errorMessage = 'Client error: ' + err.statusText;
+        } else if (err.status >= 500 && err.status < 600) {
+          this.errorMessage = 'Internal Server error';
+        } else {
+          this.errorMessage = 'An unexpected error occurred';
+        }
+      },
     });
+
+    this.activeRoute.queryParams.subscribe((query) => {});
   }
 
   ngOnDestroy(): void {

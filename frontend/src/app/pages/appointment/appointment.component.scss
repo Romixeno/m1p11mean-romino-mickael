@@ -1,0 +1,236 @@
+@import "../../../globalStyle";
+.section-appointment-section {
+  h2 {
+    font-size: 3rem;
+  }
+
+  .container {
+    .search {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      label {
+        font-size: 1.4rem;
+      }
+      input {
+        height: 30px;
+        outline: none;
+        padding-left: 5px;
+        border: 1px solid rgb(193, 193, 193);
+      }
+    }
+
+    .appointment-form {
+      // background-color: beige;
+      margin-top: 1.5rem;
+
+      h3 {
+        font-size: 2.5rem;
+        margin: 10px 0;
+      }
+      .step {
+        margin-left: 5px;
+        display: block;
+        font-size: 1.4rem;
+        margin-top: 0px;
+        font-weight: 500;
+      }
+      .select-date {
+        width: max-content;
+        border: 1px solid lightgray;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        padding: 0 7px;
+        input {
+          width: 150px;
+          outline: none;
+          height: 30px;
+          font-size: 1.4rem;
+          // border: 1px solid lightgray;
+          pointer-events: none;
+          border: none;
+        }
+        span {
+          font-size: 1.4rem;
+        }
+      }
+
+      .services-select {
+        margin-top: 1.5rem;
+      }
+      .col {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        .left-panel,
+        .right-employee {
+          flex: 1;
+        }
+        .left-panel {
+          margin-bottom: 10px;
+
+          .left-panel-header {
+            height: max-content;
+            padding: 10px 15px;
+            border-radius: 0;
+            background-color: rgb(46, 46, 46);
+            .left-panel-header-type {
+              color: rgb(230, 230, 230);
+              font-size: 1.6rem;
+            }
+          }
+
+          .input-box {
+            display: flex;
+            padding: 1rem 1.5rem;
+            justify-content: space-between;
+            gap: 5px;
+            border-bottom: 1px solid lightgray;
+            .description {
+              .name {
+                font-weight: bold;
+                font-size: 1.4rem;
+              }
+              .price-duration {
+                margin-top: 5px;
+                font-size: 1.3rem;
+                font-weight: 400;
+                display: flex;
+                gap: 25px;
+                align-items: center;
+                .price {
+                  font-weight: 500;
+                }
+                .duration {
+                  font-weight: 400;
+                  display: flex;
+                  gap: 5px;
+                  align-items: center;
+                }
+                i {
+                  color: $brown;
+                }
+              }
+
+              .description-text {
+                margin-top: 5px;
+                text-align: justify;
+                color: rgb(117, 117, 117);
+                font-size: 1.2rem;
+              }
+            }
+          }
+        }
+
+        .right-employee {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .employee-info {
+          }
+          .employee-select {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            label {
+              font-size: 1.4rem;
+            }
+            select {
+              outline: none;
+              width: 250px;
+              height: 35px;
+              border: 1px solid lightgray;
+            }
+
+            .select-container {
+              width: 250px;
+              // height: 35px;
+              padding: 0rem 0.5rem;
+              border: 1px solid lightgray;
+            }
+          }
+          small {
+            &.error {
+              color: red;
+            }
+          }
+        }
+      }
+      // .input-box {
+      //   width: 150px;
+      //   display: flex;
+      //   flex-direction: column;
+      //   gap: 5px;
+
+      //   select {
+      //     outline: none;
+      //     height: 30px;
+      //     width: 150px;
+      //     option {
+      //       height: 30px;
+      //       .info {
+      //         display: flex;
+      //         flex-direction: column;
+      //       }
+      //       img {
+      //         width: 50px;
+      //         height: 60px;
+      //       }
+      //     }
+      //   }
+      // }
+    }
+  }
+}
+.service-selected {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $light;
+  padding: 1rem 3%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .total {
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+  .price-duration {
+    margin-top: 5px;
+    font-size: 1.3rem;
+    font-weight: 400;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    .price {
+      font-weight: 500;
+    }
+    .duration {
+      font-weight: 400;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    i {
+      color: $brown;
+    }
+  }
+
+  .btn-make-appointment {
+    padding: 1rem 1.5rem;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+    &:hover {
+      background-color: rgb(0, 0, 0);
+    }
+
+    &.disabled {
+      display: none;
+    }
+  }
+}

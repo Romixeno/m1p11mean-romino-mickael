@@ -1,38 +1,59 @@
 <div
   class="header"
   appScroll
-  *ngIf="!isLoggedIn || user?.userType == 'Client'; else managerHeaderTemplate"
+  *ngIf="!user || userType == 'Client' || userType == 'Employee'"
 >
   <div class="header-top">
     <div class="header-top-left">
       <span><i class="fa-regular fa-phone"></i> +261 38 70 846 43</span>
     </div>
     <div class="header-top-right">
-      <ng-container *ngIf="isLoggedIn && user?.userType == 'Client'">
-        <div class="user-info">
+      <ng-container *ngIf="userType == 'Client'">
+        <div class="user-info" (click)="toggleDropdown()">
           <div class="user-avatar">
-            <!-- User Avatar Image Goes Here -->
-            <img src="../../../assets/noavatar.jpg" alt="" />
+            <img
+              [src]="
+                user.image
+                  ? 'http://localhost:3001' + user.image
+                  : 'assets/noavatar.jpg'
+              "
+              alt=""
+            />
           </div>
-          <div class="user-name">
-            <!-- User Name Goes Here -->
-            <span class="">{{ user?.lastName }}</span>
+          <div class="icon-menu">
+            <i class="fa-regular fa-chevron-down"></i>
+          </div>
+          <div
+            class="dropdown-menu"
+            [ngClass]="{ active: showDropdown }"
+            *ngIf="showDropdown"
+          >
+            <a (click)="onLogout()"
+              >Logout <i class="fa-thin fa-right-from-bracket"></i
+            ></a>
           </div>
         </div>
-        <span>|</span>
-        <a href="#"><i class="fa-light fa-bag-shopping"></i></a>
-        <span>|</span>
-        <button class="btn-logout" (click)="onLogout()">
-          Logout <i class="fa-thin fa-right-from-bracket"></i>
-        </button>
       </ng-container>
-      <!-- <ng-template #loginSignupTemplate>
-        <a [routerLink]="['/signup']">Sign up</a>
-        <span>|</span>
-        <a [routerLink]="['/login']" routerLinkActive="link-active"
-          ><i class="fa-light fa-user"></i> Log in</a
-        >
-      </ng-template> -->
+      <ng-container *ngIf="userType === 'Employee'">
+        <div class="user-info" (click)="toggleDropdown()">
+          <div class="user-avatar">
+            <img src="http://localhost:3001{{ user.image }}" alt="" />
+          </div>
+          <div class="icon-menu">
+            <i class="fa-regular fa-chevron-down"></i>
+          </div>
+
+          <div
+            class="dropdown-menu"
+            [ngClass]="{ active: showDropdown }"
+            *ngIf="showDropdown"
+          >
+            <a (click)="onEmployeeLogout()"
+              >Logout <i class="fa-thin fa-right-from-bracket"></i
+            ></a>
+          </div>
+        </div>
+      </ng-container>
       <ng-container *ngIf="!isLoggedIn">
         <a [routerLink]="['/signup']">Sign up</a>
         <span>|</span>
@@ -40,8 +61,6 @@
           ><i class="fa-light fa-user"></i> Log in</a
         >
       </ng-container>
-
-      <ng-container></ng-container>
     </div>
   </div>
   <div class="header-bottom">
@@ -49,28 +68,20 @@
       <!-- Logo -->
       <h1>Beauty Salon.</h1>
     </div>
-    <div class="header-bottom-links">
-      <!-- Home, services, etc. links -->
-      <a
-        [routerLink]="['']"
-        [routerLinkActiveOptions]="{ exact: true }"
-        routerLinkActive="active"
-        >Home</a
-      >
-      <a
-        [routerLink]="['/services']"
-        [routerLinkActiveOptions]="{ exact: false }"
-        routerLinkActive="active"
-        >Services</a
-      >
-      <a href="#">About us</a>
-      <a href="#">Contact</a>
-    </div>
+
+    <ng-container *ngIf="!userType || userType == 'Client'">
+      <client-guest-link></client-guest-link>
+    </ng-container>
+    <ng-container *ngIf="userType == 'Employee'">
+      <employee-link></employee-link>
+    </ng-container>
+
     <span class="search-icon">
       <i class="fa-light fa-search"></i>
     </span>
   </div>
 </div>
-<ng-template #managerHeaderTemplate>
-  <app-mg-header></app-mg-header>
-</ng-template>
+<app-mg-header
+  *ngIf="user && userType == 'Manager'"
+  [user]="user"
+></app-mg-header>

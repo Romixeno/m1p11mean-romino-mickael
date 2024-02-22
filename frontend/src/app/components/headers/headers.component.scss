@@ -37,7 +37,8 @@
       gap: 20px;
       align-items: center;
       font-size: 1.5rem;
-      a {
+
+      & > a {
         i {
           font-size: 1.4rem;
         }
@@ -55,11 +56,78 @@
       .user-info {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 2px;
+        position: relative;
+        cursor: pointer;
+        &:hover {
+          .icon-menu {
+            i {
+              opacity: 1;
+            }
+          }
+        }
+        .icon-menu {
+          i {
+            padding: 0.7rem;
+            transition: 0.3s ease;
+            opacity: 0.3;
+          }
+          // &:hover i {
+          //   opacity: 1;
+          // }
+        }
+
+        // ------------------------------------------
+        .dropdown-menu {
+          z-index: 5;
+          color: black;
+          width: max-content;
+          position: absolute;
+          top: 120%;
+          right: 0;
+          transform: translateX(10%);
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+          background-color: white;
+          border: 1px solid #ccc;
+          border-top: none;
+          display: block;
+          transition: 0.5s ease;
+
+          a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 15px;
+            font-weight: normal;
+            text-decoration: none;
+
+            color: rgb(107, 107, 107);
+            border-bottom: 1px solid lightgray;
+            &:hover {
+              color: black;
+
+              i {
+                transform: translateX(3px);
+              }
+            }
+          }
+          button {
+            display: block;
+            padding: 10px;
+            border: none;
+            background-color: transparent;
+            font-weight: normal;
+            cursor: pointer;
+            color: black;
+          }
+        }
+
+        // -----------------------------------
         .user-avatar {
-          width: 30px; /* Adjust as needed */
-          height: 30px; /* Adjust as needed */
-          border-radius: 50%; /* Makes the avatar image rounded */
+          pointer-events: none;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
           overflow: hidden;
 
           img {
@@ -77,7 +145,7 @@
 
       .btn-logout {
         cursor: pointer;
-        color: rgb(174, 174, 174);
+        // color: rgb(174, 174, 174);
         background-color: transparent;
         border: none;
         transition: all 0.3s ease;
@@ -85,9 +153,9 @@
           padding-left: 5px;
         }
 
-        &:hover {
-          color: rgb(255, 255, 255);
-        }
+        // &:hover {
+        //   color: rgb(255, 255, 255);
+        // }
       }
     }
   }
@@ -97,31 +165,31 @@
     justify-content: space-between;
     align-items: center;
 
-    .header-bottom-links {
-      display: flex;
-      gap: 5rem;
-      a {
-        font-size: 1.8rem;
-        color: white;
-        display: inline-block;
-        position: relative;
-        transition: 0.3s ease;
-        &:hover {
-          color: $brown;
-        }
-        &.active {
-          &::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -6px;
-            width: 100%;
-            height: 4px;
-            background-color: $brown;
-          }
-        }
-      }
-    }
+    // .header-bottom-links {
+    //   display: flex;
+    //   gap: 5rem;
+    //   a {
+    //     font-size: 1.8rem;
+    //     color: white;
+    //     display: inline-block;
+    //     position: relative;
+    //     transition: 0.3s ease;
+    //     &:hover {
+    //       color: $brown;
+    //     }
+    //     &.active {
+    //       &::after {
+    //         content: "";
+    //         position: absolute;
+    //         left: 0;
+    //         bottom: -6px;
+    //         width: 100%;
+    //         height: 4px;
+    //         background-color: $brown;
+    //       }
+    //     }
+    //   }
+    // }
     .search-icon {
       cursor: pointer;
       opacity: 0.5;
@@ -132,3 +200,52 @@
     }
   }
 }
+
+.dropdown-menu {
+  z-index: 5;
+  color: black;
+  width: 150px;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  // color: #333;
+}
+
+.dropdown-menu button {
+  display: block;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: black;
+}
+
+// .user-info,
+// .user-avatar {
+//   position: relative;
+// }
+
+// .dropdown-mark {
+//   position: absolute;
+//   bottom: -5px;
+//   right: -5px;
+//   background-color: #fff;
+//   padding: 5px;
+//   border: 1px solid #ccc;
+//   border-radius: 50%;
+//   cursor: pointer;
+// }
+
+// .user-avatar:hover .dropdown-menu {
+//   display: block;
+// }

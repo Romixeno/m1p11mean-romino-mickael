@@ -24,3 +24,7 @@ export class ServiceModel {
   //     this.image = image;
   // }
 }
+
+export class ServiceModelWithSelected extends ServiceModel {
+  selected: boolean = false;
+}

@@ -34,7 +34,23 @@ import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.
 import { MgEmployeesPageComponent } from './pages/managers/mg-employees-page/mg-employees-page.component';
 import { MgEmployeesTableComponent } from './pages/managers/components/mg-employees-table/mg-employees-table.component';
 import { MgEmployeesFormComponent } from './pages/managers/mg-employees-page/mg-employees-form/mg-employees-form.component';
-
+import { EmployeesComponent } from './pages/employees/employees.component';
+import { EmployeeLoginPageComponent } from './pages/employees/employee-login-page/employee-login-page.component';
+import { ClientGuestLinkComponent } from './components/headers/client-guest-link/client-guest-link.component';
+import { EmployeeLinkComponent } from './components/headers/employee-link/employee-link.component';
+import { AppointmentComponent } from './pages/appointment/appointment.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DurationFormatPipe } from './pipe/duration-format.pipe';
+import {
+  OWL_DATE_TIME_LOCALE,
+  OwlDateTimeModule,
+  OwlNativeDateTimeModule,
+} from '@danielmoncada/angular-datetime-picker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,15 +76,32 @@ import { MgEmployeesFormComponent } from './pages/managers/mg-employees-page/mg-
     MgEmployeesPageComponent,
     MgEmployeesTableComponent,
     MgEmployeesFormComponent,
+    EmployeesComponent,
+    EmployeeLoginPageComponent,
+    ClientGuestLinkComponent,
+    EmployeeLinkComponent,
+    AppointmentComponent,
+    DurationFormatPipe,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
-  providers: [provideHttpClient(withFetch())],
+  providers: [
+    provideHttpClient(withFetch()),
+    provideAnimationsAsync(),
+    { provide: OWL_DATE_TIME_LOCALE, useValue: 'fr' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

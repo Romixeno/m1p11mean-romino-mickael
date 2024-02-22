@@ -171,9 +171,27 @@ export class MgEmployeesFormComponent {
       if (key !== 'image' && key !== 'workingHours' && control) {
         this.formData.append(key, control.value);
       } else if (key == 'workingHours' && control) {
+        const originalWH: {}[] = this.employeeForm.value.workingHours;
+        const compareDay = (a: any, b: any) => {
+          let sortedDay = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+          ];
+          return (
+            sortedDay.indexOf(a.dayOfWeek) - sortedDay.indexOf(b.dayOfWeek)
+          );
+        };
+        originalWH.sort(compareDay);
+        console.log(originalWH);
         this.formData.append(
           'workingHours',
-          JSON.stringify(this.employeeForm.value.workingHours)
+          // JSON.stringify(this.employeeForm.value.workingHours)
+          JSON.stringify(originalWH)
         );
       }
     });

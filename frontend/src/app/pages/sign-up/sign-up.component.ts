@@ -54,7 +54,7 @@ export class SignUpComponent {
 
     const body = { ...other, ...pass };
     console.log(body);
-    this.authService.signUp(body).subscribe({
+    this.authService.signUpUser(body).subscribe({
       next: (response: User) => {
         console.log(response);
         this.router.navigate(['/login'], {
