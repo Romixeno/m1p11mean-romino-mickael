@@ -15,11 +15,13 @@ import { EmployeeLoginPageComponent } from './pages/employees/employee-login-pag
 import { CanActivateManager } from './guard/manager.guard';
 import { CanActivateLoginPage } from './guard/pageLogin.guard';
 import { AppointmentComponent } from './pages/appointment/appointment.component';
+import { appointmentGuard } from './guard/appointment.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
     path: 'appointment',
+    canActivate: [appointmentGuard],
     canDeactivate: [
       (comp: AppointmentComponent) => {
         return comp.canExit();
