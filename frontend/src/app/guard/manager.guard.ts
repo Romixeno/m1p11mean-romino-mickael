@@ -13,7 +13,7 @@ export class CanActivateManager {
 
   canActivate(): boolean | UrlTree {
     const userType = this.authService.getUserType();
-    console.log(userType);
+
     if (!userType || userType === 'Client' || userType === 'Employee') {
       return this.router.createUrlTree(['/']);
     }

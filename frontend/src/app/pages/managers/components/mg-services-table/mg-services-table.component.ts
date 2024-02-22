@@ -26,7 +26,6 @@ export class MgServicesTableComponent implements OnDestroy {
     this.getServices();
     this.subscription = this.serviceService.ses$.subscribe({
       next: (service: ServiceModel[]) => {
-        console.log(service);
         this.serviceList = service;
         this.showLoading = false;
       },

@@ -14,7 +14,7 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   userType$ = this.userTypeSubject.asObservable();
-
+  baseUrl = 'http://localhost:3001';
   constructor() {
     this.isAuthenticated();
   }
@@ -59,7 +59,7 @@ export class AuthService {
   // -------------------------------- Client auth ------------------------------------------
   loginUser(body: { email: string; password: string }) {
     return this.http
-      .post('http://localhost:3001/user/login', body, {
+      .post(`${this.baseUrl}/client/login`, body, {
         withCredentials: true,
       })
       .pipe(
@@ -73,18 +73,18 @@ export class AuthService {
   }
   logoutUser() {
     return this.http
-      .delete('http://localhost:3001/logout', { withCredentials: true })
+      .delete(`${this.baseUrl}/client/logout`, { withCredentials: true })
       .pipe(tap(() => this.deleteUser()));
   }
   signUpUser(body: any) {
-    return this.http.post('http://localhost:3001/user/register', body);
+    return this.http.post(`${this.baseUrl}/client/register`, body);
   }
   // ---------------------------- Client auth end here --------------------------------------
   // -------------------------------Employee auth ---------------------------------------------
 
-  loginEmployee(formData: FormData) {
+  loginEmployee(body: { email: string; password: string }) {
     return this.http
-      .post(`http://localhost:3001/login/employee`, formData, {
+      .post(`${this.baseUrl}/login/employee`, body, {
         withCredentials: true,
       })
       .pipe(
@@ -98,7 +98,7 @@ export class AuthService {
   }
   logoutEmployee() {
     return this.http
-      .delete(`http://localhost:3001/employee/logout`, {
+      .delete(`${this.baseUrl}/employee/logout`, {
         withCredentials: true,
       })
       .pipe(
@@ -109,6 +109,35 @@ export class AuthService {
   }
 
   // ---------------------------- Employee auth end here -------------------------------------
+
+  // ------------------------------------ Employee auth -----------------------------------------
+  loginManager(body: { email: string; password: string }) {
+    return this.http
+      .post(`${this.baseUrl}/manager/login`, body, {
+        withCredentials: true,
+      })
+      .pipe(
+        tap((response: any) => {
+          const manager = response;
+          const { password, __v, ...other } = manager;
+          this.setUser(other);
+          this.isAuthenticated();
+        })
+      );
+  }
+  logoutManager() {
+    return this.http
+      .delete(`${this.baseUrl}/manager/logout`, {
+        withCredentials: true,
+      })
+      .pipe(
+        tap(() => {
+          this.deleteUser();
+        })
+      );
+  }
+
+  // --------------------------- Manager auth end here ----------------------------------------
   isAuthenticated(): void {
     const user = this.getUser();
 

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import Manager from "../models/managerModels";
+import Manager from "../models/managerModels.js";
 import Joi from "joi";
 
 const registerSchema = Joi.object({
@@ -19,6 +19,7 @@ const registerSchema = Joi.object({
 });
 
 export const register = async (req, res) => {
+  console.log("ato");
   try {
     const { error, value } = registerSchema.validate(req.body);
     if (error) {
@@ -46,6 +47,7 @@ export const register = async (req, res) => {
 
     const savedManager = await newManager.save();
 
+    delete savedManager.password;
     res.status(201).json(savedManager);
   } catch (error) {
     console.error(error);
@@ -84,7 +86,7 @@ export const login = async (req, res) => {
 
     try {
       const token = jwt.sign(
-        { userId: user._id, userType: user.userType },
+        { userId: manager._id, userType: manager.userType },
         "secret",
         { expiresIn: "30d" }
       );
@@ -94,8 +96,8 @@ export const login = async (req, res) => {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         secure: true,
       });
-
-      res.status(200).json({ user: user });
+      const { __v, password, ...other } = manager._doc;
+      res.status(200).send(other);
     } catch (error) {
       console.error("Error creating token or setting cookie:", error);
       res.status(500).json({ error: "Internal Server Error" });

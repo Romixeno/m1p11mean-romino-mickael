@@ -17,6 +17,7 @@ import employerRoute from "./ressources/employerRoute.js";
 import taskRoute from "./ressources/taskRoute.js";
 import searchRoute from "./ressources/searchRoute.js";
 import statistiqueRoute from "./ressources/statistiqueRoute.js";
+import managerRoute from "./ressources/managerRoute.js";
 
 const app = express();
 
@@ -63,12 +64,13 @@ mongooseConnect().then(() => {
   app.use("/", serviceRoute);
   app.use("/", preferenceRoute);
   app.use("/", remindRoute);
+  app.use("/", managerRoute);
+  app.use("/", employerRoute);
   app.use("/", payementRoute);
   app.use("/", employerRoute);
   app.use("/", taskRoute);
   app.use("/", searchRoute);
-  app.use("/",statistiqueRoute);
-
+  app.use("/", statistiqueRoute);
   app.listen(3001, () => {
     console.log("http://localhost:3001");
   });

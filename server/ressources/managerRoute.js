@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, logout, register } from "../controllers/managerController";
+import { login, logout, register } from "../controllers/managerController.js";
 
 export default Router()
   .get("/getManager", (req, res) => {})

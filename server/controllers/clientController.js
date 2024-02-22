@@ -68,6 +68,7 @@ export const login = async (req, res) => {
     }
     //validation user
     const client = await Client.findOne({ email: value.email });
+
     if (!client) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
@@ -81,7 +82,7 @@ export const login = async (req, res) => {
 
     try {
       const token = jwt.sign(
-        { userId: user._id, userType: user.userType },
+        { userId: client._id, userType: client.userType },
         "secret",
         { expiresIn: "30d" }
       );
@@ -92,7 +93,7 @@ export const login = async (req, res) => {
         secure: true,
       });
 
-      res.status(200).json({ user: user });
+      res.status(200).json({ user: client });
     } catch (error) {
       console.error("Error creating token or setting cookie:", error);
       res.status(500).json({ error: "Internal Server Error" });

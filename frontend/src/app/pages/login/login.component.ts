@@ -77,11 +77,11 @@ export class LoginComponent {
       next: (response: any) => {
         const user = response.user;
 
-        if (user.userType == 'Client') {
-          this.router.navigate(['/']);
-        } else {
-          this.router.navigateByUrl('/manager/services');
-        }
+        // if (user.userType == 'Client') {
+        this.router.navigate(['/']);
+        // } else {
+        //   this.router.navigateByUrl('/manager/services');
+        // }
       },
       error: (err: HttpErrorResponse) => {
         this.setErrorMessage(err);

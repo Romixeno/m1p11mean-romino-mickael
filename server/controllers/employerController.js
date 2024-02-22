@@ -213,11 +213,11 @@ export const loginEmployee = async (req, res) => {
         "secret",
         { expiresIn: "30d" }
       );
-      // res.cookie("rdi", token, {
-      //   httpOnly: true,
-      //   maxAge: 30 * 24 * 60 * 60 * 1000,
-      //   secure: true,
-      // });
+      res.cookie("rdi", token, {
+        httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        secure: true,
+      });
 
       res.status(200).send(employee);
     } catch (error) {

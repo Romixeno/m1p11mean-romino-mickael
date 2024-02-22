@@ -17,7 +17,7 @@ export class MgHeaderComponent {
   ngOnInit() {}
 
   onLogout() {
-    this.authService.logoutUser().subscribe({
+    this.authService.logoutManager().subscribe({
       next: () => {
         this.router.navigate(['/']);
       },
