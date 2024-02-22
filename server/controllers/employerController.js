@@ -180,4 +180,59 @@ export const deleteEmployee = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const signInSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+});
 
+export const loginEmployee = async (req, res) => {
+  try {
+    const { error, value } = signInSchema.validate(req.body);
+    if (error) {
+      req.flash("error", error.message);
+      return res.status(400).json({ error: error.message });
+    }
+
+    const employee = await Employer.findOne({ email: value.email });
+    if (!employee) {
+      return res.status(404).send("User not found");
+    }
+
+    const verifyPassword = await bcrypt.compare(
+      value.password,
+      employee.password
+    );
+    if (!verifyPassword) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    delete employee.password;
+    try {
+      const token = jwt.sign(
+        { userId: employee._id, userType: employee.userType },
+        "secret",
+        { expiresIn: "30d" }
+      );
+      // res.cookie("rdi", token, {
+      //   httpOnly: true,
+      //   maxAge: 30 * 24 * 60 * 60 * 1000,
+      //   secure: true,
+      // });
+
+      res.status(200).send(employee);
+    } catch (error) {
+      console.error("Error creating token or setting cookie:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const logoutEmployee = async (req, res) => {
+  return res
+    .status(200)
+    .clearCookie("rdi")
+    .json({ message: "logout_employee" });
+};

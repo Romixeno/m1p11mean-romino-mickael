@@ -167,3 +167,37 @@ export const deleteService = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const serviceTypeSchema = Joi.object({
+  name: Joi.string().required(),
+});
+export const addServiceType = async (req, res) => {
+  try {
+    const { error, value } = serviceTypeSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    const serviceTypeVerify = ServiceType.findOne({ name: value.name });
+    if (serviceTypeVerify) {
+      return res.status(403).send("This serviceType already exists");
+    }
+
+    const data = new ServiceType({ name: value.name });
+
+    const savedServiceType = await data.save();
+    res.status(201).send(savedServiceType);
+  } catch (error) {
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
+export const getAllServiceTypes = async (req, res) => {
+  try {
+    const servicesType = await ServiceType.find();
+
+    res.status(200).send(servicesType);
+  } catch (error) {
+    return res.status(500).send("Internal Server Error");
+  }
+};
