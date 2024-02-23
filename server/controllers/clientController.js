@@ -2,7 +2,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import Client from "../models/clientModels.js";
 import Joi from "joi";
-
+import path from "path";
+import fs from "fs";
+import crypto from "crypto";
 const registerSchema = Joi.object({
   firstName: Joi.string().not("").required(),
   lastName: Joi.string().not("").required(),
@@ -136,5 +138,64 @@ export const getAllClients = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updateClient = async (req, res) => {
+  try {
+    let fileNameUpdate;
+    console.log("ato @ito");
+    const imagesDir = path.join("public", "images");
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+
+    const client = await Client.findById(req.params._id);
+
+    if (!client) {
+      return res.status(404).send("Client not found");
+    }
+    if (req.files && req.files.image) {
+      const { image } = req.files;
+      const newFileName =
+        "/images/IMG-" +
+        Date.now() +
+        crypto.randomInt(1000, 999999) +
+        path.extname(image.name);
+      image.mv(path.join("public", newFileName), (e) => {
+        if (e) {
+          console.log(e);
+          return res.status(500).json({ error: "Error during file upload" });
+        }
+
+        if (client.image && !client.image.includes("noavatar.jpg")) {
+          fs.unlinkSync(path.join("public", client.image));
+        }
+
+        client.image = newFileName;
+        client.set(req.body);
+        client
+          .save()
+          .then((updatedClient) => res.json(updatedClient))
+          .catch((updateError) =>
+            res
+              .status(500)
+              .json({ error: "Error during Client update", updateError })
+          );
+      });
+    } else {
+      client.set(req.body);
+      client
+        .save()
+        .then((updatedClient) => res.json(updatedClient))
+        .catch((updateError) =>
+          res
+            .status(500)
+            .json({ error: "Error during Client update", updateError })
+        );
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };

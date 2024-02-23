@@ -7,6 +7,14 @@ import { tap } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  http: HttpClient = inject(HttpClient);
+  private http: HttpClient = inject(HttpClient);
+  private baseUrl = 'http://localhost:3001';
+  verifyClientId(id: string) {
+    return this.http.get(`${this.baseUrl}/client/profile/${id}`);
+  }
+
+  updateClient(id: string, formData: FormData) {
+    return this.http.patch(`${this.baseUrl}/client/update/${id}`, formData);
+  }
   constructor() {}
 }

@@ -16,9 +16,16 @@ import { CanActivateManager } from './guard/manager.guard';
 import { CanActivateLoginPage } from './guard/pageLogin.guard';
 import { AppointmentComponent } from './pages/appointment/appointment.component';
 import { appointmentGuard } from './guard/appointment.guard';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { onlyConnectedGuard } from './guard/only-connected.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
+  {
+    path: 'profile',
+    canActivate: [onlyConnectedGuard],
+    component: ProfileComponent,
+  },
   {
     path: 'appointment',
     canActivate: [appointmentGuard],

@@ -33,7 +33,11 @@ const appointmentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  dateTime: {
+    type: Date,
+    required: true,
+  },
 });
 
-const Appointment = mongoose.model("Appointment", appointmentSchema);
-export default Appointment;
+const AppointmentModel = mongoose.model("AppointmentV2", appointmentSchema);
+export default AppointmentModel;

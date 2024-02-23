@@ -18,6 +18,7 @@ import taskRoute from "./ressources/taskRoute.js";
 import searchRoute from "./ressources/searchRoute.js";
 import statistiqueRoute from "./ressources/statistiqueRoute.js";
 import managerRoute from "./ressources/managerRoute.js";
+import appointmentRoute from "./ressources/appointmentRoute.js";
 
 const app = express();
 
@@ -64,6 +65,7 @@ mongooseConnect().then(() => {
   app.use("/", serviceRoute);
   app.use("/", preferenceRoute);
   app.use("/", remindRoute);
+  app.use("/", appointmentRoute);
   app.use("/", managerRoute);
   app.use("/", employerRoute);
   app.use("/", payementRoute);

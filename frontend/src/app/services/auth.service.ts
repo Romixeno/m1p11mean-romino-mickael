@@ -65,8 +65,13 @@ export class AuthService {
       .pipe(
         tap((response: any) => {
           const user = response.user;
-          const { password, __v, ...other } = user;
-          this.setUser(other); // Call setUser method after successful login
+          const { _id, image, userType, ...other } = user;
+          // const { password, __v, _id, image, userType, ...other } = user;
+          this.setUser({
+            _id: _id,
+            image: image,
+            userType: userType,
+          }); // Call setUser method after successful login
           this.isAuthenticated(); // Update authentication status
         })
       );

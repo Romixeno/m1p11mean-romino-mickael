@@ -51,6 +51,9 @@ import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ClientProfileComponent } from './pages/profile/client-profile/client-profile.component';
+import { EmployeeProfileComponent } from './pages/profile/employee-profile/employee-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +85,9 @@ import {
     EmployeeLinkComponent,
     AppointmentComponent,
     DurationFormatPipe,
+    ProfileComponent,
+    ClientProfileComponent,
+    EmployeeProfileComponent,
   ],
   imports: [
     BrowserModule,

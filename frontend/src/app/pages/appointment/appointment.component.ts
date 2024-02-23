@@ -8,6 +8,10 @@ import { ServiceService } from '../../services/service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeesService } from '../../services/employees.service';
 import { EmployeeModel } from '../../Models/employee.model';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { AppointmentService } from '../../services/appointment.service';
+import { AppointmentModel } from '../../Models/appointment.model';
 
 @Component({
   selector: 'app-appointment',
@@ -49,10 +53,14 @@ export class AppointmentComponent implements OnInit {
   errors: { [key: string]: string } = {};
   dateTest: any;
   min = new Date(Date.now());
+  errorMessage?: string;
 
   constructor(
     private serviceService: ServiceService,
-    private employeeService: EmployeesService
+    private employeeService: EmployeesService,
+    private authService: AuthService,
+    private userService: UserService,
+    private appointmentService: AppointmentService
   ) {}
 
   ngOnInit(): void {
@@ -158,6 +166,29 @@ export class AppointmentComponent implements OnInit {
     );
 
     console.log(selectedServices);
+    const user = this.authService.getUser();
+    this.userService.verifyClientId(user._id).subscribe({
+      next: (response) => {
+        const data: AppointmentModel = {
+          clientId: user._id,
+          services: selectedServices,
+          totalPrice: this.getTotalPrice(),
+          totalDuration: this.getTotalDuration(),
+          dateTime: this.dateTest,
+        };
+        this.appointmentService.newAppointment(data).subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (error: HttpErrorResponse) => {},
+        });
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 404) {
+          this.errorMessage = 'Not allow to make appointment';
+        }
+      },
+    });
   }
 
   onEmployeeSelectionChange(type: string, event) {
