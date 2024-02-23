@@ -24,8 +24,16 @@
         <img [src]="imgUrl" alt="" *ngIf="imgUrl" class="img-preview" />
       </div>
       <div class="link-container">
-        <a href="">My Appointment</a>
-        <a href="">My Preference</a>
+        <a href=""
+          ><i class="fa-solid fa-calendar-week"></i
+          ><span>My Appointment</span></a
+        >
+        <a href=""
+          ><i class="fa-regular fa-star"></i><span>My Preference</span>
+        </a>
+        <a href=""
+          ><i class="fa-regular fa-lock"></i><span>Change Password</span></a
+        >
       </div>
     </div>
     <form class="right" [formGroup]="profileForm" (ngSubmit)="onUpdate()">

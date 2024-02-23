@@ -1,0 +1,172 @@
+@import "../../../../globalStyle";
+.section-profile {
+  h3 {
+    font-size: 2rem;
+    color: rgb(172, 172, 172);
+  }
+
+  .sb {
+    margin: 2.5rem auto;
+    width: max-content;
+  }
+  .profile-container {
+    min-height: 400px;
+    margin: 1rem auto;
+    width: max-content;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    .left {
+      background-color: rgb(24, 24, 24);
+      width: 250px;
+      border-right: 1px solid lightgray;
+      padding: 2rem 2rem;
+      display: flex;
+      gap: 20px;
+      flex-direction: column;
+      align-items: center;
+
+      .img-container {
+        position: relative;
+        .img-preview {
+          position: absolute;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          object-fit: cover;
+          top: 0;
+          left: 0;
+        }
+      }
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .link-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        a {
+          border-radius: 3px;
+          font-size: 1.4rem;
+          display: block;
+          padding: 0.7rem 1rem;
+          width: 100%;
+          background-color: $light;
+          color: rgb(24, 24, 24);
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          i {
+            font-size: 1.4rem;
+          }
+          span {
+            transition: 0.3s ease;
+          }
+          &:hover {
+            span {
+              transform: translateX(10px);
+            }
+          }
+        }
+      }
+    }
+    .right {
+      font-size: 1.6rem;
+      min-width: 400px;
+      padding: 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      .col {
+        display: flex;
+        gap: 5px;
+
+        &.profile-info {
+          flex: 1;
+        }
+      }
+      .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        small {
+          color: red;
+          font-size: 1.2rem;
+        }
+        label {
+          color: rgb(172, 172, 172);
+        }
+        input {
+          border: 1px solid transparent;
+          outline: none;
+          height: 32px;
+          font-size: 1.6rem;
+          pointer-events: none;
+          transition: all 0.5s ease;
+
+          &.edit {
+            border: 1px solid lightgray;
+            padding-left: 5px;
+
+            pointer-events: all;
+
+            &[type="file"] {
+              cursor: pointer;
+              border: 1px solid transparent;
+            }
+          }
+        }
+      }
+
+      .button {
+        flex: 1;
+        display: flex;
+        gap: 10px;
+        align-items: end;
+        // margin-top: 1.5rem;
+        .btn-toggle-update {
+          min-width: 150px;
+          border: none;
+          background-color: rgb(38, 125, 255);
+          color: white;
+          padding: 1rem 1rem;
+          cursor: pointer;
+
+          &.edit {
+            background-color: rgb(255, 52, 38);
+            color: white;
+
+            &:hover {
+              background: rgb(255, 23, 6);
+            }
+          }
+          &:hover {
+            background: rgb(6, 105, 253);
+          }
+        }
+        .btn-update {
+          min-width: 150px;
+          border: none;
+          background-color: rgb(59, 59, 59);
+          color: white;
+          padding: 1rem 1rem;
+          cursor: pointer;
+          &:hover {
+            background: rgb(31, 31, 31);
+          }
+
+          &.disabled {
+            background-color: rgb(142, 142, 142);
+            pointer-events: none;
+            // cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}

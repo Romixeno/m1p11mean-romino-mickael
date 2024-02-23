@@ -3,6 +3,7 @@ import Joi from "joi";
 import path from "path";
 import fs from "fs";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 //create employer
 const employerSchema = Joi.object({

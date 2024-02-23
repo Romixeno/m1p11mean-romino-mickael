@@ -1,1 +1,139 @@
-<p>employee-profile works!</p>
+<welcome-message>
+  <h1 class="presentation-text">
+    Welcome to Your Profile, take a moment to review and edit your details.
+    Whether it's your contact information or any other pertinent details, this
+    is your space to make sure everything reflects accurately.
+  </h1>
+</welcome-message>
+<section class="section-profile">
+  <h3>Profile > Info</h3>
+  <div class="sb sb-success" *ngIf="successMessage" @fade>
+    <!-- Your Account has been updated successfully -->
+    {{ successMessage }}
+  </div>
+  <div class="sb sb-error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+  <div class="profile-container" *ngIf="employee">
+    <div class="left">
+      <div class="img-container">
+        <img
+          src="http://localhost:3001{{ employee?.image }}"
+          alt="Profile Picture"
+        />
+        <img [src]="imgUrl" alt="" *ngIf="imgUrl" class="img-preview" />
+      </div>
+      <div class="link-container">
+        <a href=""
+          ><i class="fa-solid fa-calendar-week"></i><span>My task</span></a
+        >
+
+        <a href=""
+          ><i class="fa-regular fa-lock"></i><span>Change Password</span></a
+        >
+      </div>
+    </div>
+    <form class="right" [formGroup]="profileForm" (ngSubmit)="onUpdate()">
+      <div class="profile-info">
+        <label for="">Specialty</label>
+        <span>Hair</span>
+      </div>
+      <div class="col">
+        <div class="profile-info">
+          <label for="firstName">First Name</label>
+          <!-- <span id="firstName">{{ client.firstName }}</span> -->
+          <input
+            type="text"
+            formControlName="firstName"
+            [ngClass]="{ edit: isEditMode }"
+          />
+          <small
+            *ngIf="profileForm.get('firstName').errors?.['required'] && profileForm.get('firstName').touched"
+            >*First name must be required</small
+          >
+        </div>
+        <div class="profile-info">
+          <label for="lastName">Last Name</label>
+          <!-- <span id="lastName">{{ client.lastName }}</span> -->
+          <input
+            type="text"
+            formControlName="lastName"
+            [ngClass]="{ edit: isEditMode }"
+          />
+          <small
+            *ngIf="profileForm.get('lastName').errors?.['required'] && profileForm.get('lastName').touched"
+            >*Last name must be required</small
+          >
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <label for="phoneNumber">Phone Number:</label>
+        <!-- <span id="phoneNumber">{{ client.phoneNumber }}</span> -->
+        <input
+          type="text"
+          formControlName="phoneNumber"
+          [ngClass]="{ edit: isEditMode }"
+        />
+        <small
+          *ngIf="profileForm.get('phoneNumber').errors?.['required'] && profileForm.get('phoneNumber').touched"
+          >*Phone Number must be required</small
+        >
+      </div>
+      <div class="profile-info">
+        <label for="email">Email:</label>
+        <!-- <span id="email">{{ client.email }}</span> -->
+        <input
+          type="email"
+          formControlName="email"
+          [ngClass]="{ edit: isEditMode }"
+        />
+        <small
+          *ngIf="profileForm.get('email').errors?.['required'] && profileForm.get('email').touched"
+          >*Email must be required</small
+        >
+        <small *ngIf="profileForm.get('email').errors?.['invalidEmail']"
+          >*Email must be valid</small
+        >
+      </div>
+      <!-- <div class="profile-info">
+        <label for="password">Password:</label>
+        <span id="password">********</span>
+       
+      </div> -->
+      <div class="profile-info" *ngIf="isEditMode" @fade>
+        <label for="">Image</label>
+        <input
+          type="file"
+          (change)="onFileChange($event)"
+          [ngClass]="{ edit: isEditMode }"
+        />
+      </div>
+
+      <div class="button">
+        <button
+          (click)="UpdateInfo($event)"
+          [ngClass]="{ edit: isEditMode }"
+          class="btn-toggle-update"
+        >
+          {{ !isEditMode ? "Change my info" : "Cancel the change" }}
+        </button>
+        <button
+          class="btn-update"
+          *ngIf="isEditMode"
+          @fade
+          type="submit"
+          [disabled]="profileForm.invalid || (!profileForm.touched && !imgUrl)"
+          [ngClass]="{
+            disabled: profileForm.invalid || (!profileForm.touched && !imgUrl)
+          }"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+<div class="overlay" *ngIf="showLoading">
+  <div class="loader"></div>
+</div>
