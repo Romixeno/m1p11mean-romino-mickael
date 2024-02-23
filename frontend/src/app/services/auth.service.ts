@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, InjectionToken, PLATFORM_ID, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { userType } from '../Models/userType.type';
-import { EmployeeModel } from '../Models/employee.model';
 
 @Injectable({
   providedIn: 'root',
