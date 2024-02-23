@@ -35,7 +35,7 @@
     </div>
     <form class="right" [formGroup]="profileForm" (ngSubmit)="onUpdate()">
       <div class="profile-info">
-        <label for="">Specialty</label>
+        <label for="">Specialty For</label>
         <span>Hair</span>
       </div>
       <div class="col">
@@ -96,6 +96,7 @@
           >*Email must be valid</small
         >
       </div>
+
       <!-- <div class="profile-info">
         <label for="password">Password:</label>
         <span id="password">********</span>
@@ -108,6 +109,13 @@
           (change)="onFileChange($event)"
           [ngClass]="{ edit: isEditMode }"
         />
+      </div>
+
+      <div class="profile-info">
+        <label for="">Your working hours</label>
+        <div *ngFor="let hour of employee.workingHours">
+          <span>{{ hour.dayOfWeek }}: {{ hour.start }}-{{ hour.end }}</span>
+        </div>
       </div>
 
       <div class="button">

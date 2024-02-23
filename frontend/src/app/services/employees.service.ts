@@ -33,4 +33,8 @@ export class EmployeesService {
     // /deleteEmployee/:_id
     return this.http.delete(`${this.url}/deleteEmployee/${id}`);
   }
+
+  getEmployeeById(id: string) {
+    return this.http.get(`${this.url}/oneEmployee/${id}`);
+  }
 }
