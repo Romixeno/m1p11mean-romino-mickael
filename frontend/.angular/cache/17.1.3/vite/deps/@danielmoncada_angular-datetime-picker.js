@@ -6,6 +6,11 @@ import {
   OverlayModule
 } from "./chunk-BS655TQ7.js";
 import {
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  Validators
+} from "./chunk-LYJOXEOW.js";
+import {
   BasePortalOutlet,
   CdkPortalOutlet,
   ComponentPortal,
@@ -23,11 +28,6 @@ import {
   transition,
   trigger
 } from "./chunk-TRLI54BY.js";
-import {
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  Validators
-} from "./chunk-LYJOXEOW.js";
 import {
   A11yModule,
   CdkMonitorFocus,
