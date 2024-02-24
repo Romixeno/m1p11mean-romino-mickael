@@ -20,4 +20,17 @@ export const getAllAppointment = async (req, res) => {
   }
 };
 
-export const getOneAppointment = async (req, res) => {};
+export const getOneAppointment = async (req, res) => {
+  try {
+    const appointmentId = req.params.id;
+    const appointment = await AppointmentModel.findById(appointmentId);
+    
+    if (!appointment) {
+      return res.status(404).send("Appointment not found");
+    }
+    
+    return res.status(200).json(appointment);
+  } catch (error) {
+    return res.status(500).send("Internal Server Error");
+  }
+};
