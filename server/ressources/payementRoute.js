@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { createPayment, getAllPayments } from "../controllers/payementController.js";
+import {
+  capture,
+  createPayment,
+  getAllPayments,
+  order,
+} from "../controllers/payementController.js";
 export default Router()
-    .post('/createPayement',createPayment)
-    .get('/allPayement',getAllPayments)
+  .post("/createPayement", createPayment)
+  .get("/allPayement", getAllPayments)
+  .post("/payment/orders", order)
+  .post("/payment/orders/:orderID/capture", capture);

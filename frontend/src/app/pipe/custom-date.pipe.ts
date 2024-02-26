@@ -8,10 +8,11 @@ export class CustomDatePipe implements PipeTransform {
     const newDate = new Date(value);
     return newDate.toLocaleString('en-US', {
       year: 'numeric',
-      month: '2-digit',
+      month: 'short',
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
+      weekday: 'short',
     });
   }
 }

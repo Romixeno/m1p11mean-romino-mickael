@@ -1,27 +1,51 @@
 import Payment from "../models/payementModels.js";
+import { captureOrder, createOrder } from "../utils/payment.js";
 
 export const createPayment = async (req, res) => {
-    try {
-        const { client, service, amount } = req.body;
+  try {
+    const { client, service, amount } = req.body;
 
-        const newPayment = new Payment({ client , service, amount });
+    const newPayment = new Payment({ client, service, amount });
 
-        await newPayment.save();
+    await newPayment.save();
 
-        res.status(201).json(newPayment);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    res.status(201).json(newPayment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
 export const getAllPayments = async (req, res) => {
-    try {
-        const payments = await Payment.find();
+  try {
+    const payments = await Payment.find();
 
-        res.status(200).json(payments);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    res.status(200).json(payments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const order = async (req, res) => {
+  try {
+    // use the cart information passed from the front-end to calculate the order amount detals
+    const { cart } = req.body;
+    const { jsonResponse, httpStatusCode } = await createOrder(cart);
+    res.status(httpStatusCode).json(jsonResponse);
+  } catch (error) {
+    console.error("Failed to create order:", error);
+    res.status(500).json({ error: "Failed to create order." });
+  }
+};
+
+export const capture = async (req, res) => {
+  try {
+    const { orderID } = req.params;
+    const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
+    res.status(httpStatusCode).json(jsonResponse);
+  } catch (error) {
+    console.error("Failed to create order:", error);
+    res.status(500).json({ error: "Failed to capture order." });
+  }
 };

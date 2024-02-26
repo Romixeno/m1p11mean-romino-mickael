@@ -8,24 +8,27 @@ export class EmployeeModel {
   phoneNumber: string;
   workingHours: [
     {
-      dayOfWeek: {
-        type: String;
-        enum: [
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-          'Sunday'
-        ];
-      };
-      start: {
-        type: String;
-      };
-      end: {
-        type: String;
-      };
+      // dayOfWeek: {
+      //   type: String;
+      //   enum: [
+      //     'Monday',
+      //     'Tuesday',
+      //     'Wednesday',
+      //     'Thursday',
+      //     'Friday',
+      //     'Saturday',
+      //     'Sunday'
+      //   ];
+      // };
+      dayOfWeek: string;
+      // start: {
+      //   type: String;
+      // };
+      // end: {
+      //   type: String;
+      // };
+      start: string;
+      end: string;
     }
   ];
   commission: {

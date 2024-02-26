@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { AppointmentService } from '../../services/appointment.service';
 import { AppointmentModel } from '../../Models/appointment.model';
+import { WeekDay } from '@angular/common';
 
 @Component({
   selector: 'app-appointment',
@@ -51,8 +52,10 @@ export class AppointmentComponent implements OnInit {
   selectedType: string;
   selectedEmployees: { [key: string]: string } = {};
   errors: { [key: string]: string } = {};
-  dateTest: any;
-  min = new Date(Date.now());
+  dateTest: Date;
+  min: Date;
+  employeeFilterByDate: EmployeeModel[];
+  showConfirmAppointment: boolean = false;
   errorMessage?: string;
 
   constructor(
@@ -64,11 +67,14 @@ export class AppointmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.min = new Date(Date.now());
+    this.min.setHours(this.min.getHours() + 1);
     const { serviceId, serviceType } = history.state;
 
     this.serviceService.getAllServices().subscribe({
       next: (response: ServiceModel[]) => {
         this.servicesList = response;
+
         this.transformedService = this.servicesList.map((service) => {
           return { ...service, selected: false };
         });
@@ -84,13 +90,41 @@ export class AppointmentComponent implements OnInit {
     this.employeeService.getAllEmployee().subscribe({
       next: (response: EmployeeModel[]) => {
         this.employeeList = response;
+        this.employeeFilterByDate = response;
       },
       error: (error: HttpErrorResponse) => {},
     });
   }
+  confirmAppointmentToggle() {
+    this.errors = this.verifyEmployeeSelection();
 
+    if (Object.keys(this.errors).length > 0) {
+      console.log('Errors:', this.errors);
+      return;
+    }
+    this.showConfirmAppointment = !this.showConfirmAppointment;
+  }
   checkChange(event: Event) {
     console.log(this.dateTest);
+    this.setEmployeeFilterByDate();
+    this.selectedEmployees = {};
+  }
+  getSelectedEmployeesLength() {
+    return Object.keys(this.selectedEmployees).length;
+  }
+
+  setEmployeeFilterByDate() {
+    const test = this.dateTest.toLocaleDateString('en-Us', {
+      weekday: 'long',
+    });
+    console.log(test);
+    this.employeeFilterByDate = this.employeeList.filter((employee) => {
+      if (employee.workingHours.find((hours) => hours.dayOfWeek == test)) {
+        return true;
+      }
+      return false;
+    });
+    console.log(this.employeeFilterByDate);
   }
 
   setSelected(index: string, type?: string) {
@@ -120,9 +154,28 @@ export class AppointmentComponent implements OnInit {
     return this.transformedService?.filter((service) => service.type === type);
   }
 
+  getEmployeeForType(type: string): EmployeeModel[] {
+    return this.employeeList.filter((employee) => employee.specialty == type);
+  }
+
+  getEmployeeImage(type: string) {
+    const employee: EmployeeModel = this.employeeList.find(
+      (employe) => employe._id == this.selectedEmployees[type]
+    );
+
+    if (employee) {
+      return employee.image;
+    }
+
+    return null;
+  }
+
   getSelectedServicesLength(): number {
     return this.transformedService?.filter((service) => service.selected)
       .length;
+  }
+  selectedServicesListFunc() {
+    return this.transformedService?.filter((service) => service.selected);
   }
 
   getTotalPrice(): number {
@@ -192,7 +245,18 @@ export class AppointmentComponent implements OnInit {
   }
 
   onEmployeeSelectionChange(type: string, event) {
-    console.log(event.value);
+    // const employee = this.employeeList.find((empl) => empl._id == event.value);
+    // console.log(
+    //   this.dateTest.toLocaleDateString('en-Us', {
+    //     weekday: 'long',
+    //   })
+    // );
+    // const test = this.dateTest.toLocaleDateString('en-Us', {
+    //   weekday: 'long',
+    // });
+
+    // const find = employee.workingHours.find((hours) => hours.dayOfWeek == test);
+    // console.log(find);
     this.selectedEmployees[type] = event.value;
   }
 
@@ -207,6 +271,14 @@ export class AppointmentComponent implements OnInit {
 
     return errors;
   }
+
+  // verify() : boolean {
+  //   const error = this.verifyEmployeeSelection()
+
+  //   if(!error){
+  //     return
+  //   }
+  // }
 
   canExit(): boolean {
     if (this.getSelectedServicesLength() > 0) {

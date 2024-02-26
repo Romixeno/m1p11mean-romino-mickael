@@ -133,13 +133,23 @@ export class MgEmployeesFormComponent {
   }
 
   onAddWorkingHours() {
-    const frmGroup = new FormGroup({
-      dayOfWeek: new FormControl(null, Validators.required),
-      start: new FormControl(null, Validators.required),
-      end: new FormControl(null, Validators.required),
-    });
+    const maxWeeks = 7;
+    const workingHoursArray = this.employeeForm.get(
+      'workingHours'
+    ) as FormArray;
+    if (workingHoursArray.length < maxWeeks) {
+      const frmGroup = new FormGroup({
+        dayOfWeek: new FormControl(null, Validators.required),
+        start: new FormControl(null, Validators.required),
+        end: new FormControl(null, Validators.required),
+      });
 
-    (<FormArray>this.employeeForm.get('workingHours')).push(frmGroup);
+      workingHoursArray.push(frmGroup);
+    } else {
+      console.log(
+        'Maximum number of weeks reached. Cannot add more working hours.'
+      );
+    }
   }
   DeleteWorkingHours(index: number) {
     const controls = <FormArray>this.employeeForm.get('workingHours');

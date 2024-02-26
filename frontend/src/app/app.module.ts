@@ -59,6 +59,8 @@ import { AppointmentListsComponent } from './pages/appointment/appointment-lists
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MatTableModule } from '@angular/material/table';
 import { CustomDatePipe } from './pipe/custom-date.pipe';
+import { ConfirmAppointmentComponent } from './pages/appointment/components/confirm-appointment/confirm-appointment.component';
+import { PaypalComponent } from './components/paypal/paypal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +99,8 @@ import { CustomDatePipe } from './pipe/custom-date.pipe';
     AppointmentListsComponent,
     NotFoundComponent,
     CustomDatePipe,
+    ConfirmAppointmentComponent,
+    PaypalComponent,
   ],
   imports: [
     BrowserModule,

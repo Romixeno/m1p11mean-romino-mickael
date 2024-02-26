@@ -10,6 +10,7 @@
 
   <div class="container">
     <div class="appointment-form">
+      <h3>Choose Your Date</h3>
       <span class="step">> Select Date</span>
       <div class="select-date">
         <input
@@ -69,10 +70,17 @@
                 </div>
               </mat-expansion-panel>
 
-              <div class="right-employee">
+              <!-- <div class="right-employee">
                 <ng-container *ngIf="hasSomeSelected(type)">
                   <div class="employee-info">
-                    <img src="" alt="" />
+                    <img
+                      src="http://localhost:3001{{
+                        getEmployeeImage(type) || '/images/noavatar.jpg'
+                      }}"
+                      alt=""
+                      *ngIf="selectedEmployees?.[type]"
+                      @fade
+                    />
                   </div>
                   <div class="employee-select">
                     <label for="">Select an Employee for {{ type }}</label>
@@ -82,9 +90,13 @@
                           onEmployeeSelectionChange(type, $event)
                         "
                       >
+                      
                         <mat-option
                           [value]="employee._id"
-                          *ngFor="let employee of employeeList; index as i"
+                          *ngFor="
+                            let employee of employeeFilterByDate;
+                            index as i
+                          "
                           >{{
                             employee.firstName + " " + employee.lastName
                           }}</mat-option
@@ -97,10 +109,45 @@
                     >
                   </div>
                 </ng-container>
-              </div>
+              </div> -->
             </div>
           </ng-container>
         </div>
+      </div>
+      <!-- *ngIf="getSelectedServicesLength() > 0" -->
+      <div
+        class="select-employee-container"
+        *ngIf="getSelectedServicesLength() > 0"
+        @fade
+      >
+        <h3>Choose the Employee you want</h3>
+
+        <span class="step">> Select Employee</span>
+
+        <ng-container *ngFor="let type of servicesType">
+          <!-- *ngIf="hasSomeSelected(type)" -->
+          <div class="select-container" *ngIf="hasSomeSelected(type)">
+            <div class="select-box">
+              <div class="row">
+                <label for="">{{ "For Your " + type }}</label>
+                <div class="mat-select">
+                  <mat-select
+                    (selectionChange)="onEmployeeSelectionChange(type, $event)"
+                  >
+                    <mat-option
+                      [value]="employee._id"
+                      *ngFor="let employee of employeeList; index as i"
+                      >{{
+                        employee.firstName + " " + employee.lastName
+                      }}</mat-option
+                    >
+                  </mat-select>
+                </div>
+              </div>
+              <small *ngIf="errors[type]">*Employee is required</small>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -108,7 +155,11 @@
 
 <div
   class="service-selected"
-  *ngIf="getSelectedServicesLength() > 0 && dateTest"
+  *ngIf="
+    getSelectedServicesLength() > 0 &&
+    dateTest &&
+    getSelectedEmployeesLength() > 0
+  "
   @fadeInOut
 >
   <div class="left-side">
@@ -131,8 +182,16 @@
     >
       Cancel
     </button>
-    <button class="btn-make-appointment" (click)="makeAppointmentClicked()">
+    <!-- <button class="btn-make-appointment" (click)="makeAppointmentClicked()">
+      Make an appointment
+    </button> -->
+    <button class="btn-make-appointment" (click)="confirmAppointmentToggle()">
       Make an appointment
     </button>
   </div>
 </div>
+<app-confirm-appointment
+  [selectedServices]="selectedServicesListFunc()"
+  [dateTime]="dateTest"
+  *ngIf="showConfirmAppointment"
+></app-confirm-appointment>

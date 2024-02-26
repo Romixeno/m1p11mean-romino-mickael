@@ -28,8 +28,7 @@ export class AppointmentListsComponent {
     this.appointmentService.getClientAppointment(user._id).subscribe({
       next: (response: AppointmentModel[]) => {
         this.appointmentList = response;
-        const newDate = new Date(this.appointmentList[0].dateTime);
-        console.log(response);
+
         // Object.keys(this.appointmentList[0]).forEach((key) => {
         //   console.log(key);
         // });
