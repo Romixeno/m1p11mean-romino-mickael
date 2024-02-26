@@ -215,4 +215,14 @@ export class AppointmentComponent implements OnInit {
       return true;
     }
   }
+
+  onCancel() {
+    this.transformedService.forEach((service) => {
+      if (service.selected) {
+        service.selected = false;
+        this.selectedId = null;
+        this.selectedType = null;
+      }
+    });
+  }
 }

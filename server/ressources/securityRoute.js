@@ -6,6 +6,7 @@ import {
   logout,
   register,
   updateClient,
+  updatePassword,
 } from "../controllers/clientController.js";
 
 // import { login, logout, register } from "../controllers/securityController.js";
@@ -15,6 +16,7 @@ export default Router()
   .post("/client/register", register)
   .post("/client/login/", login)
   .patch("/client/update/:_id", updateClient)
+  .patch("/client/update/password/_id", updatePassword)
   .delete("/client/logout", logout);
 // .get('/register',register)
 // .post('/user/register',register)

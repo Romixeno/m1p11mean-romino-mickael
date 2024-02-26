@@ -1,0 +1,22 @@
+.section-not-found {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .not-found-container {
+    text-align: center;
+    h1 {
+      font-size: 10rem;
+    }
+
+    h2 {
+      font-size: 3rem;
+    }
+
+    span {
+      display: block;
+      margin-top: 5px;
+    }
+  }
+}

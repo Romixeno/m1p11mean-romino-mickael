@@ -18,6 +18,8 @@ import { AppointmentComponent } from './pages/appointment/appointment.component'
 import { appointmentGuard } from './guard/appointment.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { onlyConnectedGuard } from './guard/only-connected.guard';
+import { AppointmentListsComponent } from './pages/appointment/appointment-lists/appointment-lists.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -29,12 +31,28 @@ const routes: Routes = [
   {
     path: 'appointment',
     canActivate: [appointmentGuard],
-    canDeactivate: [
-      (comp: AppointmentComponent) => {
-        return comp.canExit();
+
+    // component: AppointmentComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: '/appointment/new',
+        pathMatch: 'full',
+      },
+      {
+        path: 'new',
+        canDeactivate: [
+          (comp: AppointmentComponent) => {
+            return comp.canExit();
+          },
+        ],
+        component: AppointmentComponent,
+      },
+      {
+        path: 'lists',
+        component: AppointmentListsComponent,
       },
     ],
-    component: AppointmentComponent,
   },
   {
     path: 'login',
@@ -78,6 +96,11 @@ const routes: Routes = [
       { path: '', component: EmployeesComponent },
       { path: 'login', component: EmployeeLoginPageComponent },
     ],
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    component: NotFoundComponent,
   },
 ];
 

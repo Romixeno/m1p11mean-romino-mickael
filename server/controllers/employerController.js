@@ -262,7 +262,9 @@ export const updateEmployeeProfile = async (req, res) => {
           return res.status(500).json({ error: "Error during file upload" });
         }
 
-        fs.unlinkSync(path.join("public", employee.image));
+        if (fs.existsSync(path.join("public", employee.image))) {
+          fs.unlinkSync(path.join("public", employee.image));
+        }
 
         employee.image = newFileName;
         employee.set(req.body);
@@ -289,5 +291,38 @@ export const updateEmployeeProfile = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const employeeId = req.params._id;
+    const employee = await Employer.findById(employeeId);
+
+    if (!employee) {
+      return res.status(404).send("Employee not found");
+    }
+
+    const verifyPassword = await bcrypt.compare(
+      req.body.currentPassword,
+      employee.password
+    );
+
+    if (!verifyPassword) {
+      return res.status(401).send("Unauthorized");
+    }
+
+    const hashedPassword = await bcrypt.hashSync(req.body.password, 10);
+
+    employee
+      .set({
+        password: hashedPassword,
+      })
+      .save()
+      .then((update) => res.status(200).json(update))
+      .catch((error) => res.status(500).send("Error during password update"));
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };

@@ -29,7 +29,7 @@
             *ngIf="showDropdown"
           >
             <a [routerLink]="['/profile']">My profile</a>
-            <a href="">My appointment</a>
+            <a [routerLink]="['/appointment/lists']">My appointment</a>
             <a (click)="onLogout()"
               >Logout <i class="fa-thin fa-right-from-bracket"></i
             ></a>

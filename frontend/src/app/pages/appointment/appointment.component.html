@@ -10,7 +10,7 @@
 
   <div class="container">
     <div class="appointment-form">
-      <span class="step">Step 1 - Select Date</span>
+      <span class="step">> Select Date</span>
       <div class="select-date">
         <input
           [owlDateTime]="dt"
@@ -27,9 +27,9 @@
         <owl-date-time #dt></owl-date-time>
       </div>
 
-      <div class="services-container" *ngIf="dateTest" @fade>
+      <div class="services-container" @fade>
         <h3>Our Services</h3>
-        <span class="step">Step 2 - Select Services</span>
+        <span class="step">> Select Services</span>
         <div class="services-select">
           <ng-container *ngFor="let type of servicesType; index as i">
             <div class="col" *ngIf="hasSomeValue(type)">
@@ -124,6 +124,13 @@
     </div>
   </div>
   <div class="right-side">
+    <button
+      class="btn-cancel"
+      title="Cancel all selected service"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
     <button class="btn-make-appointment" (click)="makeAppointmentClicked()">
       Make an appointment
     </button>

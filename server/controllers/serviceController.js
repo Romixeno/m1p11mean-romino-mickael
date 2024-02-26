@@ -121,7 +121,9 @@ export const updateService = async (req, res) => {
           return res.status(500).json({ error: "Error during file upload" });
         }
 
-        fs.unlinkSync(path.join("public", service.image)); // Supprimer l'ancienne image
+        if (fs.existsSync(path.join("public", service.image))) {
+          fs.unlinkSync(path.join("public", service.image)); // Supprimer l'ancienne image
+        }
         service.image = newFileName;
         service.set(value);
         service

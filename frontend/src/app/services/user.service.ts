@@ -16,5 +16,12 @@ export class UserService {
   updateClient(id: string, formData: FormData) {
     return this.http.patch(`${this.baseUrl}/client/update/${id}`, formData);
   }
+
+  updatePassword(body: any, id: string) {
+    return this.http.patch(
+      `${this.baseUrl}/client/update/password/${id}`,
+      body
+    );
+  }
   constructor() {}
 }

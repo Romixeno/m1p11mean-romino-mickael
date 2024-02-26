@@ -167,7 +167,9 @@ export const updateClient = async (req, res) => {
         }
 
         if (client.image && !client.image.includes("noavatar.jpg")) {
-          fs.unlinkSync(path.join("public", client.image));
+          if (fs.existsSync(path.join("public", client.image))) {
+            fs.unlinkSync(path.join("public", client.image));
+          }
         }
 
         client.image = newFileName;
@@ -192,6 +194,39 @@ export const updateClient = async (req, res) => {
             .json({ error: "Error during Client update", updateError })
         );
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const clientId = req.params._id;
+    const client = await Client.findById(clientId);
+
+    if (!client) {
+      return res.status(404).send("Client not found");
+    }
+
+    const verifyPassword = await bcrypt.compare(
+      req.body.currentPassword,
+      client.password
+    );
+
+    if (!verifyPassword) {
+      return res.status(401).send("Unauthorized");
+    }
+
+    const hashedPassword = await bcrypt.hashSync(req.body.password, 10);
+
+    client
+      .set({
+        password: hashedPassword,
+      })
+      .save()
+      .then((update) => res.status(200).json(update))
+      .catch((error) => res.status(500).send("Error during password update"));
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

@@ -55,6 +55,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ClientProfileComponent } from './pages/profile/client-profile/client-profile.component';
 import { EmployeeProfileComponent } from './pages/profile/employee-profile/employee-profile.component';
 import { PasswordFormComponent } from './pages/profile/password-form/password-form.component';
+import { AppointmentListsComponent } from './pages/appointment/appointment-lists/appointment-lists.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { PasswordFormComponent } from './pages/profile/password-form/password-fo
     ClientProfileComponent,
     EmployeeProfileComponent,
     PasswordFormComponent,
+    AppointmentListsComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

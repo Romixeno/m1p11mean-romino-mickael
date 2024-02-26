@@ -37,4 +37,8 @@ export class EmployeesService {
   getEmployeeById(id: string) {
     return this.http.get(`${this.url}/oneEmployee/${id}`);
   }
+
+  updatePassword(body: any, id: string) {
+    return this.http.patch(`${this.url}/employee/update/password/${id}`, body);
+  }
 }
