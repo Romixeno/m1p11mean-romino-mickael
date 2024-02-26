@@ -57,7 +57,8 @@ import { EmployeeProfileComponent } from './pages/profile/employee-profile/emplo
 import { PasswordFormComponent } from './pages/profile/password-form/password-form.component';
 import { AppointmentListsComponent } from './pages/appointment/appointment-lists/appointment-lists.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { CustomDatePipe } from './pipe/custom-date.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +96,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     PasswordFormComponent,
     AppointmentListsComponent,
     NotFoundComponent,
+    CustomDatePipe,
   ],
   imports: [
     BrowserModule,
@@ -109,6 +111,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     MatFormFieldModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    MatTableModule,
   ],
   providers: [
     provideHttpClient(withFetch()),

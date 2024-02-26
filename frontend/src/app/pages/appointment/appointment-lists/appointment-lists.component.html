@@ -1,1 +1,52 @@
-<section class="appointment-lists"></section>
+<welcome-message>
+  <h1 class="presentation-text">
+    Welcome to Your Appointment List! Here you can view your scheduled
+    appointments
+  </h1>
+</welcome-message>
+<section class="appointment-lists">
+  <h2>Appointment > Lists</h2>
+
+  <table mat-table #table [dataSource]="appointmentList">
+    <ng-container matColumnDef="No">
+      <th mat-header-cell *matHeaderCellDef>No</th>
+      <td mat-cell *matCellDef="let element; index as i">{{ i + 1 }}</td>
+    </ng-container>
+    <ng-container matColumnDef="services">
+      <th mat-header-cell *matHeaderCellDef>services</th>
+      <td mat-cell *matCellDef="let element">
+        <ul *ngFor="let service of element.services">
+          <li>
+            Employee :
+            {{
+              service.employeeId.firstName + " " + service.employeeId.lastName
+            }}
+            | services : [
+            <span *ngFor="let list of service.serviceIds">
+              ({{ list.name }})</span
+            >
+            ]
+          </li>
+        </ul>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="totalDuration">
+      <th mat-header-cell *matHeaderCellDef>totalDuration</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.totalDuration | durationFormat }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="totalPrice">
+      <th mat-header-cell *matHeaderCellDef>totalPrice</th>
+      <td mat-cell *matCellDef="let element">{{ element.totalPrice }}€</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>date</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.dateTime | customDate }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnToDisplay"></tr>
+  </table>
+</section>

@@ -25,6 +25,10 @@ export class ServiceService {
     );
   }
 
+  getServiceById(id: string) {
+    return this.http.get(this.url + '/oneService/' + id);
+  }
+
   getAllServicesTypes() {
     return this.http.get(this.url + '/allServiceType');
   }

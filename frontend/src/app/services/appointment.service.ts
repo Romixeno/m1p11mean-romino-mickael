@@ -11,4 +11,8 @@ export class AppointmentService {
   newAppointment(data: AppointmentModel) {
     return this.http.post(`${this.baseUrl}/appointment/new`, data);
   }
+
+  getClientAppointment(id: string) {
+    return this.http.get(`${this.baseUrl}/appointment/client/${id}`);
+  }
 }
