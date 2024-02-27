@@ -6,7 +6,7 @@ import {
   order,
 } from "../controllers/payementController.js";
 export default Router()
-  .post("/createPayement", createPayment)
-  .get("/allPayement", getAllPayments)
+  .post("/createPayment", createPayment)
+  .get("/allPayment", getAllPayments)
   .post("/payment/orders", order)
   .post("/payment/orders/:orderID/capture", capture);

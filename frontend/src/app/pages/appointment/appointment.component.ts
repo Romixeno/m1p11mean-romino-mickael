@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import {
   ServiceModel,
@@ -13,6 +13,8 @@ import { UserService } from '../../services/user.service';
 import { AppointmentService } from '../../services/appointment.service';
 import { AppointmentModel } from '../../Models/appointment.model';
 import { WeekDay } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { PaymentService } from '../../services/payment.service';
 
 @Component({
   selector: 'app-appointment',
@@ -44,6 +46,7 @@ import { WeekDay } from '@angular/common';
   ],
 })
 export class AppointmentComponent implements OnInit {
+  calendarOpened: boolean = false;
   servicesList: ServiceModel[] = [];
   employeeList: EmployeeModel[] = [];
   servicesType: string[] = ['Hair', 'Makeup', 'Nail', 'Skin'];
@@ -57,16 +60,24 @@ export class AppointmentComponent implements OnInit {
   employeeFilterByDate: EmployeeModel[];
   showConfirmAppointment: boolean = false;
   errorMessage?: string;
+  paymentStatus: string;
+  private subscription: Subscription;
 
   constructor(
+    private paymentService: PaymentService,
     private serviceService: ServiceService,
     private employeeService: EmployeesService,
     private authService: AuthService,
     private userService: UserService,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private render: Renderer2
   ) {}
 
   ngOnInit(): void {
+    this.paymentService.resetPaymentStatus();
+    this.subscription = this.paymentService.payment$.subscribe(
+      (response) => (this.paymentStatus = response)
+    );
     this.min = new Date(Date.now());
     this.min.setHours(this.min.getHours() + 1);
     const { serviceId, serviceType } = history.state;
@@ -95,6 +106,14 @@ export class AppointmentComponent implements OnInit {
       error: (error: HttpErrorResponse) => {},
     });
   }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   confirmAppointmentToggle() {
     this.errors = this.verifyEmployeeSelection();
 
@@ -105,7 +124,6 @@ export class AppointmentComponent implements OnInit {
     this.showConfirmAppointment = !this.showConfirmAppointment;
   }
   checkChange(event: Event) {
-    console.log(this.dateTest);
     this.setEmployeeFilterByDate();
     this.selectedEmployees = {};
   }
@@ -117,14 +135,13 @@ export class AppointmentComponent implements OnInit {
     const test = this.dateTest.toLocaleDateString('en-Us', {
       weekday: 'long',
     });
-    console.log(test);
+
     this.employeeFilterByDate = this.employeeList.filter((employee) => {
       if (employee.workingHours.find((hours) => hours.dayOfWeek == test)) {
         return true;
       }
       return false;
     });
-    console.log(this.employeeFilterByDate);
   }
 
   setSelected(index: string, type?: string) {
@@ -281,7 +298,10 @@ export class AppointmentComponent implements OnInit {
   // }
 
   canExit(): boolean {
-    if (this.getSelectedServicesLength() > 0) {
+    if (
+      this.getSelectedServicesLength() > 0 &&
+      this.paymentStatus !== 'completed'
+    ) {
       return confirm('You have unsaved changes. Do you want to navigate away?');
     } else {
       return true;

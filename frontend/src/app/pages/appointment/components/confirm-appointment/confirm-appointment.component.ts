@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ServiceModelWithSelected } from '../../../../Models/service.model';
 
 @Component({
@@ -7,6 +7,7 @@ import { ServiceModelWithSelected } from '../../../../Models/service.model';
   styleUrl: './confirm-appointment.component.scss',
 })
 export class ConfirmAppointmentComponent {
+  @Output() closeFormBtnClicked: EventEmitter<null> = new EventEmitter<null>();
   @Input() selectedServices: ServiceModelWithSelected[];
   @Input() selectedEmployees: { [key: string]: string };
   @Input() dateTime: Date;
@@ -22,5 +23,9 @@ export class ConfirmAppointmentComponent {
       (total, service) => total + service.duration,
       0
     );
+  }
+
+  closeForm() {
+    this.closeFormBtnClicked.emit();
   }
 }

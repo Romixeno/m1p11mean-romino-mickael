@@ -3,9 +3,15 @@ import { captureOrder, createOrder } from "../utils/payment.js";
 
 export const createPayment = async (req, res) => {
   try {
-    const { client, service, amount } = req.body;
+    // const { client, service, amount } = req.body;
+    const { client, appointmentId, amount, transactionId } = req.body;
 
-    const newPayment = new Payment({ client, service, amount });
+    const newPayment = new Payment({
+      client,
+      appointmentId,
+      amount,
+      transactionId,
+    });
 
     await newPayment.save();
 

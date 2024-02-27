@@ -1,7 +1,7 @@
 <div class="confirm-appointment-overlay">
   <div class="confirm-appointment-container">
     <div class="btn-close">
-      <button>
+      <button (click)="closeForm()">
         <i class="fa-light fa-xmark"></i>
       </button>
     </div>
@@ -20,26 +20,14 @@
       >
       <span>You have selected {{ selectedServices.length }} services :</span>
       <ul>
-        <!-- <li>
-          Hair Coloring : <i class="fa-light fa-tag"></i> 20€ -
-          <i class="fa-light fa-timer"></i> Approx 1h
-        </li> -->
         <li *ngFor="let item of selectedServices">
           {{ item.name }} : <i class="fa-light fa-tag"></i> {{ item.price }}€ -
           <i class="fa-light fa-timer"></i> Approx
           {{ item.duration | durationFormat }}
         </li>
-        <!-- <li>
-          Hair Cutting : <i class="fa-light fa-tag"></i> 20€ -
-          <i class="fa-light fa-timer"></i> Approx 1h
-        </li>
-        <li>
-          Hair Coloring : <i class="fa-light fa-tag"></i> 20€ -
-          <i class="fa-light fa-timer"></i> Approx 1h
-        </li> -->
       </ul>
       <span class="total"
-        >Total: {{ getTotalPrice() }}€ - Duration:
+        >SubTotal: {{ getTotalPrice() }}€ - Duration:
         {{ getDurationTotal() | durationFormat }}</span
       >
     </div>
@@ -48,6 +36,7 @@
       <paypal
         [selectedServices]="selectedServices"
         [selectedEmployees]="selectedEmployees"
+        [dateAppointment]="dateTime"
       ></paypal>
     </div>
   </div>

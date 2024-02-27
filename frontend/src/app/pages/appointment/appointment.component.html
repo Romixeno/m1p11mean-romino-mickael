@@ -25,7 +25,7 @@
         <span [owlDateTimeTrigger]="dt">
           <i class="fa-regular fa-calendar"></i>
         </span>
-        <owl-date-time #dt></owl-date-time>
+        <owl-date-time #dt [pickerMode]="'dialog'"></owl-date-time>
       </div>
 
       <div class="services-container" @fade>
@@ -182,16 +182,16 @@
     >
       Cancel
     </button>
-    <!-- <button class="btn-make-appointment" (click)="makeAppointmentClicked()">
-      Make an appointment
-    </button> -->
+
     <button class="btn-make-appointment" (click)="confirmAppointmentToggle()">
       Make an appointment
     </button>
   </div>
 </div>
 <app-confirm-appointment
+  [selectedEmployees]="selectedEmployees"
   [selectedServices]="selectedServicesListFunc()"
   [dateTime]="dateTest"
   *ngIf="showConfirmAppointment"
+  (closeFormBtnClicked)="confirmAppointmentToggle()"
 ></app-confirm-appointment>

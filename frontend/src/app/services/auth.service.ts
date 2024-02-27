@@ -18,22 +18,15 @@ export class AuthService {
     this.isAuthenticated();
   }
 
-  // setAuth(value: boolean) {
-  //   this.isLoggedInSubject.next(value);
-  // }
-
   getUser() {
     const userData = sessionStorage.getItem('User');
     if (!userData) {
-      // If no user data found, return null
       return null;
     }
 
     try {
-      // Attempt to parse the user data
       return JSON.parse(userData);
     } catch (error) {
-      // If parsing fails, log the error and return null
       console.error('Error parsing user data:', error);
       return null;
     }
@@ -65,13 +58,13 @@ export class AuthService {
         tap((response: any) => {
           const user = response.user;
           const { _id, image, userType, ...other } = user;
-          // const { password, __v, _id, image, userType, ...other } = user;
+
           this.setUser({
             _id: _id,
             image: image,
             userType: userType,
-          }); // Call setUser method after successful login
-          this.isAuthenticated(); // Update authentication status
+          });
+          this.isAuthenticated();
         })
       );
   }
@@ -151,14 +144,23 @@ export class AuthService {
 
     const isAuthenticated = !!user;
     if (!isAuthenticated) {
-      // Perform actions when the user is not authenticated
-      // For example, log out the user or redirect to the login page
-      this.isLoggedInSubject.next(false); // Ensure the isLoggedInSubject reflects the current state
-      this.userTypeSubject.next(null); // Clear userTypeSubject
-      return; // Exit the method
+      this.isLoggedInSubject.next(false);
+      this.userTypeSubject.next(null);
+      return;
+    }
+    const userType = user.userType;
+    if (
+      userType !== 'Client' &&
+      userType !== 'Employee' &&
+      userType !== 'Manager'
+    ) {
+      console.error('Invalid userType detected:', userType);
+      sessionStorage.removeItem('User');
+      this.isLoggedInSubject.next(false);
+      this.userTypeSubject.next(null);
+      return;
     }
 
-    // User is authenticated
     this.isLoggedInSubject.next(true);
     if (user.userType) {
       this.userTypeSubject.next(user.userType);

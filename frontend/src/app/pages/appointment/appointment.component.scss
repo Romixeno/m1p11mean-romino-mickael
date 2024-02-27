@@ -21,7 +21,6 @@
     }
 
     .appointment-form {
-      // background-color: beige;
       margin-top: 1.5rem;
 
       h3 {
@@ -47,7 +46,7 @@
           outline: none;
           height: 30px;
           font-size: 1.4rem;
-          // border: 1px solid lightgray;
+
           pointer-events: none;
           border: none;
         }
@@ -122,78 +121,12 @@
             }
           }
         }
-
-        .right-employee {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          .employee-info {
-            padding-top: 1rem;
-            img {
-              object-fit: contain;
-              width: 80px;
-              height: 80px;
-            }
-          }
-          .employee-select {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            label {
-              font-size: 1.4rem;
-            }
-            select {
-              outline: none;
-              width: 250px;
-              height: 35px;
-              border: 1px solid lightgray;
-            }
-
-            .select-container {
-              width: 250px;
-              // height: 35px;
-              padding: 0rem 0.5rem;
-              border: 1px solid lightgray;
-            }
-          }
-          small {
-            &.error {
-              color: red;
-            }
-          }
-        }
       }
-      // .input-box {
-      //   width: 150px;
-      //   display: flex;
-      //   flex-direction: column;
-      //   gap: 5px;
-
-      //   select {
-      //     outline: none;
-      //     height: 30px;
-      //     width: 150px;
-      //     option {
-      //       height: 30px;
-      //       .info {
-      //         display: flex;
-      //         flex-direction: column;
-      //       }
-      //       img {
-      //         width: 50px;
-      //         height: 60px;
-      //       }
-      //     }
-      //   }
-      // }
     }
   }
 
   .select-employee-container {
     margin-top: 1rem;
-    // display: flex;
-    // flex-direction: column;
-    // gap: 20px;
   }
   .select-container {
     margin-top: 1rem;
