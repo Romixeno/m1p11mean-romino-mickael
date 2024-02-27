@@ -326,3 +326,20 @@ export const updatePassword = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+export const employeeBySpecialty = async (req, res) => {
+  try {
+    const specialty = req.query;
+
+    const employees = await Employer.find(specialty);
+
+    if (!employees) {
+      res.status(404).send("No employee found");
+    }
+
+    res.status(201).send(employees);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};

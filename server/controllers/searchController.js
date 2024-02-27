@@ -26,7 +26,7 @@ export const searchServices = async (query) => {
 export const searchEmployees = async (query) => {
   try {
     const employees = await Employee.find({
-      name: { $regex: query, $options: "i" },
+      lastName: { $regex: query, $options: "i" },
     });
     return employees;
   } catch (error) {

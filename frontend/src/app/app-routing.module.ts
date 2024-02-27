@@ -20,9 +20,21 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { onlyConnectedGuard } from './guard/only-connected.guard';
 import { AppointmentListsComponent } from './pages/appointment/appointment-lists/appointment-lists.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { EmployeeTasksComponent } from './pages/employees/employee-tasks/employee-tasks.component';
+import { employeeGuard } from './guard/employee.guard';
+import { StaffsComponent } from './pages/staffs/staffs.component';
+import { SearchPageComponent } from './pages/search-page/search-page.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
+  {
+    path: 'about-us',
+    component: StaffsComponent,
+  },
+  {
+    path: 'search',
+    component: SearchPageComponent,
+  },
   {
     path: 'profile',
     canActivate: [onlyConnectedGuard],
@@ -61,6 +73,7 @@ const routes: Routes = [
   },
   {
     path: 'signup',
+    canActivate: [CanActivateLoginPage],
     component: SignUpComponent,
   },
   {
@@ -93,8 +106,17 @@ const routes: Routes = [
   {
     path: 'employee',
     children: [
-      { path: '', component: EmployeesComponent },
-      { path: 'login', component: EmployeeLoginPageComponent },
+      { path: '', component: EmployeesComponent, canActivate: [employeeGuard] },
+      {
+        path: 'login',
+        component: EmployeeLoginPageComponent,
+        canActivate: [CanActivateLoginPage],
+      },
+      {
+        path: 'myTasks',
+        component: EmployeeTasksComponent,
+        canActivate: [employeeGuard],
+      },
     ],
   },
   {

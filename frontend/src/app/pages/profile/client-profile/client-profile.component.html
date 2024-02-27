@@ -18,13 +18,15 @@
     <div class="left">
       <div class="img-container">
         <img
-          src="http://localhost:3001{{ client?.image }}"
+          src="http://localhost:3001{{
+            client.image ? client?.image : '/images/noavatar.jpg'
+          }}"
           alt="Profile Picture"
         />
         <img [src]="imgUrl" alt="" *ngIf="imgUrl" class="img-preview" />
       </div>
       <div class="link-container">
-        <a href=""
+        <a [routerLink]="['/appointment/lists']"
           ><i class="fa-solid fa-calendar-week"></i
           ><span>My Appointment</span></a
         >

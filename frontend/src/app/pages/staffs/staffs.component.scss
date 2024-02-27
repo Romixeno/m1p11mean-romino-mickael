@@ -1,0 +1,125 @@
+@import "../../../globalStyle";
+
+.filter-team-container {
+  display: flex;
+  gap: 30px;
+  .filter-container {
+    position: relative;
+    .filter {
+      label {
+        font-size: 1.4rem;
+      }
+      span {
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid lightgray;
+        outline: none;
+      }
+
+      .filter-search {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 1rem 1.5rem;
+        border: 1px solid lightgray;
+
+        .btn-search {
+          margin-top: 0.5rem;
+          border: none;
+          background-color: $brown;
+          padding: 0.5rem;
+          color: black;
+          border: 1px solid black;
+          cursor: pointer;
+        }
+      }
+      .filter-category {
+        padding: 1rem 1.5rem;
+        border: 1px solid lightgray;
+        border-top: none;
+
+        .radio-container {
+          margin-top: 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 7px;
+
+          .radio-box {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+
+            input[type="radio"] {
+              accent-color: $brown;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.team-list-container {
+  flex: 1;
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(200px, 290px));
+  gap: 30px;
+
+  &.noItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error {
+    font-size: 2.5rem;
+  }
+  .team-card {
+    width: 100%;
+    box-shadow: 0px 10px 10px rgba($color: #000000, $alpha: 0.15);
+    .img-container {
+      width: 100%;
+      height: 350px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .detail {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1rem 2rem 1rem;
+      h2 {
+        font-size: 2.2rem;
+        text-transform: uppercase;
+      }
+      span {
+        color: #a0a0a0;
+        font-size: 1.3rem;
+      }
+
+      button {
+        cursor: pointer;
+        border: none;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        width: max-content;
+        color: rgb(61, 61, 61);
+        background-color: $light;
+        transition: 0.3s ease;
+        &:hover {
+          color: rgb(0, 0, 0);
+          background-color: darken($light, 5%);
+        }
+      }
+    }
+  }
+}

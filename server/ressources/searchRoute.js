@@ -22,6 +22,7 @@ router.post("/search/services", async (req, res) => {
 // Endpoint pour la recherche d'employés par nom
 router.get("/employees/:query", async (req, res) => {
   try {
+    console.log("ato");
     const { query } = req.params;
     const employees = await searchEmployees(query);
     res.json(employees);

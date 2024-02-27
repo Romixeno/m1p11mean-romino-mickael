@@ -1,7 +1,9 @@
 <div class="header-bottom-links">
   <a [routerLink]="['/profile']" routerLinkActive="active">My Profile</a>
-  <a [routerLink]="['/appointments']">Appointment List</a>
-  <a [routerLink]="['/tasks']">Tasks</a>
+  <!-- <a [routerLink]="['/appointments']">Appointment List</a> -->
+  <a [routerLink]="['/employee/myTasks']" [routerLinkActive]="'active'"
+    >My Tasks</a
+  >
   <a [routerLink]="['/commissions']">Commissions</a>
 </div>
 

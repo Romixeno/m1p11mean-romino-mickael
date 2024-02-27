@@ -18,7 +18,9 @@
     <div class="left">
       <div class="img-container">
         <img
-          src="http://localhost:3001{{ employee?.image }}"
+          src="http://localhost:3001{{
+            employee?.image ? employee.image : '/images/noavatar.jpg'
+          }}"
           alt="Profile Picture"
         />
         <img
@@ -30,7 +32,7 @@
         />
       </div>
       <div class="link-container">
-        <a href=""
+        <a [routerLink]="['/employee/myTasks']"
           ><i class="fa-solid fa-calendar-week"></i><span>My task</span></a
         >
 

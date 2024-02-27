@@ -1,0 +1,72 @@
+<welcome-message>
+  <h1 class="presentation-text">
+    Welcome to our team page, where excellence meets dedication! Our staff is
+    the heart and soul of our pampering experience.
+  </h1>
+</welcome-message>
+<section class="our-team">
+  <h1>OUR TEAM</h1>
+  <div class="filter-team-container">
+    <div class="filter-container">
+      <div class="filter">
+        <div class="filter-search">
+          <span>Search</span>
+          <input
+            type="text"
+            [(ngModel)]="searchedText"
+            placeholder="Search..."
+          />
+          <button class="btn-search" (click)="searchBtnClicked()">
+            search
+          </button>
+        </div>
+        <div class="filter-category">
+          <span for="">Category</span>
+          <div class="radio-container">
+            <div class="radio-box" *ngFor="let type of serviceTypeList">
+              <input
+                type="radio"
+                [value]="type.name"
+                [(ngModel)]="selectedCategory"
+                (change)="onCategoryChange($event)"
+              />
+              <label for="">{{ type.name }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ngClass]="{ noItem: employeeList.length == 0 }" -->
+    <div
+      class="team-list-container"
+      [ngClass]="{ noItem: employeeList.length == 0 || errorMessage }"
+    >
+      <!-- *ngFor="let employee of employeeList" -->
+      <h1 *ngIf="employeeList.length == 0 && !errorMessage">
+        No employee yet for this category
+      </h1>
+      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="team-card" *ngFor="let employee of employeeList">
+        <div class="img-container">
+          <img
+            src="http://localhost:3001{{
+              employee.image ? employee.image : '/images/noavatar.jpg'
+            }}"
+            alt=""
+          />
+        </div>
+        <div class="detail">
+          <h2 class="name">
+            {{ employee.firstName + " " + employee.lastName }}
+          </h2>
+          <span>Specialty: {{ employee.specialty }}</span>
+
+          <button>More Info</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="overlay" *ngIf="showLoading">
+  <div class="loader"></div>
+</div>

@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createEmployee,
   deleteEmployee,
+  employeeBySpecialty,
   getAllEmployees,
   getOneEmployee,
   loginEmployee,
@@ -13,6 +14,7 @@ import {
 export default Router()
   .post("/addEmployee", createEmployee)
   .post("/login/employee", loginEmployee)
+  .get("/employee/bySpecialty", employeeBySpecialty)
   .get("/oneEmployee/:_id", getOneEmployee)
   .get("/allEmployer", getAllEmployees)
   .patch("/updateEmployee/:id", updateEmployee)

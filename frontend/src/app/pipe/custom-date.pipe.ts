@@ -12,7 +12,7 @@ export class CustomDatePipe implements PipeTransform {
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
-      weekday: 'short',
+      weekday: 'long',
     });
   }
 }

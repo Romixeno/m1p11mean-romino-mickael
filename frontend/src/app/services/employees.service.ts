@@ -41,4 +41,14 @@ export class EmployeesService {
   updatePassword(body: any, id: string) {
     return this.http.patch(`${this.url}/employee/update/password/${id}`, body);
   }
+
+  getEmployeeBySpecialty(bySpecialty: string) {
+    return this.http.get(
+      `${this.url}/employee/bySpecialty/?specialty=${bySpecialty}`
+    );
+  }
+
+  searchEmployee(q: string) {
+    return this.http.get(`${this.url}/employees/${q}`);
+  }
 }

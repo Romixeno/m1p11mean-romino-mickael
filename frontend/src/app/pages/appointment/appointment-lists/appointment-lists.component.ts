@@ -14,17 +14,24 @@ export class AppointmentListsComponent {
   appointmentService: AppointmentService = inject(AppointmentService);
   authService: AuthService = inject(AuthService);
   serviceService: ServiceService = inject(ServiceService);
-
+  displayedMessage: string;
   columnToDisplay: string[] = [
     'No',
     'services',
-    'totalPrice',
-    'totalDuration',
+    // 'totalPrice',
+    // 'totalDuration',
     'date',
   ];
   ngOnInit(): void {
     const user = this.authService.getUser();
-
+    const message = history.state;
+    if (message.message) {
+      this.displayedMessage = message.message;
+      setTimeout(() => {
+        this.displayedMessage = null;
+        history.replaceState(null, '', window.location.href);
+      }, 4000);
+    }
     this.appointmentService.getClientAppointment(user._id).subscribe({
       next: (response: AppointmentModel[]) => {
         this.appointmentList = response;

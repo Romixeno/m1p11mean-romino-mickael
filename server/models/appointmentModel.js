@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const appointmentSchema = new mongoose.Schema({
   clientId: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Client",
   },
   services: [
     {

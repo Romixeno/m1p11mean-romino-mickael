@@ -61,6 +61,9 @@ import { MatTableModule } from '@angular/material/table';
 import { CustomDatePipe } from './pipe/custom-date.pipe';
 import { ConfirmAppointmentComponent } from './pages/appointment/components/confirm-appointment/confirm-appointment.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
+import { EmployeeTasksComponent } from './pages/employees/employee-tasks/employee-tasks.component';
+import { StaffsComponent } from './pages/staffs/staffs.component';
+import { SearchPageComponent } from './pages/search-page/search-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -101,6 +104,9 @@ import { PaypalComponent } from './components/paypal/paypal.component';
     CustomDatePipe,
     ConfirmAppointmentComponent,
     PaypalComponent,
+    EmployeeTasksComponent,
+    StaffsComponent,
+    SearchPageComponent,
   ],
   imports: [
     BrowserModule,

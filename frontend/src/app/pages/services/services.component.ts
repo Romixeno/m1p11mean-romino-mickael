@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from '../../services/service.service';
 
 import { HttpErrorResponse } from '@angular/common/http';
+import { ServiceTypeModel } from '../../Models/serviceType.model';
+import { response } from 'express';
 
 @Component({
   selector: 'app-services',
@@ -15,9 +17,9 @@ export class ServicesComponent implements OnDestroy {
   router: Router = inject(Router);
   activeRoute: ActivatedRoute = inject(ActivatedRoute);
   serviceService: ServiceService = inject(ServiceService);
-  searchedText: string;
-  selectedType: string = 'All';
-  servicesType: string[] = ['Hair', 'Makeup', 'Nail'];
+  searchedText: string = '';
+  selectedType: string = 'Hair';
+  servicesType: ServiceTypeModel[];
   servicesList: ServiceModel[] = [
     // {
     //   type: 'Hair',
@@ -124,28 +126,71 @@ export class ServicesComponent implements OnDestroy {
 
   ngOnInit() {
     this.showLoading = true;
-    this.serviceService.getAllServices().subscribe({
-      next: (response: ServiceModel[]) => {
-        this.showLoading = false;
-        this.servicesList = response;
+
+    this.serviceService.getAllServicesTypes().subscribe({
+      next: (response: ServiceTypeModel[]) => {
+        this.servicesType = response;
       },
-      error: (err: HttpErrorResponse) => {
-        console.error(err);
-        this.showLoading = false;
-        if (err.status == 0) {
-          this.errorMessage =
-            'Please check your internet connection and try again later.';
-        } else if (err.status >= 400 && err.status < 500) {
-          this.errorMessage = 'Client error: ' + err.statusText;
-        } else if (err.status >= 500 && err.status < 600) {
-          this.errorMessage = 'Internal Server error';
-        } else {
-          this.errorMessage = 'An unexpected error occurred';
-        }
+      error: (error) => {
+        console.error(error);
       },
     });
+    // this.serviceService.getAllServices().subscribe({
+    //   next: (response: ServiceModel[]) => {
+    //     this.showLoading = false;
+    //     this.servicesList = response;
+    //   },
+    //   error: (err: HttpErrorResponse) => {
+    //     console.error(err);
+    //     this.showLoading = false;
+    //     if (err.status == 0) {
+    //       this.errorMessage =
+    //         'Please check your internet connection and try again later.';
+    //     } else if (err.status >= 400 && err.status < 500) {
+    //       this.errorMessage = 'Client error: ' + err.statusText;
+    //     } else if (err.status >= 500 && err.status < 600) {
+    //       this.errorMessage = 'Internal Server error';
+    //     } else {
+    //       this.errorMessage = 'An unexpected error occurred';
+    //     }
+    //   },
+    // });
 
-    this.activeRoute.queryParams.subscribe((query) => {});
+    this.activeRoute.queryParams.subscribe((query: any) => {
+      console.log(query);
+
+      let queryParams: any = { q: '', filterBy: 'Hair' };
+      const { q, filterBy } = query;
+      if (q) {
+        queryParams.q = q;
+      } else {
+        queryParams.q = '';
+      }
+      if (filterBy) {
+        queryParams.filterBy = filterBy;
+        this.selectedType = filterBy;
+      }
+      this.serviceService.searchService(queryParams).subscribe({
+        next: (response: ServiceModel[]) => {
+          this.servicesList = response;
+          this.showLoading = false;
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          this.showLoading = false;
+          if (err.status == 0) {
+            this.errorMessage =
+              'Please check your internet connection and try again later.';
+          } else if (err.status >= 400 && err.status < 500) {
+            this.errorMessage = 'Client error: ' + err.statusText;
+          } else if (err.status >= 500 && err.status < 600) {
+            this.errorMessage = 'Internal Server error';
+          } else {
+            this.errorMessage = 'An unexpected error occurred';
+          }
+        },
+      });
+    });
   }
 
   ngOnDestroy(): void {
@@ -167,24 +212,25 @@ export class ServicesComponent implements OnDestroy {
     this.router.navigate(['/services'], {
       queryParams,
     });
-    let query = { q: this.searchedText, filterBy: this.selectedType };
+    // let query = { q: this.searchedText, filterBy: this.selectedType };
 
-    if (this.searchedText) {
-      console.log(query);
-      this.serviceService
-        .searchService(query)
-        .subscribe((response: ServiceModel[]) => {
-          this.servicesList = response;
-          this.showLoading = false;
-        });
-    } else {
-      this.serviceService
-        .getAllServices()
-        .subscribe((response: ServiceModel[]) => {
-          this.showLoading = false;
-          this.servicesList = response;
-        });
-    }
+    // if (this.searchedText) {
+    // console.log(query);
+    // this.serviceService
+    //   .searchService(query)
+    //   .subscribe((response: ServiceModel[]) => {
+    //     console.log(response);
+    //     this.servicesList = response;
+    //     this.showLoading = false;
+    //   });
+    // } else {
+    //   this.serviceService
+    //     .getAllServices()
+    //     .subscribe((response: ServiceModel[]) => {
+    //       this.showLoading = false;
+    //       this.servicesList = response;
+    //     });
+    // }
   }
 
   hasServicesForType(type: string): boolean {

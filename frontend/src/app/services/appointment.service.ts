@@ -7,12 +7,16 @@ import { AppointmentModel } from '../Models/appointment.model';
 })
 export class AppointmentService {
   http: HttpClient = inject(HttpClient);
-  baseUrl = 'http://localhost:3001';
+  baseUrl = 'http://localhost:3001/appointment';
   newAppointment(data: AppointmentModel) {
-    return this.http.post(`${this.baseUrl}/appointment/new`, data);
+    return this.http.post(`${this.baseUrl}/new`, data);
   }
 
   getClientAppointment(id: string) {
-    return this.http.get(`${this.baseUrl}/appointment/client/${id}`);
+    return this.http.get(`${this.baseUrl}/client/${id}`);
+  }
+
+  getEmployeeTasks(employeeId: string) {
+    return this.http.get(`${this.baseUrl}/employee/${employeeId}`);
   }
 }

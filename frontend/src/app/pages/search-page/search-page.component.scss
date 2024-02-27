@@ -1,0 +1,234 @@
+@import "../../../globalStyle";
+.section-search {
+  .input-container {
+    display: flex;
+    flex-direction: column-reverse;
+    // height: 35px;
+    gap: 20px;
+  }
+  .input-radio-container {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .input-box {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      label {
+        font-weight: 500;
+      }
+      input[type="radio"] {
+        accent-color: $brown;
+      }
+    }
+  }
+  .input-search-container {
+    display: flex;
+    justify-content: center;
+
+    // height: 100%;
+    .input-search {
+      width: 40%;
+      outline: none;
+      border: 1px solid lightgray;
+      height: 37px;
+      padding-left: 10px;
+      font-size: 1.6rem;
+    }
+
+    button {
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      padding: 0 2rem;
+      color: rgb(125, 125, 125);
+      background-color: rgb(13, 13, 13);
+      outline: none;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      &:hover {
+        color: white;
+        background-color: black;
+      }
+    }
+  }
+
+  .search-result-text {
+    margin-top: 3rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 2rem;
+  }
+
+  .services-list {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 275px));
+    // grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    grid-template-rows: auto;
+    .service-item {
+      position: relative;
+      border: 1px solid rgb(227, 227, 227);
+      display: flex;
+      flex-direction: column;
+      transition: 0.2s ease;
+      &:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      .preference-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: rgb(190, 190, 190);
+        font-size: 24px;
+        outline: none;
+      }
+      .service-item-img {
+        overflow: hidden;
+        height: 200px;
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .service-item-bottom {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 1rem 1.5rem;
+        padding-bottom: 2rem;
+      }
+      .service-item-details {
+        display: flex;
+        height: max-content;
+
+        flex-direction: column;
+        gap: 7px;
+
+        h3 {
+          font-family: "Montserrat", sans-serif;
+          font-size: 1.6rem;
+        }
+
+        i {
+          color: $brown;
+          font-size: 1rem;
+        }
+
+        span {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          font-size: 1.3rem;
+          font-weight: 400;
+          color: rgb(175, 175, 175);
+        }
+
+        strong {
+          font-weight: 500;
+          color: $black;
+        }
+
+        p {
+          font-size: 1.3rem;
+          margin-top: 1rem;
+          color: #b8b8b8;
+          line-height: 1.8rem;
+        }
+      }
+
+      .service-item-btn {
+        height: 100%;
+        margin-top: 2rem;
+        display: flex;
+        align-items: end;
+        button {
+          cursor: pointer;
+          border-radius: 3px;
+          background-color: $brown;
+          font-size: 1.2rem;
+          padding: 1rem 1.5rem;
+          border: none;
+          color: white;
+
+          &:hover {
+            background-color: lighten($color: $brown, $amount: 5%);
+          }
+        }
+      }
+    }
+  }
+
+  .team-list-container {
+    margin-top: 2rem;
+    flex: 1;
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(200px, 290px));
+    gap: 30px;
+
+    &.noItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .error {
+      font-size: 2.5rem;
+    }
+    .team-card {
+      width: 100%;
+      box-shadow: 0px 10px 10px rgba($color: #000000, $alpha: 0.15);
+      .img-container {
+        width: 100%;
+        height: 350px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .detail {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 1rem 2rem 1rem;
+        h2 {
+          font-size: 2.2rem;
+          text-transform: uppercase;
+        }
+        span {
+          color: #a0a0a0;
+          font-size: 1.3rem;
+        }
+
+        button {
+          cursor: pointer;
+          border: none;
+          margin-top: 1rem;
+          padding: 0.5rem 1rem;
+          width: max-content;
+          color: rgb(61, 61, 61);
+          background-color: $light;
+          transition: 0.3s ease;
+          &:hover {
+            color: rgb(0, 0, 0);
+            background-color: darken($light, 5%);
+          }
+        }
+      }
+    }
+  }
+}

@@ -77,3 +77,35 @@ export const getClientAppointment = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
+export const getEmployeeTasks = async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+
+    const tasks = await AppointmentModel.find({
+      "services.employeeId": employeeId,
+    })
+      .populate({
+        path: "services",
+        populate: [
+          {
+            path: "serviceIds",
+            model: ServiceModel,
+            select: { name: 1, _id: 0 },
+          },
+        ],
+      })
+      .populate({
+        path: "clientId",
+        select: { firstName: 1, lastName: 1, _id: 0 },
+      });
+
+    if (!tasks) {
+      return res.status(404).send("no tasks found");
+    }
+
+    return res.status(200).send(tasks);
+  } catch (error) {
+    return res.status(500).send("Internal Server Error");
+  }
+};
