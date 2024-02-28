@@ -59,6 +59,7 @@ export class EmployeeLoginPageComponent {
       },
       error: (err: HttpErrorResponse) => {
         console.error(err);
+        this.setErrorMessage(err);
       },
     });
   }
