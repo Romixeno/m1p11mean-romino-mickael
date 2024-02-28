@@ -204,7 +204,7 @@ export const updatePassword = async (req, res) => {
   try {
     const clientId = req.params._id;
     const client = await Client.findById(clientId);
-
+    console.log(client);
     if (!client) {
       return res.status(404).send("Client not found");
     }
@@ -227,6 +227,94 @@ export const updatePassword = async (req, res) => {
       .save()
       .then((update) => res.status(200).json(update))
       .catch((error) => res.status(500).send("Error during password update"));
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const addRemoveEmployeePreference = async (req, res) => {
+  try {
+    const clientId = req.params._clientId;
+    const employeeId = req.body.employeeId;
+
+    const client = await Client.findById(clientId);
+
+    if (!client) {
+      return res.status(401).send("Not authorized");
+    }
+
+    const isEmployeeFavorite =
+      client.preferences.favoriteEmployee.includes(employeeId);
+
+    if (!isEmployeeFavorite) {
+      client.preferences.favoriteEmployee.push(employeeId);
+
+      await client.save();
+
+      return res.status(200).send(client.preferences);
+    } else {
+      const index = client.preferences.favoriteEmployee.indexOf(employeeId);
+
+      client.preferences.favoriteEmployee.splice(index, 1);
+
+      await client.save();
+      return res.status(200).send(client.preferences);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const addRemoveServicePreference = async (req, res) => {
+  try {
+    const clientId = req.params._clientId;
+    const serviceId = req.body.serviceId;
+
+    const client = await Client.findById(clientId);
+
+    if (!client) {
+      return res.status(401).send("Not authorized");
+    }
+
+    const isServiceFavorite =
+      client.preferences.favoriteService.includes(serviceId);
+
+    if (!isServiceFavorite) {
+      client.preferences.favoriteService.push(serviceId);
+
+      await client.save();
+
+      return res.status(200).send(client.preferences);
+    } else {
+      const index = client.preferences.favoriteService.indexOf(serviceId);
+
+      client.preferences.favoriteService.splice(index, 1);
+
+      await client.save();
+      return res.status(200).send(client.preferences);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const getClientPreference = async (req, res) => {
+  try {
+    const clientId = req.params._clientId;
+
+    const clientPreference = await Client.findById(clientId).select({
+      preferences: 1,
+      _id: 0,
+    });
+
+    if (!clientPreference) {
+      return res.status(404).send("Client not found");
+    }
+    let { preferences } = clientPreference;
+    return res.status(200).json(preferences);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

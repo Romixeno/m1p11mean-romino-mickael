@@ -33,8 +33,15 @@ export class PasswordFormComponent {
     });
   }
 
-  closeForm(event: Event) {
-    event.preventDefault();
+  setSuccessMessage(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = null;
+      this.closeForm();
+    }, 4000);
+  }
+  closeForm(event?: Event) {
+    event?.preventDefault();
     this.onBtnCloseForm.emit();
   }
 
@@ -48,6 +55,7 @@ export class PasswordFormComponent {
       this.userService.updatePassword(Data, this.user._id).subscribe({
         next: (value) => {
           console.log(value);
+          this.setSuccessMessage('Password Changed Successfully');
         },
         error: (error) => {
           console.error(error);

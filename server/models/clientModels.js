@@ -35,8 +35,8 @@ const clientSchema = new Schema({
     },
   ],
   preferences: {
-    favoriteService: { type: Schema.Types.ObjectId, ref: "Service" },
-    favoriteEmployee: { type: Schema.Types.ObjectId, ref: "Employee" },
+    favoriteService: [{ type: Schema.Types.ObjectId, ref: "Service" }],
+    favoriteEmployee: [{ type: Schema.Types.ObjectId, ref: "Employee" }],
   },
   specialOffersNotification: { type: Boolean, default: true },
   userType: {

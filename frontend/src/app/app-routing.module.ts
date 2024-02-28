@@ -24,12 +24,26 @@ import { EmployeeTasksComponent } from './pages/employees/employee-tasks/employe
 import { employeeGuard } from './guard/employee.guard';
 import { StaffsComponent } from './pages/staffs/staffs.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
+import { StaffDetailComponent } from './pages/staffs/staff-detail/staff-detail.component';
+import { PreferencesComponent } from './pages/preferences/preferences.component';
+import { userGuard } from './guard/user.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
     path: 'about-us',
-    component: StaffsComponent,
+    children: [
+      {
+        path: '',
+        component: StaffsComponent,
+      },
+      { path: ':id', component: StaffDetailComponent },
+    ],
+  },
+  {
+    path: 'preferences',
+    canActivate: [userGuard],
+    component: PreferencesComponent,
   },
   {
     path: 'search',

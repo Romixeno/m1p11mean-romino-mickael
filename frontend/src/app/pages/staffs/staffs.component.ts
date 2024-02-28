@@ -33,14 +33,26 @@ export class StaffsComponent {
         console.error(error);
       },
     });
-    this.employeeService.getAllEmployee().subscribe({
-      next: (response: EmployeeModel[]) => {
-        this.employeeList = response;
+    this.employeeService
+      .getEmployeeBySpecialty(this.selectedCategory)
+      .subscribe({
+        next: (response: EmployeeModel[]) => {
+          this.employeeList = response;
+          console.log(response);
+          this.showLoading = false;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+    // this.employeeService.getAllEmployee().subscribe({
+    //   next: (response: EmployeeModel[]) => {
+    //     this.employeeList = response;
 
-        this.showLoading = false;
-      },
-      error: (error) => {},
-    });
+    //     this.showLoading = false;
+    //   },
+    //   error: (error) => {},
+    // });
   }
 
   searchBtnClicked() {

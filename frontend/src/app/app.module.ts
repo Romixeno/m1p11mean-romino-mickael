@@ -64,6 +64,8 @@ import { PaypalComponent } from './components/paypal/paypal.component';
 import { EmployeeTasksComponent } from './pages/employees/employee-tasks/employee-tasks.component';
 import { StaffsComponent } from './pages/staffs/staffs.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
+import { StaffDetailComponent } from './pages/staffs/staff-detail/staff-detail.component';
+import { PreferencesComponent } from './pages/preferences/preferences.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,6 +109,8 @@ import { SearchPageComponent } from './pages/search-page/search-page.component';
     EmployeeTasksComponent,
     StaffsComponent,
     SearchPageComponent,
+    StaffDetailComponent,
+    PreferencesComponent,
   ],
   imports: [
     BrowserModule,

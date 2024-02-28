@@ -1,11 +1,14 @@
 @import "../../../globalStyle";
 
 .filter-team-container {
+  margin-top: 2rem;
   display: flex;
   gap: 30px;
   .filter-container {
     position: relative;
     .filter {
+      position: sticky;
+      top: 120px;
       label {
         font-size: 1.4rem;
       }

@@ -65,6 +65,10 @@ const employeeSchema = new Schema({
     type: String,
     default: "Employee",
   },
+  about: {
+    type: String,
+    
+  }
 });
 
 const Employer = mongoose.model("Employee", employeeSchema);

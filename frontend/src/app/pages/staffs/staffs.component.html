@@ -61,7 +61,9 @@
           </h2>
           <span>Specialty: {{ employee.specialty }}</span>
 
-          <button>More Info</button>
+          <button [routerLink]="['/about-us/' + employee._id]">
+            More Info
+          </button>
         </div>
       </div>
     </div>

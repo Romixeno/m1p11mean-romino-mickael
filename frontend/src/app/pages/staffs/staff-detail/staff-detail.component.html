@@ -1,0 +1,78 @@
+<welcome-message>
+  <h1 class="presentation-text">Meet Our Dedicated Team Members</h1>
+</welcome-message>
+<section class="section-employee-details">
+  <h1>DETAILS</h1>
+  <div class="details-container" *ngIf="employee" @fade>
+    <div class="img-container">
+      <img
+        src="http://localhost:3001{{
+          employee.image ? employee.image : '/images/noavatar.jpg'
+        }}"
+        alt=""
+      />
+      <div
+        class="heart-icon"
+        *ngIf="userType == 'Client'"
+        [ngClass]="{ favorite: verifyEmployeePreference(employee._id) }"
+        (click)="addRemoveEmployeeFavorite(employee._id)"
+      >
+        <ng-container
+          *ngIf="!verifyEmployeePreference(employee._id); else favoriteIcon"
+        >
+          <i class="fa-light fa-heart" @fav></i>
+        </ng-container>
+        <ng-template #favoriteIcon>
+          <i class="fa-solid fa-heart" @fav></i>
+        </ng-template>
+      </div>
+    </div>
+    <div class="info-container">
+      <div class="col">
+        <div class="field">
+          <label for="">Firstname</label>
+          <span>{{ employee.firstName }}</span>
+        </div>
+        <div class="field">
+          <label for="">Lastname</label>
+          <span>{{ employee.lastName }}</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="">Specialty</label>
+        <span>{{ employee.specialty }}</span>
+      </div>
+      <div class="field">
+        <label for="">Contact</label>
+        <span
+          ><i class="fa-solid fa-phone"></i> 0387084643 --
+          <i class="fa-solid fa-envelope"></i> romixeno&#64;gmail.com</span
+        >
+      </div>
+
+      <div class="field">
+        <label for="">Working Hours</label>
+        <span *ngFor="let hour of employee.workingHours">
+          {{ hour.dayOfWeek }} : {{ hour.start }}-{{ hour.end }}
+        </span>
+      </div>
+      <div class="field">
+        <label for="">About</label>
+        <span class="about-text"
+          >Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
+          corporis quas, saepe explicabo nihil perferendis quae similique
+          pariatur officiis sequi voluptatibus. Temporibus, quidem est nesciunt
+          ut ex vero praesentium voluptates consequuntur facere, adipisci
+          asperiores sint molestiae voluptas, quod quis ducimus! Ut, possimus
+          vero voluptatibus nisi numquam sint blanditiis corrupti facere.</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="review">
+    <h1>Review</h1>
+  </div>
+</section>
+<div class="overlay" *ngIf="showLoading" @fade>
+  <div class="loader"></div>
+</div>

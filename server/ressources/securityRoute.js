@@ -16,7 +16,7 @@ export default Router()
   .post("/client/register", register)
   .post("/client/login/", login)
   .patch("/client/update/:_id", updateClient)
-  .patch("/client/update/password/_id", updatePassword)
+  .patch("/client/update/password/:_id", updatePassword)
   .delete("/client/logout", logout);
 // .get('/register',register)
 // .post('/user/register',register)

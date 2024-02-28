@@ -1,16 +1,12 @@
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
-
-import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
-
-export const onlyConnectedGuard: CanActivateFn = (
-  route,
-  state
-): boolean | UrlTree => {
-  const router: Router = inject(Router);
+import { AuthService } from '../services/auth.service';
+export const userGuard: CanActivateFn = (route, state): boolean | UrlTree => {
   const authService: AuthService = inject(AuthService);
+  const router: Router = inject(Router);
   const userType = authService.getUserType();
-  if (!userType || userType == 'Manager') {
+
+  if (!userType || userType === 'Employee' || userType === 'Manager') {
     return router.createUrlTree(['/']);
   }
   return true;

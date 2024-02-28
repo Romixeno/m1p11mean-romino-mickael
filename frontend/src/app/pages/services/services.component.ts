@@ -1,24 +1,46 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ServiceModel } from '../../Models/service.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ServiceService } from '../../services/service.service';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { ServiceTypeModel } from '../../Models/serviceType.model';
 import { response } from 'express';
+import { userType } from '../../Models/userType.type';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { PreferencesModel } from '../../Models/preferences.model';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-services',
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss',
+  animations: [
+    trigger('fade', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate('300ms ease-in', style({ opacity: 0 }))]),
+    ]),
+    trigger('fav', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-out', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class ServicesComponent implements OnDestroy {
   showLoading: boolean = false;
   router: Router = inject(Router);
   activeRoute: ActivatedRoute = inject(ActivatedRoute);
   serviceService: ServiceService = inject(ServiceService);
+  authService: AuthService = inject(AuthService);
+  userService: UserService = inject(UserService);
   searchedText: string = '';
-  selectedType: string = 'Hair';
+  selectedCategory: string = 'Hair';
   servicesType: ServiceTypeModel[];
   servicesList: ServiceModel[] = [
     // {
@@ -123,10 +145,22 @@ export class ServicesComponent implements OnDestroy {
   ];
   filteredServiceList: ServiceModel[];
   errorMessage: string;
-
+  userType: userType;
+  preference: PreferencesModel;
   ngOnInit() {
     this.showLoading = true;
-
+    this.userType = this.authService.getUserType();
+    if (this.userType == 'Client') {
+      const user = this.authService.getUser();
+      this.userService.getClientPreferences(user._id).subscribe({
+        next: (response: PreferencesModel) => {
+          this.preference = response;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+    }
     this.serviceService.getAllServicesTypes().subscribe({
       next: (response: ServiceTypeModel[]) => {
         this.servicesType = response;
@@ -135,62 +169,17 @@ export class ServicesComponent implements OnDestroy {
         console.error(error);
       },
     });
-    // this.serviceService.getAllServices().subscribe({
-    //   next: (response: ServiceModel[]) => {
-    //     this.showLoading = false;
-    //     this.servicesList = response;
-    //   },
-    //   error: (err: HttpErrorResponse) => {
-    //     console.error(err);
-    //     this.showLoading = false;
-    //     if (err.status == 0) {
-    //       this.errorMessage =
-    //         'Please check your internet connection and try again later.';
-    //     } else if (err.status >= 400 && err.status < 500) {
-    //       this.errorMessage = 'Client error: ' + err.statusText;
-    //     } else if (err.status >= 500 && err.status < 600) {
-    //       this.errorMessage = 'Internal Server error';
-    //     } else {
-    //       this.errorMessage = 'An unexpected error occurred';
-    //     }
-    //   },
-    // });
-
-    this.activeRoute.queryParams.subscribe((query: any) => {
-      console.log(query);
-
-      let queryParams: any = { q: '', filterBy: 'Hair' };
-      const { q, filterBy } = query;
-      if (q) {
-        queryParams.q = q;
-      } else {
-        queryParams.q = '';
-      }
-      if (filterBy) {
-        queryParams.filterBy = filterBy;
-        this.selectedType = filterBy;
-      }
-      this.serviceService.searchService(queryParams).subscribe({
+    this.serviceService
+      .searchService({ q: '', filterBy: this.selectedCategory })
+      .subscribe({
         next: (response: ServiceModel[]) => {
           this.servicesList = response;
           this.showLoading = false;
         },
-        error: (err: HttpErrorResponse) => {
-          console.error(err);
-          this.showLoading = false;
-          if (err.status == 0) {
-            this.errorMessage =
-              'Please check your internet connection and try again later.';
-          } else if (err.status >= 400 && err.status < 500) {
-            this.errorMessage = 'Client error: ' + err.statusText;
-          } else if (err.status >= 500 && err.status < 600) {
-            this.errorMessage = 'Internal Server error';
-          } else {
-            this.errorMessage = 'An unexpected error occurred';
-          }
+        error: (error) => {
+          console.error(error);
         },
       });
-    });
   }
 
   ngOnDestroy(): void {
@@ -198,45 +187,62 @@ export class ServicesComponent implements OnDestroy {
     //Add 'implements OnDestroy' to the class.
   }
 
-  onFilterTypeChange(val: any) {
-    const value = val.target.value;
-    this.selectedType = value;
-  }
-
-  onBtnFilterApplyClicked() {
-    this.showLoading = true;
-    let queryParams: any = { filterBy: this.selectedType };
-    if (this.searchedText != '') {
-      queryParams = { q: this.searchedText, ...queryParams };
-    }
-    this.router.navigate(['/services'], {
-      queryParams,
-    });
-    // let query = { q: this.searchedText, filterBy: this.selectedType };
-
-    // if (this.searchedText) {
-    // console.log(query);
-    // this.serviceService
-    //   .searchService(query)
-    //   .subscribe((response: ServiceModel[]) => {
-    //     console.log(response);
-    //     this.servicesList = response;
-    //     this.showLoading = false;
-    //   });
-    // } else {
-    //   this.serviceService
-    //     .getAllServices()
-    //     .subscribe((response: ServiceModel[]) => {
-    //       this.showLoading = false;
-    //       this.servicesList = response;
-    //     });
-    // }
-  }
-
   hasServicesForType(type: string): boolean {
     return this.servicesList.some((service) => service.type === type);
   }
   getServicesForType(type: string): ServiceModel[] {
     return this.servicesList.filter((service) => service.type === type);
+  }
+
+  searchBtnClicked() {
+    if (
+      this.searchedText == '' ||
+      this.searchedText == null ||
+      this.searchedText == undefined
+    ) {
+      return;
+    }
+
+    const queryParams: any = {
+      service: '',
+      q: this.searchedText,
+    };
+    const navigationExtras: NavigationExtras = {
+      queryParams,
+    };
+
+    this.router.navigate(['/search'], navigationExtras);
+  }
+  onCategoryChange(event: Event) {
+    this.showLoading = true;
+    this.serviceService
+      .searchService({ q: '', filterBy: this.selectedCategory })
+      .subscribe({
+        next: (response: ServiceModel[]) => {
+          this.servicesList = response;
+          this.showLoading = false;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+  }
+
+  verifyServicePreference(serviceId: string) {
+    return this.preference?.favoriteService.includes(serviceId);
+  }
+
+  addRemoveServiceFavorite(serviceId: string) {
+    this.showLoading = true;
+    const user = this.authService.getUser();
+    this.userService.addRemoveServicePreference(user._id, serviceId).subscribe({
+      next: (response: PreferencesModel) => {
+        this.preference = response;
+        this.showLoading = false;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 }

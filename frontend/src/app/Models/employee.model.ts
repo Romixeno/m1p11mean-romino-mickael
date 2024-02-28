@@ -1,6 +1,6 @@
 export class EmployeeModel {
-  _id?: string;
-  __v?: number;
+  __v: string;
+  _id: string;
   specialty: string;
   firstName: string;
   lastName: string;
@@ -8,25 +8,7 @@ export class EmployeeModel {
   phoneNumber: string;
   workingHours: [
     {
-      // dayOfWeek: {
-      //   type: String;
-      //   enum: [
-      //     'Monday',
-      //     'Tuesday',
-      //     'Wednesday',
-      //     'Thursday',
-      //     'Friday',
-      //     'Saturday',
-      //     'Sunday'
-      //   ];
-      // };
       dayOfWeek: string;
-      // start: {
-      //   type: String;
-      // };
-      // end: {
-      //   type: String;
-      // };
       start: string;
       end: string;
     }

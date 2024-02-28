@@ -8,46 +8,61 @@
   <div class="filter-container">
     <div class="filter">
       <div class="filter-search">
-        <label>Search</label>
-        <input
-          type="text"
-          [(ngModel)]="searchedText"
-          placeholder="type anything..."
-        />
+        <span>Search</span>
+        <input type="text" [(ngModel)]="searchedText" placeholder="Search..." />
+        <button class="btn-search" (click)="searchBtnClicked()">search</button>
       </div>
-      <div class="filter-by-type">
-        <label for="serviceType">Filter by Category:</label>
-        <!-- (change)="onFilterTypeChange($event)" -->
-        <select id="serviceType" [(ngModel)]="selectedType">
-          <option value="All">All</option>
-          <!-- <option value="Hair">Hair</option>
-          <option value="Makeup">Makeup</option>
-          <option value="Nail">Nail</option> -->
-          <option [value]="type.name" *ngFor="let type of servicesType">
-            {{ type.name }}
-          </option>
-        </select>
-      </div>
-      <div class="filter-btn-apply">
-        <button (click)="onBtnFilterApplyClicked()">Apply</button>
+      <div class="filter-category">
+        <span for="">Category</span>
+        <div class="radio-container">
+          <div class="radio-box" *ngFor="let type of servicesType">
+            <input
+              type="radio"
+              [value]="type.name"
+              [(ngModel)]="selectedCategory"
+              (change)="onCategoryChange($event)"
+            />
+            <label for="">{{ type.name }}</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="all-services-types">
-    <div class="no-display" *ngIf="!servicesList || servicesList?.length == 0">
+    <div
+      class="no-display"
+      *ngIf="!servicesList || servicesList?.length == 0"
+      @fade
+    >
       <h2>No services to display..</h2>
       <h2 *ngIf="errorMessage">{{ errorMessage }}</h2>
     </div>
     <ng-container *ngIf="servicesList">
       <ng-container *ngFor="let type of servicesType">
-        <div class="services-type" *ngIf="hasServicesForType(type.name)">
+        <div class="services-type" *ngIf="hasServicesForType(type.name)" @fade>
           <h1>{{ type.name }}</h1>
           <div class="services-list">
             <ng-container *ngFor="let service of getServicesForType(type.name)">
               <div class="service-item">
-                <button class="preference-button">
-                  <i class="fa-light fa-heart"></i>
+                <button
+                  (click)="addRemoveServiceFavorite(service._id)"
+                  class="preference-button"
+                  *ngIf="userType == 'Client'"
+                  [ngClass]="{ favorite: verifyServicePreference(service._id) }"
+                >
+                  <ng-container
+                    *ngIf="
+                      !verifyServicePreference(service._id);
+                      else favoriteButton
+                    "
+                  >
+                    <i class="fa-light fa-heart" @fav></i>
+                  </ng-container>
+                  <ng-template #favoriteButton>
+                    <i class="fa-solid fa-heart" @fav></i>
+                  </ng-template>
                 </button>
+
                 <div class="service-item-img">
                   <img [src]="'http://localhost:3001' + service.image" alt="" />
                 </div>
@@ -88,6 +103,6 @@
     </ng-container>
   </div>
 </section>
-<div class="overlay" *ngIf="showLoading">
+<div class="overlay" *ngIf="showLoading" @fade>
   <div class="loader"></div>
 </div>

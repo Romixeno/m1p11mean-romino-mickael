@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { User } from '../Models/user.model';
+
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +20,24 @@ export class UserService {
     return this.http.patch(
       `${this.baseUrl}/client/update/password/${id}`,
       body
+    );
+  }
+
+  getClientPreferences(clientId: string) {
+    return this.http.get(`${this.baseUrl}/preferences/${clientId}`);
+  }
+
+  addRemoveEmployeePreference(clientId: string, employeeId: string) {
+    return this.http.post(
+      `${this.baseUrl}/addRemoveEmployeePreference/${clientId}`,
+      { employeeId: employeeId }
+    );
+  }
+
+  addRemoveServicePreference(clientId: string, serviceId: string) {
+    return this.http.post(
+      `${this.baseUrl}/addRemoveServicePreference/${clientId}`,
+      { serviceId: serviceId }
     );
   }
   constructor() {}
