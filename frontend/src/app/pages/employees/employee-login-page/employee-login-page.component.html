@@ -4,9 +4,9 @@
     <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
       <div class="icon">
         <i class="fa-light fa-circle-user"></i>
-        <!-- <div class="sb sb-error" *ngIf="message">
-              {{ message }}
-            </div> -->
+        <div class="sb sb-error" *ngIf="errorMessage">
+          {{ errorMessage?.error }}
+        </div>
       </div>
       <div class="input-container">
         <div class="input-box">

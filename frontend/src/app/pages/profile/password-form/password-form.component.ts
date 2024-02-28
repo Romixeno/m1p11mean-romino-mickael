@@ -54,7 +54,6 @@ export class PasswordFormComponent {
 
       this.userService.updatePassword(Data, this.user._id).subscribe({
         next: (value) => {
-          console.log(value);
           this.setSuccessMessage('Password Changed Successfully');
         },
         error: (error) => {
@@ -69,7 +68,7 @@ export class PasswordFormComponent {
 
       this.employeeService.updatePassword(Data, this.user._id).subscribe({
         next: (value) => {
-          console.log(value);
+          this.setSuccessMessage('Password Changed Successfully');
         },
         error: (error) => {
           console.error(error);

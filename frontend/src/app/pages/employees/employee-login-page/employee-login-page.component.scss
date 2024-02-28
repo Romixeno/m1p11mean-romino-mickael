@@ -11,7 +11,11 @@
     align-items: center;
     justify-content: center;
     gap: 50px;
-
+    .sb {
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 1.2rem;
+    }
     h1 {
       font-size: 4rem;
     }
