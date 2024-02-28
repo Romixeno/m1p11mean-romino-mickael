@@ -24,7 +24,14 @@ export const createPayment = async (req, res) => {
 
 export const getAllPayments = async (req, res) => {
   try {
-    const payments = await Payment.find();
+    const payments = await Payment.find().populate({
+      path: "client",
+      select: {
+        firstName: 1,
+        lastName: 1,
+        _id: 0,
+      },
+    });
 
     res.status(200).json(payments);
   } catch (error) {

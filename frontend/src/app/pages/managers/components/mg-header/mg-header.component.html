@@ -21,10 +21,17 @@
   </div>
   <div class="header-bottom">
     <div class="header-bottom-links">
-      <a [routerLink]="['/manager/services']">Services managment</a>
-      <a [routerLink]="['/manager/employees']" href="">Employee managment</a>
-      <a href="">Appointment list</a>
-      <a href="">Statistics</a>
+      <a [routerLink]="['/manager/services']" [routerLinkActive]="'active'"
+        >Services management</a
+      >
+      <a [routerLink]="['/manager/employees']" [routerLinkActive]="'active'"
+        >Employee management</a
+      >
+      <a [routerLink]="['/manager/payments']" [routerLinkActive]="'active'"
+        >Payments</a
+      >
+      <a>Appointment list</a>
+      <a>Statistics</a>
     </div>
   </div>
 </div>

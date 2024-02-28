@@ -27,6 +27,7 @@ import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { StaffDetailComponent } from './pages/staffs/staff-detail/staff-detail.component';
 import { PreferencesComponent } from './pages/preferences/preferences.component';
 import { userGuard } from './guard/user.guard';
+import { PaymentListsComponent } from './pages/managers/payment-lists/payment-lists.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -114,6 +115,10 @@ const routes: Routes = [
           { path: '', component: MgEmployeesPageComponent },
           { path: 'add-employees', component: MgEmployeesFormComponent },
         ],
+      },
+      {
+        path: 'payments',
+        component: PaymentListsComponent,
       },
     ],
   },

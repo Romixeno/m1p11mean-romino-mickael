@@ -45,4 +45,8 @@ export class PaymentService {
       }
     );
   }
+
+  getAllPayment() {
+    return this.http.get(`${this.baseUrl}/allPayment`);
+  }
 }

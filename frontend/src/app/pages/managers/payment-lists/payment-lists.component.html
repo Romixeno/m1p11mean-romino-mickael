@@ -1,0 +1,27 @@
+<section class="mg-payments">
+  <div class="payments-table-container">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <h2>Payments</h2>
+      </div>
+      <table>
+        <tr>
+          <th>No.</th>
+          <th>Client</th>
+          <th>transactionId</th>
+          <th>amount</th>
+          <th>paymentDate</th>
+          <th>status</th>
+        </tr>
+        <tr *ngFor="let list of paymentList; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ list.client.firstName + " " + list.client.lastName }}</td>
+          <td>{{ list.transactionId }}</td>
+          <td>{{ list.amount }}€</td>
+          <td>{{ list.paymentDate.toLocaleString() | customDate }}</td>
+          <td>{{ list.status }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
