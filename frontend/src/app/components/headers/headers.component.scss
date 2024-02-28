@@ -103,6 +103,9 @@
 
             color: rgb(107, 107, 107);
             border-bottom: 1px solid lightgray;
+            i {
+              transition: 0.3s ease;
+            }
             &:hover {
               color: black;
 

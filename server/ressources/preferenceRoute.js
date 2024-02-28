@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createPreference,
   deletePreferenceByClient,
+  getClientPreferencePopulated,
   getPreferenceByClient,
 } from "../controllers/preferenceController.js";
 import {
@@ -15,5 +16,6 @@ export default Router()
   .post("/addRemoveServicePreference/:_clientId", addRemoveServicePreference)
   .get("/onePreference/:_clientId", getPreferenceByClient)
   .get("/preferences/:_clientId", getClientPreference)
+  .get("/preferencesPopulated/:_clientId", getClientPreferencePopulated)
   .patch("/updatePreference/:_clientId", getPreferenceByClient)
   .delete("/deletePreference/:clientId", deletePreferenceByClient);

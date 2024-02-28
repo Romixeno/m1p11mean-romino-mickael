@@ -1,0 +1,12 @@
+<div class="confirm-action-overlay">
+  <div class="confirm-action">
+    <span
+      >Are you sure you want to remove this {{ selectedData?.type }} from your
+      preferences?</span
+    >
+    <div class="button">
+      <button class="confirm-btn" (click)="confirmBtnClicked()">Confirm</button>
+      <button class="cancel-btn" (click)="closeForm('close')">Cancel</button>
+    </div>
+  </div>
+</div>

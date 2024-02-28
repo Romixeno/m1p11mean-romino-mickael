@@ -1,1 +1,100 @@
-<p>preferences works!</p>
+<welcome-message>
+  <h1 class="presentation-text">
+    Welcome to your preference page. Here, you can view all your preferred
+    services and employees.
+  </h1>
+</welcome-message>
+<section class="section-preferences">
+  <ng-container *ngIf="preference?.favoriteService.length > 0">
+    <h1>Preferred Services</h1>
+    <div class="services-favorite" @fade>
+      <div
+        class="service-item"
+        *ngFor="let service of preference?.favoriteService"
+      >
+        <button
+          (click)="confirmAction(service._id, 'service')"
+          class="preference-button"
+          [ngClass]="{ favorite: true }"
+        >
+          <i class="fa-solid fa-heart"></i>
+        </button>
+
+        <div class="service-item-img">
+          <img [src]="'http://localhost:3001' + service.image" alt="" />
+        </div>
+        <div class="service-item-bottom">
+          <div class="service-item-details">
+            <h3 class="service-item-detail-name">{{ service.name }}</h3>
+            <span class="service-detail-price"
+              ><i class="fa-solid fa-tag"></i>Price:
+              <strong>{{ service.price }}€</strong></span
+            >
+            <span class="service-detail-duration"
+              ><i class="fa-regular fa-timer"></i>Duration Approx.:
+              <strong>{{ service.duration | durationFormat }}</strong></span
+            >
+            <p class="service-detail-description">
+              {{ service.description }}
+            </p>
+          </div>
+          <div class="service-item-btn">
+            <button
+              [routerLink]="['/appointment']"
+              [state]="{
+                serviceId: service._id,
+                serviceType: service.type
+              }"
+            >
+              Make an appointment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="preference?.favoriteEmployee.length > 0">
+    <h1>Preferred Employees</h1>
+    <div class="employee-favorite" @fade>
+      <div
+        class="team-card"
+        *ngFor="let employee of preference?.favoriteEmployee"
+      >
+        <div class="img-container">
+          <img
+            src="http://localhost:3001{{
+              employee.image ? employee.image : '/images/noavatar.jpg'
+            }}"
+            alt=""
+          />
+          <div
+            class="heart-icon"
+            [ngClass]="{ favorite: true }"
+            (click)="confirmAction(employee._id, 'employee')"
+          >
+            <i class="fa-solid fa-heart"></i>
+          </div>
+        </div>
+        <div class="detail">
+          <h2 class="name">
+            {{ employee.firstName + " " + employee.lastName }}
+          </h2>
+          <span>Specialty: {{ employee.specialty }}</span>
+
+          <button [routerLink]="['/about-us/' + employee._id]">
+            More Info
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>
+<div class="overlay" *ngIf="showLoading">
+  <div class="loader"></div>
+</div>
+<confirm-action
+  *ngIf="showConfirmAction"
+  [selectedData]="selectedData"
+  (closeFormEvent)="closeConfirmAction($event)"
+></confirm-action>

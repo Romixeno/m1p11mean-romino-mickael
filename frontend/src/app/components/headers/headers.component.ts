@@ -4,12 +4,22 @@ import { User } from '../../Models/user.model';
 import { userType } from '../../Models/userType.type';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-headers',
   templateUrl: './headers.component.html',
   styleUrls: ['./headers.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('fade', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms ease-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate('200ms ease-in', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class HeadersComponent implements OnInit {
   router: Router = inject(Router);

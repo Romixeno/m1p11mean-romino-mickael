@@ -27,9 +27,17 @@
             class="dropdown-menu"
             [ngClass]="{ active: showDropdown }"
             *ngIf="showDropdown"
+            @fade
           >
-            <a [routerLink]="['/profile']">My profile</a>
-            <a [routerLink]="['/appointment/lists']">My appointment</a>
+            <a [routerLink]="['/profile']"
+              >My profile <i class="fa-light fa-user"></i
+            ></a>
+            <a [routerLink]="['/preferences']"
+              >My Preferences <i class="fa-regular fa-star"></i
+            ></a>
+            <a [routerLink]="['/appointment/lists']"
+              >My appointment <i class="fa-solid fa-calendar-week"></i>
+            </a>
             <a (click)="onLogout()"
               >Logout <i class="fa-thin fa-right-from-bracket"></i
             ></a>

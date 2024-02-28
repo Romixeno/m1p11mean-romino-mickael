@@ -40,5 +40,9 @@ export class UserService {
       { serviceId: serviceId }
     );
   }
+
+  getPreferencePopulated(clientId: string) {
+    return this.http.get(`${this.baseUrl}/preferencesPopulated/${clientId}`);
+  }
   constructor() {}
 }

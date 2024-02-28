@@ -31,8 +31,8 @@ import {
   ɵɵdefineNgModule,
   ɵɵinject
 } from "./chunk-M43NMAIA.js";
-import "./chunk-UKEHM6V6.js";
 import "./chunk-V2DXGMIT.js";
+import "./chunk-UKEHM6V6.js";
 import "./chunk-ZDOIMVJD.js";
 
 // node_modules/@angular/platform-browser/fesm2022/animations.mjs

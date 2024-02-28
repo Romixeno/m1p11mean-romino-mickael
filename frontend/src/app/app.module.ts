@@ -66,6 +66,7 @@ import { StaffsComponent } from './pages/staffs/staffs.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { StaffDetailComponent } from './pages/staffs/staff-detail/staff-detail.component';
 import { PreferencesComponent } from './pages/preferences/preferences.component';
+import { ConfirmActionComponent } from './pages/preferences/confirm-action/confirm-action.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,6 +112,7 @@ import { PreferencesComponent } from './pages/preferences/preferences.component'
     SearchPageComponent,
     StaffDetailComponent,
     PreferencesComponent,
+    ConfirmActionComponent,
   ],
   imports: [
     BrowserModule,
