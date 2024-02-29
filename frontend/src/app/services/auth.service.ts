@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { userType } from '../Models/userType.type';
+import { httpUrl } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   userType$ = this.userTypeSubject.asObservable();
-  baseUrl = 'http://localhost:3001';
+
   constructor() {
     this.isAuthenticated();
   }
@@ -51,7 +52,7 @@ export class AuthService {
   // -------------------------------- Client auth ------------------------------------------
   loginUser(body: { email: string; password: string }) {
     return this.http
-      .post(`${this.baseUrl}/client/login`, body, {
+      .post(`${httpUrl}/client/login`, body, {
         withCredentials: true,
       })
       .pipe(
@@ -70,18 +71,18 @@ export class AuthService {
   }
   logoutUser() {
     return this.http
-      .delete(`${this.baseUrl}/client/logout`, { withCredentials: true })
+      .delete(`${httpUrl}/client/logout`, { withCredentials: true })
       .pipe(tap(() => this.deleteUser()));
   }
   signUpUser(body: any) {
-    return this.http.post(`${this.baseUrl}/client/register`, body);
+    return this.http.post(`${httpUrl}/client/register`, body);
   }
   // ---------------------------- Client auth end here --------------------------------------
   // -------------------------------Employee auth ---------------------------------------------
 
   loginEmployee(body: { email: string; password: string }) {
     return this.http
-      .post(`${this.baseUrl}/login/employee`, body, {
+      .post(`${httpUrl}/login/employee`, body, {
         withCredentials: true,
       })
       .pipe(
@@ -99,7 +100,7 @@ export class AuthService {
   }
   logoutEmployee() {
     return this.http
-      .delete(`${this.baseUrl}/employee/logout`, {
+      .delete(`${httpUrl}/employee/logout`, {
         withCredentials: true,
       })
       .pipe(
@@ -114,7 +115,7 @@ export class AuthService {
   // ------------------------------------ Employee auth -----------------------------------------
   loginManager(body: { email: string; password: string }) {
     return this.http
-      .post(`${this.baseUrl}/manager/login`, body, {
+      .post(`${httpUrl}/manager/login`, body, {
         withCredentials: true,
       })
       .pipe(
@@ -128,7 +129,7 @@ export class AuthService {
   }
   logoutManager() {
     return this.http
-      .delete(`${this.baseUrl}/manager/logout`, {
+      .delete(`${httpUrl}/manager/logout`, {
         withCredentials: true,
       })
       .pipe(

@@ -7,21 +7,4 @@ import { ServiceModel } from '../../../Models/service.model';
   templateUrl: './mg-services-page.component.html',
   styleUrl: './mg-services-page.component.scss',
 })
-export class MgServicesPageComponent {
-  // serviceService: ServiceService = inject(ServiceService);
-  // serviceList: ServiceModel[] = null;
-  // showFormServices: boolean = false;
-  // ngOnInit() {
-  //   this.serviceService.getAllServices();
-  //   this.serviceService.services$.subscribe((service) => {
-  //     this.serviceList = service;
-  //     console.log(this.serviceList);
-  //   });
-  // }
-  // showForm() {
-  //   this.showFormServices = true;
-  // }
-  // closeForm() {
-  //   this.showFormServices = false;
-  // }
-}
+export class MgServicesPageComponent {}

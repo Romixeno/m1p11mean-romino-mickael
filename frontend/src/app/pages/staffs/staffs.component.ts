@@ -5,6 +5,7 @@ import { response } from 'express';
 import { ServiceService } from '../../services/service.service';
 import { ServiceTypeModel } from '../../Models/serviceType.model';
 import { NavigationExtras, Router } from '@angular/router';
+import { httpUrl } from '../../utils/utils';
 
 @Component({
   selector: 'app-staffs',
@@ -12,6 +13,7 @@ import { NavigationExtras, Router } from '@angular/router';
   styleUrl: './staffs.component.scss',
 })
 export class StaffsComponent {
+  baseUrl: string = httpUrl;
   employeeList: EmployeeModel[] = [];
   serviceTypeList: ServiceTypeModel[] = [];
   router: Router = inject(Router);

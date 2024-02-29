@@ -18,8 +18,8 @@
     <div class="left">
       <div class="img-container">
         <img
-          src="http://localhost:3001{{
-            client.image ? client?.image : '/images/noavatar.jpg'
+          src="{{
+            baseUrl + client.image ? client?.image : '/images/noavatar.jpg'
           }}"
           alt="Profile Picture"
         />

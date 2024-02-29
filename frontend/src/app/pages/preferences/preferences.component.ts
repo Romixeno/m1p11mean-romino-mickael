@@ -7,6 +7,7 @@ import {
 } from '../../Models/preferences.model';
 import { ClientModel } from '../../Models/client.model';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { httpUrl } from '../../utils/utils';
 
 @Component({
   selector: 'app-preferences',
@@ -23,6 +24,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class PreferencesComponent {
+  baseUrl: string = httpUrl;
   authService: AuthService = inject(AuthService);
   userService: UserService = inject(UserService);
   preference: PreferencesModelPopulated;

@@ -12,11 +12,7 @@
         <div class="user-info" (click)="toggleDropdown()">
           <div class="user-avatar">
             <img
-              [src]="
-                user.image
-                  ? 'http://localhost:3001' + user.image
-                  : 'assets/noavatar.jpg'
-              "
+              [src]="user.image ? baseUrl + user.image : 'assets/noavatar.jpg'"
               alt=""
             />
           </div>
@@ -47,7 +43,7 @@
       <ng-container *ngIf="userType === 'Employee'">
         <div class="user-info" (click)="toggleDropdown()">
           <div class="user-avatar">
-            <img src="http://localhost:3001{{ user.image }}" alt="" />
+            <img src="{{ baseUrl + user.image }}" alt="" />
           </div>
           <div class="icon-menu">
             <i class="fa-regular fa-chevron-down"></i>

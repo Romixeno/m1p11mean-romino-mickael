@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../Models/user.model';
 import { userType } from '../../Models/userType.type';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { httpUrl } from '../../utils/utils';
 
 @Component({
   selector: 'app-headers',
@@ -22,6 +22,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class HeadersComponent implements OnInit {
+  baseUrl = httpUrl;
   router: Router = inject(Router);
   isLoggedIn: boolean = false;
   userType?: userType;

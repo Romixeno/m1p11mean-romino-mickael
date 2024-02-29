@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 import { PreferencesModel } from '../../../Models/preferences.model';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { httpUrl } from '../../../utils/utils';
 
 @Component({
   selector: 'app-staff-detail',
@@ -29,6 +30,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class StaffDetailComponent {
+  baseUrl: string = httpUrl;
   activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   employeeService: EmployeesService = inject(EmployeesService);
   authService: AuthService = inject(AuthService);

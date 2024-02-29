@@ -19,7 +19,6 @@ const registerSchema = Joi.object({
 });
 
 export const register = async (req, res) => {
-  console.log("ato");
   try {
     const { error, value } = registerSchema.validate(req.body);
     if (error) {

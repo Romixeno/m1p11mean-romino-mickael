@@ -2,16 +2,13 @@ import { Component, OnDestroy, inject } from '@angular/core';
 import { ServiceModel } from '../../Models/service.model';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ServiceService } from '../../services/service.service';
-
-import { HttpErrorResponse } from '@angular/common/http';
 import { ServiceTypeModel } from '../../Models/serviceType.model';
-import { response } from 'express';
 import { userType } from '../../Models/userType.type';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { PreferencesModel } from '../../Models/preferences.model';
 import { animate, style, transition, trigger } from '@angular/animations';
-
+import { httpUrl } from '../../utils/utils';
 @Component({
   selector: 'app-services',
   templateUrl: './services.component.html',
@@ -33,6 +30,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class ServicesComponent implements OnDestroy {
+  baseUrl: string = httpUrl;
   showLoading: boolean = false;
   router: Router = inject(Router);
   activeRoute: ActivatedRoute = inject(ActivatedRoute);

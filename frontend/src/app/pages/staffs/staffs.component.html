@@ -49,8 +49,8 @@
       <div class="team-card" *ngFor="let employee of employeeList">
         <div class="img-container">
           <img
-            src="http://localhost:3001{{
-              employee.image ? employee.image : '/images/noavatar.jpg'
+            src="{{
+              baseUrl + employee.image ? employee.image : '/images/noavatar.jpg'
             }}"
             alt=""
           />

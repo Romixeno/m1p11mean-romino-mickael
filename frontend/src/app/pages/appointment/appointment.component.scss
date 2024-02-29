@@ -24,8 +24,10 @@
       margin-top: 1.5rem;
 
       h3 {
-        font-size: 2.5rem;
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.2rem;
         margin: 10px 0;
+        font-weight: 500;
       }
       .step {
         margin-left: 5px;
@@ -51,6 +53,7 @@
           border: none;
         }
         span {
+          cursor: pointer;
           font-size: 1.4rem;
         }
       }
@@ -59,7 +62,7 @@
         margin-top: 1.5rem;
       }
       .col {
-        width: 100%;
+        width: 400px;
         display: flex;
         align-items: center;
         .left-panel,
@@ -99,10 +102,10 @@
                 gap: 25px;
                 align-items: center;
                 .price {
-                  font-weight: 500;
+                  font-weight: 600;
                 }
                 .duration {
-                  font-weight: 400;
+                  font-weight: 500;
                   display: flex;
                   gap: 5px;
                   align-items: center;

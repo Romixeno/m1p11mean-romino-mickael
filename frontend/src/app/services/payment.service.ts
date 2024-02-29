@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Subject, Subscriber } from 'rxjs';
+import { httpUrl } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PaymentService {
   http: HttpClient = inject(HttpClient);
-  baseUrl: string = 'http://localhost:3001';
+
   private paymentStatus = new BehaviorSubject<string>('pending');
   payment$ = this.paymentStatus.asObservable();
   constructor() {}
@@ -20,11 +21,11 @@ export class PaymentService {
     this.paymentStatus.next('pending');
   }
   createPayment(data: any) {
-    return this.http.post(`${this.baseUrl}/createPayment`, data);
+    return this.http.post(`${httpUrl}/createPayment`, data);
   }
   createOrder(cart: any) {
     return this.http.post(
-      `${this.baseUrl}/payment/orders`,
+      `${httpUrl}/payment/orders`,
       { cart: cart },
       {
         headers: {
@@ -36,7 +37,7 @@ export class PaymentService {
 
   captureOrder(orderId: string) {
     return this.http.post(
-      `${this.baseUrl}/payment/orders/${orderId}/capture`,
+      `${httpUrl}/payment/orders/${orderId}/capture`,
       null,
       {
         headers: {
@@ -47,6 +48,6 @@ export class PaymentService {
   }
 
   getAllPayment() {
-    return this.http.get(`${this.baseUrl}/allPayment`);
+    return this.http.get(`${httpUrl}/allPayment`);
   }
 }

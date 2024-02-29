@@ -1,10 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { ServiceModel } from '../../../../Models/service.model';
 import { Subscription } from 'rxjs';
-import { ServiceService } from '../../../../services/service.service';
 import { EmployeesService } from '../../../../services/employees.service';
 import { EmployeeModel } from '../../../../Models/employee.model';
+import { httpUrl } from '../../../../utils/utils';
 
 @Component({
   selector: 'mg-employees-table',
@@ -22,7 +21,7 @@ export class MgEmployeesTableComponent {
   errorMessage: string = '';
   successMessage: any;
   private subscription: Subscription;
-
+  baseUrl = httpUrl;
   ngOnInit() {
     this.showLoading = true;
     this.getEmployees();

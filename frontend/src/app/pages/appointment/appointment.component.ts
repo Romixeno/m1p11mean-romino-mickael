@@ -15,6 +15,7 @@ import { AppointmentModel } from '../../Models/appointment.model';
 import { WeekDay } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { PaymentService } from '../../services/payment.service';
+import { ServiceTypeModel } from '../../Models/serviceType.model';
 
 @Component({
   selector: 'app-appointment',
@@ -49,7 +50,7 @@ export class AppointmentComponent implements OnInit {
   calendarOpened: boolean = false;
   servicesList: ServiceModel[] = [];
   employeeList: EmployeeModel[] = [];
-  servicesType: string[] = ['Hair', 'Makeup', 'Nail', 'Skin'];
+  servicesType: ServiceTypeModel[] = [];
   transformedService: ServiceModelWithSelected[];
   selectedId?: string;
   selectedType: string;
@@ -62,7 +63,7 @@ export class AppointmentComponent implements OnInit {
   errorMessage?: string;
   paymentStatus: string;
   private subscription: Subscription;
-
+  showLoading: boolean = false;
   constructor(
     private paymentService: PaymentService,
     private serviceService: ServiceService,
@@ -74,6 +75,7 @@ export class AppointmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.showLoading = true;
     this.paymentService.resetPaymentStatus();
     this.subscription = this.paymentService.payment$.subscribe(
       (response) => (this.paymentStatus = response)
@@ -82,10 +84,18 @@ export class AppointmentComponent implements OnInit {
     this.min.setHours(this.min.getHours() + 1);
     const { serviceId, serviceType } = history.state;
 
+    this.serviceService.getAllServicesTypes().subscribe({
+      next: (response: ServiceTypeModel[]) => {
+        this.servicesType = response;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
     this.serviceService.getAllServices().subscribe({
       next: (response: ServiceModel[]) => {
         this.servicesList = response;
-
+        this.showLoading = false;
         this.transformedService = this.servicesList.map((service) => {
           return { ...service, selected: false };
         });
@@ -108,8 +118,6 @@ export class AppointmentComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -281,8 +289,13 @@ export class AppointmentComponent implements OnInit {
     const errors: { [key: string]: string } = {};
 
     this.servicesType.forEach((type) => {
-      if (this.hasSomeSelected(type) && !this.selectedEmployees[type]) {
-        errors[type] = `You have to select an employee for the service ${type}`;
+      if (
+        this.hasSomeSelected(type.name) &&
+        !this.selectedEmployees[type.name]
+      ) {
+        errors[
+          type.name
+        ] = `You have to select an employee for the service ${type.name}`;
       }
     });
 

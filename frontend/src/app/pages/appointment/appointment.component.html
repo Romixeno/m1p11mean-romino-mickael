@@ -6,12 +6,12 @@
 </welcome-message>
 
 <section class="section-appointment-section">
-  <h2>Appointment <i class="fa-regular fa-calendar-check"></i></h2>
+  <h1>Appointment <i class="fa-regular fa-calendar-check"></i></h1>
 
   <div class="container">
     <div class="appointment-form">
       <h3>Choose Your Date</h3>
-      <span class="step">> Select Date</span>
+      <!-- <span class="step">> Select Date</span> -->
       <div class="select-date">
         <input
           [owlDateTime]="dt"
@@ -30,22 +30,22 @@
 
       <div class="services-container" @fade>
         <h3>Our Services</h3>
-        <span class="step">> Select Services</span>
+        <!-- <span class="step">> Select Services</span> -->
         <div class="services-select">
           <ng-container *ngFor="let type of servicesType; index as i">
-            <div class="col" *ngIf="hasSomeValue(type)">
+            <div class="col" *ngIf="hasSomeValue(type.name)">
               <mat-expansion-panel
                 class="left-panel"
-                [expanded]="selectedType && selectedType == type"
+                [expanded]="selectedType && selectedType == type.name"
               >
                 <mat-expansion-panel-header class="left-panel-header">
                   <mat-panel-title class="left-panel-header-type">
-                    {{ type }}
+                    {{ type.name }}
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div
                   class="input-box"
-                  *ngFor="let service of getServicesForType(type)"
+                  *ngFor="let service of getServicesForType(type.name)"
                 >
                   <div class="description">
                     <div class="name">{{ service.name }}</div>
@@ -64,52 +64,11 @@
                   </div>
                   <mat-checkbox
                     [checked]="service.selected"
-                    (change)="setSelected(service._id, type)"
+                    (change)="setSelected(service._id, type.name)"
                     [color]="'primary'"
                   ></mat-checkbox>
                 </div>
               </mat-expansion-panel>
-
-              <!-- <div class="right-employee">
-                <ng-container *ngIf="hasSomeSelected(type)">
-                  <div class="employee-info">
-                    <img
-                      src="http://localhost:3001{{
-                        getEmployeeImage(type) || '/images/noavatar.jpg'
-                      }}"
-                      alt=""
-                      *ngIf="selectedEmployees?.[type]"
-                      @fade
-                    />
-                  </div>
-                  <div class="employee-select">
-                    <label for="">Select an Employee for {{ type }}</label>
-                    <div class="select-container">
-                      <mat-select
-                        (selectionChange)="
-                          onEmployeeSelectionChange(type, $event)
-                        "
-                      >
-                      
-                        <mat-option
-                          [value]="employee._id"
-                          *ngFor="
-                            let employee of employeeFilterByDate;
-                            index as i
-                          "
-                          >{{
-                            employee.firstName + " " + employee.lastName
-                          }}</mat-option
-                        >
-                      </mat-select>
-                    </div>
-                    <small [ngClass]="{ error: errors[type] }"
-                      >You have to select a employee for the service
-                      {{ type }}</small
-                    >
-                  </div>
-                </ng-container>
-              </div> -->
             </div>
           </ng-container>
         </div>
@@ -120,19 +79,19 @@
         *ngIf="getSelectedServicesLength() > 0"
         @fade
       >
-        <h3>Choose the Employee you want</h3>
-
-        <span class="step">> Select Employee</span>
+        <h3>Choose the Employee</h3>
 
         <ng-container *ngFor="let type of servicesType">
           <!-- *ngIf="hasSomeSelected(type)" -->
-          <div class="select-container" *ngIf="hasSomeSelected(type)">
+          <div class="select-container" *ngIf="hasSomeSelected(type.name)">
             <div class="select-box">
               <div class="row">
-                <label for="">{{ "For Your " + type }}</label>
+                <label for="">{{ "For Your " + type.name }}</label>
                 <div class="mat-select">
                   <mat-select
-                    (selectionChange)="onEmployeeSelectionChange(type, $event)"
+                    (selectionChange)="
+                      onEmployeeSelectionChange(type.name, $event)
+                    "
                   >
                     <mat-option
                       [value]="employee._id"
@@ -144,7 +103,7 @@
                   </mat-select>
                 </div>
               </div>
-              <small *ngIf="errors[type]">*Employee is required</small>
+              <small *ngIf="errors[type.name]">*Employee is required</small>
             </div>
           </div>
         </ng-container>
@@ -195,3 +154,6 @@
   *ngIf="showConfirmAppointment"
   (closeFormBtnClicked)="confirmAppointmentToggle()"
 ></app-confirm-appointment>
+<div class="overlay" *ngIf="showLoading">
+  <div class="loader"></div>
+</div>

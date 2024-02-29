@@ -21,7 +21,7 @@
         </button>
 
         <div class="service-item-img">
-          <img [src]="'http://localhost:3001' + service.image" alt="" />
+          <img [src]="baseUrl + service.image" alt="" />
         </div>
         <div class="service-item-bottom">
           <div class="service-item-details">
@@ -63,8 +63,8 @@
       >
         <div class="img-container">
           <img
-            src="http://localhost:3001{{
-              employee.image ? employee.image : '/images/noavatar.jpg'
+            src="{{
+              baseUrl + employee.image ? employee.image : '/images/noavatar.jpg'
             }}"
             alt=""
           />

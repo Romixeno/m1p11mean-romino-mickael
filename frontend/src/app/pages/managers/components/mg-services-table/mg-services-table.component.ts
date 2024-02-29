@@ -3,6 +3,7 @@ import { ServiceModel } from '../../../../Models/service.model';
 import { ServiceService } from '../../../../services/service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { httpUrl } from '../../../../utils/utils';
 
 @Component({
   selector: 'mg-services-table',
@@ -10,6 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./mg-services-table.component.scss'],
 })
 export class MgServicesTableComponent implements OnDestroy {
+  baseUrl: string = httpUrl;
   serviceService: ServiceService = inject(ServiceService);
   serviceList: ServiceModel[] = null;
   selectedService: ServiceModel = null;

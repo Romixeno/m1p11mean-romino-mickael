@@ -1,4 +1,4 @@
 export class ServiceTypeModel {
-  _id: string;
+  _id?: string;
   name: string;
 }

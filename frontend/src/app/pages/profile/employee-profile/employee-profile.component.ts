@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CustomValidator } from '../../../validators/passwordValidator';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { httpUrl } from '../../../utils/utils';
 
 @Component({
   selector: 'employee-profile',
@@ -33,7 +34,7 @@ export class EmployeeProfileComponent {
   successMessage: string;
   errorMessage: string;
   imgUrl: string;
-
+  baseUrl: string = httpUrl;
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

@@ -4,6 +4,7 @@ import { EmployeeModel } from '../../Models/employee.model';
 import { ServiceModel } from '../../Models/service.model';
 import { ServiceService } from '../../services/service.service';
 import { EmployeesService } from '../../services/employees.service';
+import { httpUrl } from '../../utils/utils';
 
 @Component({
   selector: 'app-search-page',
@@ -22,7 +23,7 @@ export class SearchPageComponent {
   searchResultText: string;
   noResult: boolean = false;
   showLoading: boolean = false;
-
+  baseUrl: string = httpUrl;
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

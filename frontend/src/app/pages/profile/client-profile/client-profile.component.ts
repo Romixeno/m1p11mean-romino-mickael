@@ -7,6 +7,7 @@ import { ClientModel } from '../../../Models/client.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/passwordValidator';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { httpUrl } from '../../../utils/utils';
 
 @Component({
   selector: 'client-profile',
@@ -23,6 +24,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class ClientProfileComponent {
+  baseUrl: string = httpUrl;
   showPasswordForm: boolean = false;
   showLoading: boolean = false;
   isEditMode: boolean = false;

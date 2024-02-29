@@ -6,8 +6,8 @@
   <div class="details-container" *ngIf="employee" @fade>
     <div class="img-container">
       <img
-        src="http://localhost:3001{{
-          employee.image ? employee.image : '/images/noavatar.jpg'
+        src="{{
+          baseUrl + employee.image ? employee.image : '/images/noavatar.jpg'
         }}"
         alt=""
       />

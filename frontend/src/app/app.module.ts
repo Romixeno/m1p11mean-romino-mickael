@@ -68,6 +68,7 @@ import { StaffDetailComponent } from './pages/staffs/staff-detail/staff-detail.c
 import { PreferencesComponent } from './pages/preferences/preferences.component';
 import { ConfirmActionComponent } from './pages/preferences/confirm-action/confirm-action.component';
 import { PaymentListsComponent } from './pages/managers/payment-lists/payment-lists.component';
+import { MgServiceTypesComponent } from './pages/managers/mg-service-types/mg-service-types.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,6 +116,7 @@ import { PaymentListsComponent } from './pages/managers/payment-lists/payment-li
     PreferencesComponent,
     ConfirmActionComponent,
     PaymentListsComponent,
+    MgServiceTypesComponent,
   ],
   imports: [
     BrowserModule,

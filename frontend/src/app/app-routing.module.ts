@@ -28,6 +28,7 @@ import { StaffDetailComponent } from './pages/staffs/staff-detail/staff-detail.c
 import { PreferencesComponent } from './pages/preferences/preferences.component';
 import { userGuard } from './guard/user.guard';
 import { PaymentListsComponent } from './pages/managers/payment-lists/payment-lists.component';
+import { MgServiceTypesComponent } from './pages/managers/mg-service-types/mg-service-types.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -120,6 +121,10 @@ const routes: Routes = [
         path: 'payments',
         component: PaymentListsComponent,
       },
+      {
+        path: 'serviceTypes',
+        component: MgServiceTypesComponent,
+      },
     ],
   },
   {
@@ -146,7 +151,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

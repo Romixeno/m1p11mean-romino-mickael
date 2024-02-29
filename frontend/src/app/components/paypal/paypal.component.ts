@@ -64,7 +64,6 @@ export class PaypalComponent {
                   next: (responseId) => {
                     this.newPayment(responseId, response.id).subscribe({
                       next: (value) => {
-                        console.log(value);
                         this.setPaymentStatus('completed');
                         this.ngZone.run(() => {
                           this.router.navigateByUrl('/appointment/lists', {
